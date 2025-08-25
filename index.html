@@ -1004,8 +1004,12 @@
         let isTranslating = false;
         let translationHistory = [];
 
-        // LibreTranslate configuration
-        const LIBRETRANSLATE_URL = 'https://libretranslate.de/translate';
+        // Translation API configuration with fallbacks
+        const TRANSLATION_APIS = [
+            'https://libretranslate.com/translate',
+            'https://translate.argosopentech.com/translate',
+            'https://libretranslate.de/translate'
+        ];
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
@@ -1055,9 +1059,10 @@
                 
                 clearTimeout(translationTimeout);
                 if (sourceText.value.trim()) {
+                    // Increased delay to reduce API calls
                     translationTimeout = setTimeout(() => {
                         translateText();
-                    }, 800);
+                    }, 1500); // Increased from 800ms to 1500ms
                 } else {
                     targetText.value = '';
                     updateTargetCount();
@@ -1178,9 +1183,22 @@
             showLoadingState();
 
             try {
-                const translation = await translateWithLibreTranslate(text);
+                // Try multiple translation services
+                let translation = null;
+                let lastError = null;
 
-                if (translation.translatedText) {
+                for (let i = 0; i < TRANSLATION_APIS.length; i++) {
+                    try {
+                        translation = await translateWithAPI(text, TRANSLATION_APIS[i]);
+                        break; // Success, exit loop
+                    } catch (error) {
+                        lastError = error;
+                        console.warn(`Translation API ${TRANSLATION_APIS[i]} failed:`, error);
+                        continue; // Try next API
+                    }
+                }
+
+                if (translation && translation.translatedText) {
                     targetTextEl.value = translation.translatedText;
                     updateTargetCount();
                     
@@ -1193,7 +1211,7 @@
                     // Add to history
                     addToHistory(text, translation.translatedText, currentSourceLang, currentTargetLang);
                 } else {
-                    throw new Error('Translation failed');
+                    throw lastError || new Error('All translation services failed');
                 }
             } catch (error) {
                 console.error('Translation error:', error);
@@ -1204,8 +1222,8 @@
             }
         }
 
-        async function translateWithLibreTranslate(text) {
-            const response = await fetch(LIBRETRANSLATE_URL, {
+        async function translateWithAPI(text, apiUrl) {
+            const response = await fetch(apiUrl, {
                 method: 'POST',
                 body: JSON.stringify({
                     q: text,
@@ -1219,10 +1237,14 @@
             });
 
             if (!response.ok) {
-                throw new Error(`LibreTranslate API error: ${response.status}`);
+                throw new Error(`Translation API error: ${response.status} - ${response.statusText}`);
             }
 
             const data = await response.json();
+            
+            if (!data.translatedText) {
+                throw new Error('No translation text in response');
+            }
             
             return {
                 translatedText: data.translatedText,
@@ -1233,10 +1255,17 @@
         function handleTranslationError(error, originalText) {
             const targetTextEl = document.getElementById('targetText');
             
-            showToast('Translation service temporarily unavailable');
-            targetTextEl.value = `Translation temporarily unavailable for: "${originalText}"`;
+            // Don't show toast for every error, only for manual translations
+            console.error('Translation failed:', error);
             
+            // Clear the target text instead of showing error message
+            targetTextEl.value = '';
             updateTargetCount();
+            
+            // Only show toast if it's a manual translation attempt
+            if (document.getElementById('translateBtn').disabled) {
+                showToast('Translation service temporarily unavailable');
+            }
         }
 
         function clearSource() {
