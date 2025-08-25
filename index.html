@@ -7,13 +7,13 @@
     <meta name="description" content="Free professional translation service supporting 47+ languages including Hausa, Arabic, French, Spanish, German & more. Instant AI translations with modern interface. No registration required.">
     <meta name="keywords" content="free translator, online translation, Hausa translator, Arabic translator, multilingual translation, AI translator, instant translation, language converter, translate text, free translation service, Google Translate alternative">
     <meta name="verify-admitad" content="b63cb1a621" />
-    
+   
     <!-- SEO Meta Tags -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="author" content="Nexo Translate">
     <meta name="language" content="English">
     <meta name="revisit-after" content="1 day">
-    
+   
     <!-- Open Graph Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Free Online Translator | Nexo Translate - 47+ Languages">
@@ -25,7 +25,7 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:type" content="image/jpeg">
-    
+   
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Free Online Translator | Nexo Translate - 47+ Languages">
@@ -33,7 +33,7 @@
     <meta name="twitter:image" content="https://nexotranslate.com/twitter-image.jpg">
     <meta name="twitter:site" content="@NexoTranslate">
     <meta name="twitter:creator" content="@NexoTranslate">
-    
+   
     <!-- Additional SEO Tags -->
     <link rel="canonical" href="https://nexotranslate.com">
     <link rel="alternate" hreflang="en" href="https://nexotranslate.com">
@@ -41,10 +41,10 @@
     <link rel="alternate" hreflang="fr" href="https://nexotranslate.com/fr">
     <link rel="alternate" hreflang="ar" href="https://nexotranslate.com/ar">
     <link rel="alternate" hreflang="ha" href="https://nexotranslate.com/ha">
-    
+   
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
-    
+   
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
     {
@@ -82,13 +82,11 @@
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap');
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #000000;
@@ -99,7 +97,6 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-
         body::before {
             content: '';
             position: fixed;
@@ -107,13 +104,12 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
+            background:
                 radial-gradient(circle at 15% 25%, rgba(255, 255, 255, 0.015) 0%, transparent 60%),
                 radial-gradient(circle at 85% 75%, rgba(255, 255, 255, 0.02) 0%, transparent 60%),
                 radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.005) 0%, transparent 100%);
             z-index: -1;
         }
-
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -124,13 +120,11 @@
             align-items: center;
             gap: 2rem;
         }
-
         .header {
             margin: 1rem 0;
             text-align: center;
             animation: fadeInDown 0.8s ease-out;
         }
-
         .logo {
             font-size: 2.5rem;
             font-weight: 300;
@@ -139,14 +133,12 @@
             text-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
             margin-bottom: 0.5rem;
         }
-
         .ad-banner-top {
             width: 100%;
             max-width: 728px;
             height: 90px;
             animation: slideInUp 0.8s ease-out 0.1s both;
         }
-
         .main-container {
             background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(60px);
@@ -158,11 +150,10 @@
             animation: slideInUp 0.8s ease-out 0.2s both;
             position: relative;
             overflow: hidden;
-            box-shadow: 
+            box-shadow:
                 0 32px 64px rgba(0, 0, 0, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
-
         .main-container::before {
             content: '';
             position: absolute;
@@ -172,7 +163,6 @@
             height: 1px;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
         }
-
         .language-bar {
             display: flex;
             align-items: center;
@@ -181,12 +171,10 @@
             justify-content: space-between;
             position: relative;
         }
-
         .language-selector {
             position: relative;
             min-width: 200px;
         }
-
         .language-btn {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px);
@@ -206,14 +194,12 @@
             justify-content: space-between;
             position: relative;
         }
-
         .language-btn:hover {
             background: rgba(255, 255, 255, 0.06);
             border-color: rgba(255, 255, 255, 0.12);
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
-
         .language-dropdown {
             position: absolute;
             top: calc(100% + 8px);
@@ -228,30 +214,25 @@
             overflow-y: auto;
             z-index: 1000;
             display: none;
-            box-shadow: 
+            box-shadow:
                 0 20px 40px rgba(0, 0, 0, 0.6),
                 0 0 0 1px rgba(255, 255, 255, 0.05);
         }
-
         .language-dropdown::-webkit-scrollbar {
             width: 4px;
         }
-
         .language-dropdown::-webkit-scrollbar-track {
             background: rgba(255, 255, 255, 0.02);
             border-radius: 2px;
         }
-
         .language-dropdown::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 2px;
         }
-
         .language-dropdown.active {
             display: block;
             animation: dropdownFade 0.25s ease-out;
         }
-
         .language-option {
             padding: 0.875rem 1.25rem;
             cursor: pointer;
@@ -262,11 +243,9 @@
             gap: 0.75rem;
             position: relative;
         }
-
         .language-option:hover {
             background: rgba(255, 255, 255, 0.04);
         }
-
         .swap-btn {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px);
@@ -283,19 +262,16 @@
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             font-size: 1.2rem;
         }
-
         .swap-btn:hover {
             background: rgba(255, 255, 255, 0.06);
             transform: rotate(180deg) scale(1.05);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
-
         .translation-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             position: relative;
         }
-
         .translation-container::before {
             content: '';
             position: absolute;
@@ -306,13 +282,11 @@
             background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.04), transparent);
             transform: translateX(-50%);
         }
-
         .text-panel {
             position: relative;
             display: flex;
             flex-direction: column;
         }
-
         .text-area {
             width: 100%;
             min-height: 280px;
@@ -327,16 +301,13 @@
             font-family: inherit;
             font-weight: 300;
         }
-
         .text-area::placeholder {
             color: rgba(255, 255, 255, 0.3);
             font-weight: 300;
         }
-
         .text-area:focus {
             background: rgba(255, 255, 255, 0.015);
         }
-
         .panel-controls {
             position: absolute;
             bottom: 1.25rem;
@@ -347,12 +318,10 @@
             transition: all 0.3s ease;
             transform: translateY(10px);
         }
-
         .text-panel:hover .panel-controls {
             opacity: 1;
             transform: translateY(0);
         }
-
         .control-btn {
             background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(20px);
@@ -370,31 +339,26 @@
             font-size: 0.9rem;
             font-weight: 500;
         }
-
         .control-btn:hover {
             background: rgba(255, 255, 255, 0.08);
             color: #ffffff;
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
-
         .control-btn.recording {
             background: rgba(255, 0, 0, 0.2);
             color: #ff4444;
             border-color: rgba(255, 0, 0, 0.3);
             animation: pulse 1.5s infinite;
         }
-
         .mic-btn.recording svg {
             color: #ff4444;
         }
-
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.4); }
             70% { box-shadow: 0 0 0 8px rgba(255, 68, 68, 0); }
             100% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0); }
         }
-
         .char-count {
             position: absolute;
             bottom: 1.25rem;
@@ -403,7 +367,6 @@
             font-size: 0.8rem;
             font-weight: 400;
         }
-
         .bottom-bar {
             padding: 2rem;
             display: flex;
@@ -411,13 +374,11 @@
             align-items: center;
             border-top: 1px solid rgba(255, 255, 255, 0.04);
         }
-
         .detect-language {
             color: rgba(255, 255, 255, 0.4);
             font-size: 0.9rem;
             font-weight: 400;
         }
-
         .translate-btn {
             background: linear-gradient(135deg, #ffffff, rgba(255, 255, 255, 0.9));
             color: #000000;
@@ -432,23 +393,19 @@
             transform: translateY(10px);
             box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
         }
-
         .translate-btn.visible {
             opacity: 1;
             transform: translateY(0);
         }
-
         .translate-btn:hover {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
             transform: translateY(-2px);
             box-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
         }
-
         .translate-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
         }
-
         .loading-indicator {
             display: inline-flex;
             align-items: center;
@@ -456,7 +413,6 @@
             color: rgba(255, 255, 255, 0.4);
             font-size: 0.9rem;
         }
-
         .spinner {
             width: 16px;
             height: 16px;
@@ -465,14 +421,12 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-
         .ad-banner-bottom {
             width: 100%;
             max-width: 728px;
             height: 90px;
             animation: slideInUp 0.8s ease-out 0.4s both;
         }
-
         .affiliate-ads {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -481,7 +435,6 @@
             max-width: 1100px;
             margin-top: 2rem;
         }
-
         .affiliate-ad {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
             backdrop-filter: blur(20px);
@@ -498,7 +451,6 @@
             display: flex;
             align-items: center;
         }
-
         .affiliate-ad::before {
             content: '';
             position: absolute;
@@ -509,7 +461,6 @@
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask-composite: xor;
         }
-
         .affiliate-ad::after {
             content: '';
             position: absolute;
@@ -520,78 +471,64 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
             transition: left 0.6s;
         }
-
         .affiliate-ad:hover::after {
             left: 100%;
         }
-
         .alibaba-ad {
             background: linear-gradient(135deg, rgba(255, 102, 0, 0.1), rgba(255, 102, 0, 0.05));
             border-color: rgba(255, 102, 0, 0.2);
         }
-
         .retouchme-ad {
             background: linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(138, 43, 226, 0.05));
             border-color: rgba(138, 43, 226, 0.2);
         }
-
         .hacoo-ad-new {
             background: linear-gradient(135deg, rgba(0, 191, 255, 0.1), rgba(0, 191, 255, 0.05));
             border-color: rgba(0, 191, 255, 0.2);
         }
-
         .affiliate-ad:hover {
             transform: translateY(-4px) scale(1.02);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
         }
-
         .alibaba-ad:hover {
             border-color: rgba(255, 102, 0, 0.4);
             box-shadow: 0 15px 40px rgba(255, 102, 0, 0.2);
         }
-
         .retouchme-ad:hover {
             border-color: rgba(138, 43, 226, 0.4);
             box-shadow: 0 15px 40px rgba(138, 43, 226, 0.2);
         }
-
         .hacoo-ad-new:hover {
             border-color: rgba(0, 191, 255, 0.4);
             box-shadow: 0 15px 40px rgba(0, 191, 255, 0.2);
         }
-
         .ad-content {
             display: flex;
             align-items: center;
             gap: 1rem;
             width: 100%;
         }
-
         .ad-logo {
             transition: all 0.3s ease;
             opacity: 0.9;
             flex-shrink: 0;
         }
-
         .affiliate-ad:hover .ad-logo {
             opacity: 1;
             transform: scale(1.05);
         }
-
         .ad-text h3 {
             font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 0.25rem;
             color: #ffffff;
         }
-
         .ad-text p {
             font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.7);
             font-weight: 400;
             line-height: 1.4;
         }
-
         .toast {
             position: fixed;
             top: 2rem;
@@ -608,7 +545,6 @@
             animation: slideInRight 0.3s ease, fadeOutRight 0.3s ease 3s forwards;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
-
         .error-message {
             background: rgba(255, 0, 0, 0.1);
             border: 1px solid rgba(255, 0, 0, 0.3);
@@ -618,7 +554,6 @@
             margin: 1rem 0;
             font-size: 0.9rem;
         }
-
         .history-section {
             width: 100%;
             max-width: 1100px;
@@ -629,44 +564,61 @@
             padding: 2rem;
             margin-top: 2rem;
         }
-
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
         .history-section h2 {
             font-size: 1.5rem;
             font-weight: 500;
-            margin-bottom: 1rem;
         }
-
+        .clear-history-btn {
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.2), rgba(255, 0, 0, 0.1));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 0.75rem 1.5rem;
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.1);
+        }
+        .clear-history-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.3), rgba(255, 0, 0, 0.15));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.15);
+        }
         .history-list {
             display: flex;
             flex-direction: column;
             gap: 1rem;
         }
-
         .history-item {
             background: rgba(255, 255, 255, 0.03);
             border-radius: 12px;
             padding: 1rem;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
-
         .history-item:hover {
             background: rgba(255, 255, 255, 0.05);
+            transform: translateX(5px);
         }
-
         .history-source {
             font-weight: 400;
             margin-bottom: 0.5rem;
         }
-
         .history-target {
             font-weight: 300;
             color: rgba(255, 255, 255, 0.7);
         }
-
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-
         @keyframes fadeInDown {
             from {
                 opacity: 0;
@@ -677,7 +629,6 @@
                 transform: translateY(0);
             }
         }
-
         @keyframes slideInUp {
             from {
                 opacity: 0;
@@ -688,7 +639,6 @@
                 transform: translateY(0);
             }
         }
-
         @keyframes dropdownFade {
             from {
                 opacity: 0;
@@ -699,25 +649,26 @@
                 transform: scale(1) translateY(0);
             }
         }
-
         @keyframes slideInRight {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
-
         @keyframes fadeOutRight {
             to { transform: translateX(100%); opacity: 0; }
         }
-
+        @keyframes fadeOut {
+            to { opacity: 0; transform: scale(0.95); }
+        }
+        .history-item.clearing {
+            animation: fadeOut 0.3s ease forwards;
+        }
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
             }
-
             .translation-container {
                 grid-template-columns: 1fr;
             }
-
             .translation-container::before {
                 top: 50%;
                 bottom: auto;
@@ -728,61 +679,49 @@
                 transform: translateY(-50%);
                 background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.04), transparent);
             }
-
             .language-bar {
                 flex-direction: column;
                 gap: 1rem;
                 padding: 1.5rem;
             }
-
             .bottom-bar {
                 flex-direction: column;
                 gap: 1rem;
                 align-items: stretch;
             }
-
             .affiliate-ads {
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
-
             .affiliate-ad {
                 min-height: 100px;
                 padding: 1.25rem;
             }
-
             .ad-logo svg {
                 width: 50px;
                 height: 33px;
             }
-
             .ad-text h3 {
                 font-size: 1rem;
             }
-
             .ad-text p {
                 font-size: 0.85rem;
             }
-
             [dir="rtl"] .text-area {
                 text-align: right;
             }
         }
-
         /* RTL support */
         [dir="rtl"] {
             direction: rtl;
         }
-
         [dir="rtl"] .language-btn {
             text-align: right;
         }
-
         [dir="rtl"] .char-count {
             left: auto;
             right: 2rem;
         }
-
         [dir="rtl"] .panel-controls {
             right: auto;
             left: 1.25rem;
@@ -794,11 +733,9 @@
         <div class="header">
             <h1 class="logo">nexo translate</h1>
         </div>
-
-        <div class="ad-banner-top">
+        <div class="ad-banner-top" style="display: none;">
             <div id="frame" style="width: 100%;"><iframe data-aa="2407892" src="//acceptable.a-ads.com/2407892?size=Adaptive&background_color=0f0e0e" style="border:0px; padding:0; width:100%; height:100%; overflow:hidden; background-color: transparent;"></iframe><a style="display: block; text-align: right; font-size: 12px" id="frame-link" href="https://aads.com/?partner=2407892">Advertise here</a></div>
         </div>
-
         <div class="main-container">
             <div class="language-bar">
                 <div class="language-selector">
@@ -808,9 +745,7 @@
                     </button>
                     <div class="language-dropdown" id="sourceDropdown"></div>
                 </div>
-
                 <button class="swap-btn" id="swapBtn">⇄</button>
-
                 <div class="language-selector">
                     <button class="language-btn" id="targetLangBtn">
                         <span id="targetLangText">English</span>
@@ -819,12 +754,11 @@
                     <div class="language-dropdown" id="targetDropdown"></div>
                 </div>
             </div>
-
             <div class="translation-container">
                 <div class="text-panel">
-                    <textarea 
-                        class="text-area" 
-                        id="sourceText" 
+                    <textarea
+                        class="text-area"
+                        id="sourceText"
                         placeholder="Enter text to translate"
                         maxlength="5000"
                         aria-label="Source text input"
@@ -841,11 +775,10 @@
                         <button class="control-btn" id="speakSource" title="Listen" aria-label="Speak source text">🔊</button>
                     </div>
                 </div>
-
                 <div class="text-panel">
-                    <textarea 
-                        class="text-area" 
-                        id="targetText" 
+                    <textarea
+                        class="text-area"
+                        id="targetText"
                         placeholder="Translation will appear here"
                         readonly
                         aria-label="Translated text output"
@@ -857,17 +790,14 @@
                     </div>
                 </div>
             </div>
-
             <div class="bottom-bar">
                 <div class="detect-language" id="detectedLang"></div>
                 <button class="translate-btn" id="translateBtn">Translate</button>
             </div>
         </div>
-
         <div class="ad-banner-bottom">
             <div id="frame" style="width: 100%;"><iframe data-aa="2407892" src="//acceptable.a-ads.com/2407892?size=Adaptive&background_color=0f0e0e" style="border:0px; padding:0; width:100%; height:100%; overflow:hidden; background-color: transparent;"></iframe><a style="display: block; text-align: right; font-size: 12px" id="frame-link" href="https://aads.com/?partner=2407892">Advertise here</a></div>
         </div>
-
         <div class="affiliate-ads">
             <a href="https://rzekl.com/g/pm1aev55clb63cb1a621219aa26f6f/" class="affiliate-ad alibaba-ad" target="_blank" rel="noopener">
                 <div class="ad-content">
@@ -887,7 +817,7 @@
                     </div>
                 </div>
             </a>
-            
+           
             <a href="https://plrvq.com/g/gp8po8i1u7b63cb1a62145d8e108c6/" class="affiliate-ad retouchme-ad" target="_blank" rel="noopener">
                 <div class="ad-content">
                     <div class="ad-logo">
@@ -913,7 +843,7 @@
                     </div>
                 </div>
             </a>
-            
+           
             <a href="https://dorinebeaumont.com/g/84e1j7pvh1d55e295720f271888eea/" class="affiliate-ad hacoo-ad-new" target="_blank" rel="noopener">
                 <div class="ad-content">
                     <div class="ad-logo">
@@ -940,13 +870,14 @@
                 </div>
             </a>
         </div>
-
         <div class="history-section" id="historySection">
-            <h2>Translation History</h2>
+            <div class="history-header">
+                <h2>Translation History</h2>
+                <button class="clear-history-btn" id="clearHistoryBtn">Clear History</button>
+            </div>
             <div class="history-list" id="historyList"></div>
         </div>
     </div>
-
     <script>
         // Comprehensive language support with proper codes
         const languages = {
@@ -1001,7 +932,6 @@
             'zh-TW': { name: 'Chinese (Traditional)', code: 'zh-TW' },
             'zu': { name: 'Zulu', code: 'zu' }
         };
-
         let currentSourceLang = 'auto';
         let currentTargetLang = 'en';
         let translationTimeout;
@@ -1009,10 +939,8 @@
         let recognition = null;
         let isRecording = false;
         let translationHistory = [];
-
         // Translation API configuration
         const TRANSLATION_API_URL = 'https://api.mymemory.translated.net/get';
-
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
             initializeLanguageDropdowns();
@@ -1023,11 +951,9 @@
             updateHistoryUI();
             updateTextDirection();
         });
-
         function initializeLanguageDropdowns() {
             const sourceDropdown = document.getElementById('sourceDropdown');
             const targetDropdown = document.getElementById('targetDropdown');
-
             // Populate source dropdown (includes auto-detect)
             Object.entries(languages).forEach(([code, lang]) => {
                 const option = document.createElement('div');
@@ -1036,7 +962,6 @@
                 option.onclick = () => selectSourceLanguage(code);
                 sourceDropdown.appendChild(option);
             });
-
             // Populate target dropdown (excludes auto-detect)
             Object.entries(languages).filter(([code]) => code !== 'auto').forEach(([code, lang]) => {
                 const option = document.createElement('div');
@@ -1046,7 +971,6 @@
                 targetDropdown.appendChild(option);
             });
         }
-
         function initializeEventListeners() {
             const sourceText = document.getElementById('sourceText');
             const sourceLangBtn = document.getElementById('sourceLangBtn');
@@ -1055,15 +979,15 @@
             const targetDropdown = document.getElementById('targetDropdown');
             const swapBtn = document.getElementById('swapBtn');
             const translateBtn = document.getElementById('translateBtn');
-
+            const clearHistoryBtn = document.getElementById('clearHistoryBtn');
             // Text input handling with debounced auto-translation
             sourceText.addEventListener('input', function() {
                 updateCharCount();
                 showTranslateButton();
-                
+               
                 clearTimeout(translationTimeout);
                 const text = sourceText.value.trim();
-                
+               
                 if (text) {
                     translationTimeout = setTimeout(() => {
                         translateText();
@@ -1072,29 +996,24 @@
                     clearTranslation();
                 }
             });
-
             // Language dropdown toggles
             sourceLangBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 sourceDropdown.classList.toggle('active');
                 targetDropdown.classList.remove('active');
             });
-
             targetLangBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 targetDropdown.classList.toggle('active');
                 sourceDropdown.classList.remove('active');
             });
-
             // Close dropdowns when clicking outside
             document.addEventListener('click', () => {
                 sourceDropdown.classList.remove('active');
                 targetDropdown.classList.remove('active');
             });
-
             // Swap languages
             swapBtn.addEventListener('click', swapLanguages);
-
             // Manual translate button
             translateBtn.addEventListener('click', () => {
                 const text = sourceText.value.trim();
@@ -1102,7 +1021,8 @@
                     translateText(true);
                 }
             });
-
+            // Clear history button
+            clearHistoryBtn.addEventListener('click', clearHistory);
             // Control buttons
             document.getElementById('clearSource').addEventListener('click', clearSource);
             document.getElementById('copyTarget').addEventListener('click', copyTranslation);
@@ -1115,7 +1035,6 @@
                 const text = document.getElementById('targetText').value.trim();
                 if (text) speakText(text, currentTargetLang);
             });
-
             // Keyboard shortcuts
             sourceText.addEventListener('keydown', (e) => {
                 if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
@@ -1127,12 +1046,11 @@
                 }
             });
         }
-
         function selectSourceLanguage(langCode) {
             currentSourceLang = langCode;
             document.getElementById('sourceLangText').textContent = languages[langCode].name;
             document.getElementById('sourceDropdown').classList.remove('active');
-            
+           
             updateTextDirection();
             const sourceText = document.getElementById('sourceText').value.trim();
             if (sourceText) {
@@ -1140,12 +1058,11 @@
             }
             saveUserPreferences();
         }
-
         function selectTargetLanguage(langCode) {
             currentTargetLang = langCode;
             document.getElementById('targetLangText').textContent = languages[langCode].name;
             document.getElementById('targetDropdown').classList.remove('active');
-            
+           
             updateTextDirection();
             const sourceText = document.getElementById('sourceText').value.trim();
             if (sourceText) {
@@ -1153,74 +1070,65 @@
             }
             saveUserPreferences();
         }
-
         function swapLanguages() {
             if (currentSourceLang === 'auto') {
                 showToast('Cannot swap from auto-detect language');
                 return;
             }
-
             const tempLang = currentSourceLang;
             currentSourceLang = currentTargetLang;
             currentTargetLang = tempLang;
-
             // Update UI
             document.getElementById('sourceLangText').textContent = languages[currentSourceLang].name;
             document.getElementById('targetLangText').textContent = languages[currentTargetLang].name;
-
             // Swap text
             const sourceTextEl = document.getElementById('sourceText');
             const targetTextEl = document.getElementById('targetText');
             const tempText = sourceTextEl.value;
             sourceTextEl.value = targetTextEl.value;
             targetTextEl.value = tempText;
-
             updateCharCount();
             updateTargetCount();
             updateTextDirection();
             saveUserPreferences();
-
             if (sourceTextEl.value.trim()) {
                 translateText();
             }
         }
-
         async function translateText(manual = false) {
             if (isTranslating) return;
-            
+           
             const sourceTextEl = document.getElementById('sourceText');
             const targetTextEl = document.getElementById('targetText');
             const text = sourceTextEl.value.trim();
-            
+           
             if (!text) return;
-
             isTranslating = true;
             showLoadingState();
-
             try {
                 const sourceLang = currentSourceLang === 'auto' ? 'auto' : currentSourceLang;
                 const targetLang = currentTargetLang;
-                
+               
                 // Use MyMemory API
                 const response = await fetch(`${TRANSLATION_API_URL}?q=${encodeURIComponent(text)}&langpair=${sourceLang}|${targetLang}`);
-                
+               
                 if (!response.ok) {
                     if (response.status === 429) {
                         throw new Error('Rate limit exceeded. Please try again later.');
                     }
                     throw new Error(`Translation API error: ${response.status}`);
                 }
-                
+               
                 const data = await response.json();
-                
+               
                 if (data && data.responseData && data.responseData.translatedText) {
                     const translatedText = data.responseData.translatedText;
-                    
+                   
                     // Avoid showing identical text for same language
                     if (translatedText !== text || sourceLang === targetLang) {
                         targetTextEl.value = translatedText;
                         updateTargetCount();
-                        
+                       
                         // Show detected language if auto-detect was used
                         if (currentSourceLang === 'auto' && data.quotaFinished === false) {
                             const detectedLang = detectLanguageFromResponse(data);
@@ -1228,7 +1136,6 @@
                                 document.getElementById('detectedLang').textContent = `Detected: ${languages[detectedLang].name}`;
                             }
                         }
-
                         // Add to history
                         addToHistory(text, translatedText, currentSourceLang, currentTargetLang);
                     } else {
@@ -1238,7 +1145,7 @@
                 } else {
                     throw new Error('Invalid response from translation service');
                 }
-                
+               
             } catch (error) {
                 console.error('Translation error:', error);
                 handleTranslationError(error);
@@ -1247,7 +1154,6 @@
                 hideLoadingState();
             }
         }
-
         function detectLanguageFromResponse(data) {
             // Improved detection logic for MyMemory
             if (data.responseStatus === 200 && data.responseData) {
@@ -1265,12 +1171,11 @@
             }
             return null;
         }
-
         function handleTranslationError(error) {
             const targetTextEl = document.getElementById('targetText');
             targetTextEl.value = '';
             updateTargetCount();
-            
+           
             let message = 'Translation failed. Please try again.';
             if (error.message.includes('network') || error.message.includes('fetch')) {
                 message = 'Network error. Please check your internet connection.';
@@ -1281,11 +1186,10 @@
             }
             showToast(message);
         }
-
         function clearSource() {
             const sourceTextEl = document.getElementById('sourceText');
             const targetTextEl = document.getElementById('targetText');
-            
+           
             sourceTextEl.value = '';
             targetTextEl.value = '';
             updateCharCount();
@@ -1293,7 +1197,6 @@
             hideTranslateButton();
             document.getElementById('detectedLang').textContent = '';
         }
-
         function clearTranslation() {
             const targetTextEl = document.getElementById('targetText');
             targetTextEl.value = '';
@@ -1301,16 +1204,15 @@
             hideTranslateButton();
             document.getElementById('detectedLang').textContent = '';
         }
-
         function copyTranslation() {
             const targetTextEl = document.getElementById('targetText');
             const text = targetTextEl.value.trim();
-            
+           
             if (!text) {
                 showToast('Nothing to copy');
                 return;
             }
-            
+           
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(text).then(() => {
                     showToast('Translation copied to clipboard');
@@ -1321,7 +1223,6 @@
                 fallbackCopyTextToClipboard(text);
             }
         }
-
         function fallbackCopyTextToClipboard(text) {
             const textArea = document.createElement('textarea');
             textArea.value = text;
@@ -1331,25 +1232,24 @@
             document.body.appendChild(textArea);
             textArea.focus();
             textArea.select();
-            
+           
             try {
                 const successful = document.execCommand('copy');
                 showToast(successful ? 'Translation copied to clipboard' : 'Could not copy text');
             } catch (err) {
                 showToast('Copy not supported in this browser');
             }
-            
+           
             document.body.removeChild(textArea);
         }
-
         function speakText(text, langCode) {
             if (!text) return;
-            
+           
             if ('speechSynthesis' in window) {
                 speechSynthesis.cancel();
-                
+               
                 const utterance = new SpeechSynthesisUtterance(text);
-                
+               
                 const speechLangMap = {
                     'zh': 'zh-CN',
                     'zh-TW': 'zh-TW',
@@ -1359,24 +1259,23 @@
                     'fr': 'fr-FR',
                     // Add more as needed
                 };
-                
+               
                 utterance.lang = speechLangMap[langCode] || langCode;
                 utterance.rate = 0.9;
                 utterance.pitch = 1;
                 utterance.volume = 1;
-                
+               
                 utterance.onstart = () => showToast('Playing audio...');
                 utterance.onerror = (event) => {
                     console.error('Speech synthesis error:', event.error);
                     showToast('Could not play audio. Voice may not be available for this language.');
                 };
-                
+               
                 speechSynthesis.speak(utterance);
             } else {
                 showToast('Text-to-speech not supported in this browser');
             }
         }
-
         function initializeSpeechRecognition() {
             if (!('SpeechRecognition' in window) && !('webkitSpeechRecognition' in window)) {
                 const micBtn = document.getElementById('listenSource');
@@ -1385,31 +1284,30 @@
                 micBtn.setAttribute('aria-disabled', 'true');
                 return;
             }
-
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             recognition = new SpeechRecognition();
-            
+           
             recognition.continuous = false;
             recognition.interimResults = true;
             recognition.maxAlternatives = 1;
-            
+           
             recognition.onstart = () => {
                 isRecording = true;
                 const micBtn = document.getElementById('listenSource');
                 micBtn.classList.add('recording');
                 showToast('Listening... Speak now');
             };
-            
+           
             recognition.onresult = (event) => {
                 let transcript = '';
                 for (let i = event.resultIndex; i < event.results.length; i++) {
                     transcript += event.results[i][0].transcript;
                 }
-                
+               
                 const sourceText = document.getElementById('sourceText');
                 sourceText.value = transcript;
                 updateCharCount();
-                
+               
                 if (event.results[event.results.length - 1].isFinal) {
                     showTranslateButton();
                     if (transcript.trim()) {
@@ -1417,19 +1315,19 @@
                     }
                 }
             };
-            
+           
             recognition.onend = () => {
                 isRecording = false;
                 const micBtn = document.getElementById('listenSource');
                 micBtn.classList.remove('recording');
                 showToast('Recording stopped');
             };
-            
+           
             recognition.onerror = (event) => {
                 isRecording = false;
                 const micBtn = document.getElementById('listenSource');
                 micBtn.classList.remove('recording');
-                
+               
                 let errorMessage = 'Speech recognition error';
                 switch(event.error) {
                     case 'no-speech':
@@ -1454,21 +1352,20 @@
                 showToast(errorMessage);
             };
         }
-
         function startSpeechRecognition() {
             if (!recognition) {
                 showToast('Speech recognition not supported');
                 return;
             }
-            
+           
             if (isRecording) {
                 recognition.stop();
                 return;
             }
-            
+           
             const langCode = currentSourceLang === 'auto' ? 'en-US' : getRecognitionLanguage(currentSourceLang);
             recognition.lang = langCode;
-            
+           
             try {
                 recognition.start();
             } catch (error) {
@@ -1476,7 +1373,6 @@
                 showToast('Could not start speech recognition. Check permissions.');
             }
         }
-
         function getRecognitionLanguage(langCode) {
             const recognitionLangMap = {
                 'en': 'en-US',
@@ -1519,7 +1415,7 @@
                 'ca': 'ca-ES',
                 'eu': 'eu-ES',
                 'gl': 'gl-ES',
-                'ha': 'ha-NG',  // Assuming Nigerian Hausa
+                'ha': 'ha-NG', // Assuming Nigerian Hausa
                 'am': 'am-ET',
                 'sw': 'sw-TZ',
                 'zu': 'zu-ZA',
@@ -1528,10 +1424,9 @@
                 'ig': 'ig-NG',
                 'tl': 'tl-PH'
             };
-            
+           
             return recognitionLangMap[langCode] || 'en-US';
         }
-
         function addToHistory(source, target, sourceLang, targetLang) {
             const historyItem = {
                 source,
@@ -1540,7 +1435,7 @@
                 targetLang,
                 timestamp: Date.now()
             };
-            
+           
             translationHistory.unshift(historyItem);
             if (translationHistory.length > 50) {
                 translationHistory = translationHistory.slice(0, 50);
@@ -1548,11 +1443,10 @@
             saveUserPreferences();
             updateHistoryUI();
         }
-
         function updateHistoryUI() {
             const historyList = document.getElementById('historyList');
             historyList.innerHTML = '';
-            
+           
             translationHistory.forEach((item, index) => {
                 const div = document.createElement('div');
                 div.className = 'history-item';
@@ -1564,7 +1458,26 @@
                 historyList.appendChild(div);
             });
         }
-
+        function clearHistory() {
+            if (!translationHistory.length) {
+                showToast('No history to clear');
+                return;
+            }
+            if (confirm('Are you sure you want to clear all translation history? This cannot be undone.')) {
+                const historyItems = document.querySelectorAll('.history-item');
+                historyItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.classList.add('clearing');
+                    }, index * 50);
+                });
+                setTimeout(() => {
+                    translationHistory = [];
+                    updateHistoryUI();
+                    saveUserPreferences();
+                    showToast('Translation history cleared');
+                }, historyItems.length * 50 + 300);
+            }
+        }
         function loadHistoryItem(item) {
             selectSourceLanguage(item.sourceLang);
             selectTargetLanguage(item.targetLang);
@@ -1573,7 +1486,6 @@
             translateText();
             showToast('Loaded from history');
         }
-
         function escapeHtml(unsafe) {
             return unsafe
                 .replace(/&/g, "&amp;")
@@ -1582,7 +1494,6 @@
                 .replace(/"/g, "&quot;")
                 .replace(/'/g, "&#039;");
         }
-
         function loadUserPreferences() {
             try {
                 if (typeof Storage !== 'undefined') {
@@ -1598,7 +1509,7 @@
                             document.getElementById('targetLangText').textContent = languages[prefs.targetLang].name;
                         }
                     }
-                    
+                   
                     const history = localStorage.getItem('translationHistory');
                     if (history) {
                         translationHistory = JSON.parse(history);
@@ -1609,7 +1520,6 @@
             }
             updateTextDirection();
         }
-
         function saveUserPreferences() {
             try {
                 if (typeof Storage !== 'undefined') {
@@ -1624,64 +1534,56 @@
                 console.warn('Could not save to localStorage:', e);
             }
         }
-
         function showLoadingState() {
             const translateBtn = document.getElementById('translateBtn');
             translateBtn.innerHTML = '<div class="spinner"></div> Translating...';
             translateBtn.disabled = true;
             document.getElementById('targetText').placeholder = 'Translating...';
         }
-
         function hideLoadingState() {
             const translateBtn = document.getElementById('translateBtn');
             translateBtn.innerHTML = 'Translate';
             translateBtn.disabled = false;
             document.getElementById('targetText').placeholder = 'Translation will appear here';
         }
-
         function showTranslateButton() {
             const translateBtn = document.getElementById('translateBtn');
             translateBtn.classList.add('visible');
         }
-
         function hideTranslateButton() {
             const translateBtn = document.getElementById('translateBtn');
             translateBtn.classList.remove('visible');
         }
-
         function updateCharCount() {
             const sourceText = document.getElementById('sourceText');
             const sourceCount = document.getElementById('sourceCount');
             sourceCount.textContent = `${sourceText.value.length} / 5,000`;
         }
-
         function updateTargetCount() {
             const targetText = document.getElementById('targetText');
             const targetCount = document.getElementById('targetCount');
             targetCount.textContent = `${targetText.value.length} characters`;
         }
-
         function showToast(message) {
             const existingToast = document.querySelector('.toast');
             if (existingToast) existingToast.remove();
-            
+           
             const toast = document.createElement('div');
             toast.className = 'toast';
             toast.textContent = message;
             document.body.appendChild(toast);
-            
+           
             setTimeout(() => {
                 if (toast.parentNode) toast.parentNode.removeChild(toast);
             }, 3000);
         }
-
         function updateTextDirection() {
             const sourceText = document.getElementById('sourceText');
             const targetText = document.getElementById('targetText');
-            
+           
             const sourceRTL = currentSourceLang !== 'auto' && languages[currentSourceLang].rtl;
             const targetRTL = languages[currentTargetLang].rtl;
-            
+           
             sourceText.setAttribute('dir', sourceRTL ? 'rtl' : 'ltr');
             targetText.setAttribute('dir', targetRTL ? 'rtl' : 'ltr');
         }
