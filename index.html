@@ -664,15 +664,15 @@
             width: 100%;
         }
 
-        .ad-icon {
-            font-size: 2.5rem;
-            opacity: 0.8;
+        .ad-logo {
             transition: all 0.3s ease;
+            opacity: 0.9;
+            flex-shrink: 0;
         }
 
-        .affiliate-ad:hover .ad-icon {
+        .affiliate-ad:hover .ad-logo {
             opacity: 1;
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         .ad-text h3 {
@@ -826,8 +826,9 @@
                 padding: 1.25rem;
             }
 
-            .ad-icon {
-                font-size: 2rem;
+            .ad-logo svg {
+                width: 50px;
+                height: 33px;
             }
 
             .ad-text h3 {
@@ -914,7 +915,16 @@
         <div class="affiliate-ads">
             <a href="https://rzekl.com/g/pm1aev55clb63cb1a621219aa26f6f/" class="affiliate-ad alibaba-ad" target="_blank" rel="noopener">
                 <div class="ad-content">
-                    <div class="ad-icon">🛒</div>
+                    <div class="ad-logo">
+                        <svg width="60" height="40" viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="60" height="40" rx="6" fill="#FF6600"/>
+                            <path d="M8 12h44v16H8V12z" fill="white"/>
+                            <text x="30" y="22" text-anchor="middle" fill="#FF6600" font-family="Arial, sans-serif" font-size="10" font-weight="bold">alibaba</text>
+                            <circle cx="15" cy="8" r="2" fill="white"/>
+                            <circle cx="30" cy="32" r="2" fill="white"/>
+                            <circle cx="45" cy="8" r="2" fill="white"/>
+                        </svg>
+                    </div>
                     <div class="ad-text">
                         <h3>Alibaba Wholesale</h3>
                         <p>Global Trade Starts Here - Millions of Products</p>
@@ -924,7 +934,23 @@
             
             <a href="https://plrvq.com/g/gp8po8i1u7b63cb1a62145d8e108c6/" class="affiliate-ad retouchme-ad" target="_blank" rel="noopener">
                 <div class="ad-content">
-                    <div class="ad-icon">📸</div>
+                    <div class="ad-logo">
+                        <svg width="60" height="40" viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="retouchGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#8A2BE2;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#DA70D6;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <rect width="60" height="40" rx="6" fill="url(#retouchGrad)"/>
+                            <rect x="8" y="8" width="20" height="15" rx="2" fill="white" opacity="0.9"/>
+                            <rect x="32" y="17" width="20" height="15" rx="2" fill="white" opacity="0.7"/>
+                            <circle cx="18" cy="12" r="2" fill="#8A2BE2"/>
+                            <path d="M12 18l4-2 4 3" stroke="#8A2BE2" stroke-width="1.5" fill="none"/>
+                            <text x="50" y="12" text-anchor="end" fill="white" font-family="Arial, sans-serif" font-size="6" font-weight="bold">RETOUCH</text>
+                            <text x="50" y="19" text-anchor="end" fill="white" font-family="Arial, sans-serif" font-size="6" font-weight="bold">ME</text>
+                        </svg>
+                    </div>
                     <div class="ad-text">
                         <h3>RetouchMe</h3>
                         <p>Professional Photo Editing in Minutes</p>
@@ -934,7 +960,23 @@
             
             <a href="https://dorinebeaumont.com/g/84e1j7pvh1d55e295720f271888eea/" class="affiliate-ad hacoo-ad-new" target="_blank" rel="noopener">
                 <div class="ad-content">
-                    <div class="ad-icon">💎</div>
+                    <div class="ad-logo">
+                        <svg width="60" height="40" viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="hacooGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#00BFFF;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#1E90FF;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <rect width="60" height="40" rx="6" fill="url(#hacooGrad)"/>
+                            <text x="30" y="16" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="bold">HACOO</text>
+                            <rect x="10" y="22" width="8" height="6" rx="1" fill="white" opacity="0.8"/>
+                            <rect x="22" y="22" width="8" height="6" rx="1" fill="white" opacity="0.6"/>
+                            <rect x="34" y="22" width="8" height="6" rx="1" fill="white" opacity="0.4"/>
+                            <rect x="46" y="22" width="4" height="6" rx="1" fill="white" opacity="0.3"/>
+                            <circle cx="30" cy="32" r="2" fill="white"/>
+                        </svg>
+                    </div>
                     <div class="ad-text">
                         <h3>Hacoo</h3>
                         <p>Premium Shopping Deals & Fashion</p>
