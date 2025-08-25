@@ -1004,12 +1004,8 @@
         let isTranslating = false;
         let translationHistory = [];
 
-        // Translation API configuration with fallbacks
-        const TRANSLATION_APIS = [
-            'https://libretranslate.com/translate',
-            'https://translate.argosopentech.com/translate',
-            'https://libretranslate.de/translate'
-        ];
+        // Translation API configuration - Using MyMemory which is reliable and free
+        const MYMEMORY_API = 'https://api.mymemory.translated.net/get';
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
@@ -1183,21 +1179,8 @@
             showLoadingState();
 
             try {
-                // Try multiple translation services
-                let translation = null;
-                let lastError = null;
-
-                for (let i = 0; i < TRANSLATION_APIS.length; i++) {
-                    try {
-                        translation = await translateWithAPI(text, TRANSLATION_APIS[i]);
-                        break; // Success, exit loop
-                    } catch (error) {
-                        lastError = error;
-                        console.warn(`Translation API ${TRANSLATION_APIS[i]} failed:`, error);
-                        continue; // Try next API
-                    }
-                }
-
+                const translation = await translateWithMyMemory(text);
+                
                 if (translation && translation.translatedText) {
                     targetTextEl.value = translation.translatedText;
                     updateTargetCount();
@@ -1210,8 +1193,11 @@
                     
                     // Add to history
                     addToHistory(text, translation.translatedText, currentSourceLang, currentTargetLang);
+                    
+                    // Track successful translation
+                    trackTranslation(currentSourceLang, currentTargetLang, text.length);
                 } else {
-                    throw lastError || new Error('All translation services failed');
+                    throw new Error('No translation received');
                 }
             } catch (error) {
                 console.error('Translation error:', error);
@@ -1222,34 +1208,66 @@
             }
         }
 
-        async function translateWithAPI(text, apiUrl) {
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                body: JSON.stringify({
-                    q: text,
-                    source: currentSourceLang === 'auto' ? 'auto' : currentSourceLang,
-                    target: currentTargetLang,
-                    format: 'text'
-                }),
+        async function translateWithMyMemory(text) {
+            // MyMemory API expects language codes, handle auto-detect
+            let sourceLang = currentSourceLang;
+            if (sourceLang === 'auto') {
+                sourceLang = 'en'; // Default for auto-detect, MyMemory will detect automatically
+            }
+            
+            // Build the API URL
+            const url = `${MYMEMORY_API}?q=${encodeURIComponent(text)}&langpair=${sourceLang}|${currentTargetLang}`;
+            
+            const response = await fetch(url, {
+                method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Accept': 'application/json',
                 }
             });
 
             if (!response.ok) {
-                throw new Error(`Translation API error: ${response.status} - ${response.statusText}`);
+                throw new Error(`MyMemory API error: ${response.status} - ${response.statusText}`);
             }
 
             const data = await response.json();
             
-            if (!data.translatedText) {
-                throw new Error('No translation text in response');
+            if (!data.responseData || !data.responseData.translatedText) {
+                throw new Error('Invalid response from MyMemory API');
+            }
+            
+            // Check if translation quality is acceptable
+            if (data.responseData.translatedText === text && currentSourceLang !== currentTargetLang) {
+                // If translated text is same as source and languages are different, might be an error
+                console.warn('Translation might have failed - same text returned');
             }
             
             return {
-                translatedText: data.translatedText,
-                detectedLanguage: data.detectedLanguage?.language || currentSourceLang
+                translatedText: data.responseData.translatedText,
+                detectedLanguage: currentSourceLang === 'auto' ? detectLanguageFromText(text) : currentSourceLang
             };
+        }
+
+        // Simple language detection fallback
+        function detectLanguageFromText(text) {
+            // Basic language detection patterns
+            const patterns = {
+                'ar': /[\u0600-\u06FF]/,
+                'zh': /[\u4e00-\u9fff]/,
+                'ja': /[\u3040-\u309f\u30a0-\u30ff]/,
+                'ko': /[\uac00-\ud7af]/,
+                'hi': /[\u0900-\u097F]/,
+                'th': /[\u0e00-\u0e7f]/,
+                'he': /[\u0590-\u05FF]/,
+                'ru': /[\u0400-\u04FF]/
+            };
+            
+            for (const [lang, pattern] of Object.entries(patterns)) {
+                if (pattern.test(text)) {
+                    return lang;
+                }
+            }
+            
+            return 'en'; // Default to English
         }
 
         function handleTranslationError(error, originalText) {
@@ -1449,6 +1467,18 @@
             // Implementation depends on your caching strategy
         }
 
+        // Analytics tracking (replace with your analytics service)
+        function trackTranslation(sourceLang, targetLang, textLength) {
+            // Example: Google Analytics 4
+            // gtag('event', 'translation', {
+            //     'source_language': sourceLang,
+            //     'target_language': targetLang,
+            //     'text_length': textLength
+            // });
+            
+            console.log('Translation tracked:', { sourceLang, targetLang, textLength });
+        }
+
         // Initialize common translations cache
         setTimeout(preloadCommonTranslations, 2000);
 
@@ -1461,18 +1491,6 @@
                     console.log('SW registration failed: ', registrationError);
                 });
             });
-        }
-
-        // Analytics tracking (replace with your analytics service)
-        function trackTranslation(sourceLang, targetLang, textLength) {
-            // Example: Google Analytics 4
-            // gtag('event', 'translation', {
-            //     'source_language': sourceLang,
-            //     'target_language': targetLang,
-            //     'text_length': textLength
-            // });
-            
-            console.log('Translation tracked:', { sourceLang, targetLang, textLength });
         }
 
         // Error reporting (replace with your error tracking service)
