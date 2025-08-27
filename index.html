@@ -874,36 +874,85 @@
                 <button class="translate-btn" id="translateBtn">Translate</button>
             </div>
         </div>
-        
         <!-- Adsterra 300x250 Banner -->
-        <div class="ad-banner-adsterra">
-            <div id="adsterra-banner"></div>
-            <div class="ad-fallback">Ad not loaded. Please refresh.</div>
-            <script>
+<div class="ad-banner-adsterra">
+    <div id="adsterra-banner"></div>
+    <div class="ad-fallback">Ad not loaded. Please check your ad blocker or refresh the page.</div>
+    <script>
+        (function() {
+            const adContainer = document.getElementById('adsterra-banner');
+            const fallback = document.querySelector('.ad-banner-adsterra .ad-fallback');
+            let retries = 3;
+            let attempt = 0;
+
+            function loadAdsterraAd() {
                 try {
-                    const adContainer = document.getElementById('adsterra-banner');
+                    // Ensure atOptions is defined
+                    if (!window.atOptions) {
+                        window.atOptions = {
+                            'key': 'e127e3b53bca5c1364eee3b652b6776c',
+                            'format': 'iframe',
+                            'height': 250,
+                            'width': 300,
+                            'params': {}
+                        };
+                    }
+
+                    // Create iframe
                     const iframe = document.createElement('iframe');
                     iframe.width = '300';
                     iframe.height = '250';
                     iframe.frameBorder = '0';
                     iframe.scrolling = 'no';
+                    iframe.title = 'Adsterra Advertisement';
                     adContainer.appendChild(iframe);
+
+                    // Check if ad loaded successfully
                     iframe.onload = () => {
                         try {
                             if (!iframe.contentWindow.document.body.hasChildNodes()) {
-                                document.querySelector('.ad-banner-adsterra').classList.add('ad-error');
+                                console.warn('Adsterra iframe is empty');
+                                handleAdError();
                             }
                         } catch (e) {
-                            document.querySelector('.ad-banner-adsterra').classList.add('ad-error');
+                            console.error('Adsterra iframe check failed:', e);
+                            handleAdError();
                         }
                     };
+
+                    // Trigger Adsterra script if not already loaded
+                    if (!document.querySelector('script[src*="highperformanceformat.com"]')) {
+                        const script = document.createElement('script');
+                        script.src = '//www.highperformanceformat.com/e127e3b53bca5c1364eee3b652b6776c/invoke.js';
+                        script.async = true;
+                        script.onerror = () => {
+                            console.error('Adsterra script failed to load');
+                            handleAdError();
+                        };
+                        document.head.appendChild(script);
+                    }
                 } catch (e) {
-                    console.log('Adsterra ad failed to load:', e);
-                    document.querySelector('.ad-banner-adsterra').classList.add('ad-error');
+                    console.error('Adsterra ad setup failed:', e);
+                    handleAdError();
                 }
-            </script>
-        </div>
-        
+            }
+
+            function handleAdError() {
+                attempt++;
+                if (attempt < retries) {
+                    console.log(`Retrying Adsterra ad load (attempt ${attempt + 1}/${retries})`);
+                    setTimeout(loadAdsterraAd, 2000);
+                } else {
+                    document.querySelector('.ad-banner-adsterra').classList.add('ad-error');
+                    fallback.textContent = 'Ad failed to load. Please disable ad blocker or try again later.';
+                }
+            }
+
+            // Initial ad load attempt
+            loadAdsterraAd();
+        })();
+    </script>
+</div>        
         <!-- Monetag Ad Banner -->
         <div class="ad-banner-monetag">
             <script>
