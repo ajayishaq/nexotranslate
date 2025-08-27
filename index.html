@@ -126,7 +126,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         .header {
@@ -144,22 +144,38 @@
             margin-bottom: 0.5rem;
         }
 
-        .ad-banner-adsterra, .ad-banner-bottom, .ad-banner-monetag {
+        .ad-banner-adsterra, .ad-banner-monetag {
             width: 100%;
-            max-width: 728px;
-            height: 90px;
+            max-width: 750px;
+            min-height: 100px;
             animation: slideInUp 0.8s ease-out 0.1s both;
             border-radius: 12px;
             overflow: hidden;
             background: rgba(255, 255, 255, 0.5);
             border: 1px solid rgba(0, 0, 0, 0.05);
+            margin: 1.5rem auto;
+            position: relative;
+            z-index: 10;
         }
 
-        .ad-banner-adsterra iframe, .ad-banner-bottom iframe, .ad-banner-monetag iframe {
+        .ad-banner-adsterra iframe, .ad-banner-monetag iframe {
             width: 100%;
-            height: 100%;
+            height: 90px;
             border: none;
             border-radius: 12px;
+        }
+
+        .ad-fallback {
+            display: none;
+            text-align: center;
+            padding: 1rem;
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .ad-banner-adsterra.ad-error .ad-fallback,
+        .ad-banner-monetag.ad-error .ad-fallback {
+            display: block;
         }
 
         .main-container {
@@ -755,6 +771,7 @@
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
+                gap: 1.5rem;
             }
 
             .translation-container {
@@ -815,6 +832,17 @@
                 width: 100%;
                 height: 52px;
             }
+
+            .ad-banner-adsterra, .ad-banner-monetag {
+                max-width: 100%;
+                width: 100%;
+                min-height: 90px;
+            }
+
+            .ad-banner-adsterra iframe, .ad-banner-monetag iframe {
+                width: 100%;
+                height: 90px;
+            }
         }
     </style>
 </head>
@@ -831,8 +859,11 @@
                     document.write('<iframe src="https://www.profitableratecpm.com/d464skb4pz?key=84516152d8056a89362bc8bcbc148985" width="728" height="90" frameborder="0" scrolling="no"></iframe>');
                 } catch (e) {
                     console.log('Adsterra ad failed to load:', e);
+                    document.querySelector('.ad-banner-adsterra').innerHTML = '<div class="ad-fallback">Ad not loaded. Please refresh.</div>';
+                    document.querySelector('.ad-banner-adsterra').classList.add('ad-error');
                 }
             </script>
+            <div class="ad-fallback">Ad not loaded. Please refresh.</div>
         </div>
         
         <div class="main-container">
@@ -897,20 +928,32 @@
             </div>
         </div>
         
-        <!-- Bottom Ad Banner (AADS) -->
-        <div class="ad-banner-bottom">
-            <iframe data-aa="2407892" src="//aa-ads.com/2407892?size=Adaptive&background_color=ffffff" style="width:100%; height:100%; border:none; overflow:hidden; background-color: transparent;"></iframe>
-        </div>
-        
         <!-- Monetag Ad Banner -->
         <div class="ad-banner-monetag">
             <script>
                 try {
-                    document.write('<iframe src="https://otieu.com/4/9781286" width="728" height="90" frameborder="0" scrolling="no"></iframe>');
+                    const iframe = document.createElement('iframe');
+                    iframe.src = 'https://otieu.com/4/9781286';
+                    iframe.width = '728';
+                    iframe.height = '90';
+                    iframe.frameBorder = '0';
+                    iframe.scrolling = 'no';
+                    iframe.onload = () => {
+                        try {
+                            if (!iframe.contentWindow.document.body.hasChildNodes()) {
+                                document.querySelector('.ad-banner-monetag').classList.add('ad-error');
+                            }
+                        } catch (e) {
+                            document.querySelector('.ad-banner-monetag').classList.add('ad-error');
+                        }
+                    };
+                    document.querySelector('.ad-banner-monetag').appendChild(iframe);
                 } catch (e) {
                     console.log('Monetag ad failed to load:', e);
+                    document.querySelector('.ad-banner-monetag').classList.add('ad-error');
                 }
             </script>
+            <div class="ad-fallback">Ad not loaded. Please refresh.</div>
         </div>
         
         <!-- Affiliate Ads -->
