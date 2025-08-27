@@ -7,9 +7,6 @@
     <meta name="description" content="Free professional translation service supporting 47+ languages including Hausa, Arabic, French, Spanish, German & more. Instant AI translations with modern interface. No registration required.">
     <meta name="keywords" content="free translator, online translation, Hausa translator, Arabic translator, multilingual translation, AI translator, instant translation, language converter, translate text, free translation service, Google Translate alternative">
     <meta name="verify-admitad" content="b63cb1a621" />
-    
-    <!-- Monetag Meta Tag -->
-    <meta name="monetag" content="528179be189c3102c727e3c5d4298f18">
    
     <!-- SEO Meta Tags -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -849,11 +846,6 @@
             }
         }
     </style>
-    <!-- Adsterra Integration -->
-    <script async src="https://www.profitableratecpm.com/d464skb4pz?key=84516152d8056a89362bc8bcbc148985"></script>
-    
-    <!-- Monetag Integration -->
-    <script async src="https://otieu.com/4/9781286"></script>
 </head>
 <body>
     <div class="container">
@@ -1763,39 +1755,43 @@
 
         function loadUserPreferences() {
             try {
-                const saved = localStorage.getItem('nexoTranslatorPreferences');
-                if (saved) {
-                    const prefs = JSON.parse(saved);
-                    if (prefs.sourceLang && languages[prefs.sourceLang]) {
-                        currentSourceLang = prefs.sourceLang;
-                        document.getElementById('sourceLangText').textContent = languages[prefs.sourceLang].name;
+                if (typeof(Storage) !== "undefined" && localStorage) {
+                    const saved = localStorage.getItem('nexoTranslatorPreferences');
+                    if (saved) {
+                        const prefs = JSON.parse(saved);
+                        if (prefs.sourceLang && languages[prefs.sourceLang]) {
+                            currentSourceLang = prefs.sourceLang;
+                            document.getElementById('sourceLangText').textContent = languages[prefs.sourceLang].name;
+                        }
+                        if (prefs.targetLang && languages[prefs.targetLang]) {
+                            currentTargetLang = prefs.targetLang;
+                            document.getElementById('targetLangText').textContent = languages[prefs.targetLang].name;
+                        }
                     }
-                    if (prefs.targetLang && languages[prefs.targetLang]) {
-                        currentTargetLang = prefs.targetLang;
-                        document.getElementById('targetLangText').textContent = languages[prefs.targetLang].name;
+                   
+                    const history = localStorage.getItem('nexoTranslatorHistory');
+                    if (history) {
+                        translationHistory = JSON.parse(history);
                     }
-                }
-               
-                const history = localStorage.getItem('nexoTranslatorHistory');
-                if (history) {
-                    translationHistory = JSON.parse(history);
                 }
             } catch (e) {
-                console.warn('Could not load preferences:', e);
+                console.warn('Could not load from localStorage:', e);
             }
             updateTextDirection();
         }
 
         function saveUserPreferences() {
             try {
-                const prefs = {
-                    sourceLang: currentSourceLang,
-                    targetLang: currentTargetLang
-                };
-                localStorage.setItem('nexoTranslatorPreferences', JSON.stringify(prefs));
-                localStorage.setItem('nexoTranslatorHistory', JSON.stringify(translationHistory));
+                if (typeof(Storage) !== "undefined" && localStorage) {
+                    const prefs = {
+                        sourceLang: currentSourceLang,
+                        targetLang: currentTargetLang
+                    };
+                    localStorage.setItem('nexoTranslatorPreferences', JSON.stringify(prefs));
+                    localStorage.setItem('nexoTranslatorHistory', JSON.stringify(translationHistory));
+                }
             } catch (e) {
-                console.warn('Could not save preferences:', e);
+                console.warn('Could not save to localStorage:', e);
             }
         }
 
