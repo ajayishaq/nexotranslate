@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,9 +40,9 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
     <!-- Adsterra Smart Link -->
-    <script async src="https://www.profitableratecpm.com/d464skb4pz?key=84516152d8056a89362bc8bcbc148985" onerror="document.querySelector('.ad-banner-adsterra').innerHTML='<div class=\"ad-fallback\">Ad not loaded. Please refresh.</div>';document.querySelector('.ad-banner-adsterra').classList.add('ad-error');"></script>
+    <script async src="https://www.profitableratecpm.com/d464skb4pz?key=84516152d8056a89362bc8bcbc148985" onerror="console.log('Adsterra script failed to load');"></script>
     <!-- Monetag Direct Link -->
-    <script async src="https://otieu.com/4/9785070" onerror="document.querySelector('.ad-banner-monetag').innerHTML='<div class=\"ad-fallback\">Ad not loaded. Please refresh.</div>';document.querySelector('.ad-banner-monetag').classList.add('ad-error');"></script>
+    <script async src="https://otieu.com/4/9785070" onerror="console.log('Monetag script failed to load');"></script>
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
     {
@@ -81,7 +80,7 @@
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap');
-       
+        
         * {
             margin: 0;
             padding: 0;
@@ -126,8 +125,8 @@
             animation: fadeInDown 0.8s ease-out;
         }
         .logo {
-            font-size: 2.5rem;
-            font-weight: 300;
+            font-size: 2rem; /* Reduced from 2.5rem */
+            font-weight: 700; /* Changed to bold */
             letter-spacing: -0.03em;
             color: #000000;
             text-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
@@ -678,6 +677,13 @@
         @keyframes fadeOut {
             to { opacity: 0; transform: scale(0.95); }
         }
+        footer {
+            margin-top: auto;
+            padding: 1rem 0;
+            text-align: center;
+            color: #666666;
+            font-size: 0.9rem;
+        }
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
@@ -740,13 +746,9 @@
                 width: 100%;
                 height: 90px;
             }
-        }
-        footer {
-            margin-top: auto;
-            padding: 1rem 0;
-            text-align: center;
-            color: #666666;
-            font-size: 0.9rem;
+            .logo {
+                font-size: 1.5rem; /* Smaller size for mobile */
+            }
         }
     </style>
 </head>
@@ -755,13 +757,35 @@
         <div class="header">
             <h1 class="logo">nexo translator</h1>
         </div>
-       
+        
         <!-- Adsterra Ad Banner -->
         <div class="ad-banner-adsterra">
-            <script async src="https://www.profitableratecpm.com/d464skb4pz?key=84516152d8056a89362bc8bcbc148985"></script>
+            <script>
+                try {
+                    const iframe = document.createElement('iframe');
+                    iframe.src = 'https://www.profitableratecpm.com/d464skb4pz?key=84516152d8056a89362bc8bcbc148985';
+                    iframe.width = '728';
+                    iframe.height = '90';
+                    iframe.frameBorder = '0';
+                    iframe.scrolling = 'no';
+                    iframe.onload = () => {
+                        try {
+                            if (!iframe.contentWindow.document.body.hasChildNodes()) {
+                                document.querySelector('.ad-banner-adsterra').classList.add('ad-error');
+                            }
+                        } catch (e) {
+                            document.querySelector('.ad-banner-adsterra').classList.add('ad-error');
+                        }
+                    };
+                    document.querySelector('.ad-banner-adsterra').appendChild(iframe);
+                } catch (e) {
+                    console.log('Adsterra ad failed to load:', e);
+                    document.querySelector('.ad-banner-adsterra').classList.add('ad-error');
+                }
+            </script>
             <div class="ad-fallback">Ad not loaded. Please refresh.</div>
         </div>
-       
+        
         <div class="main-container">
             <div class="language-bar">
                 <div class="language-selector">
@@ -780,7 +804,7 @@
                     <div class="language-dropdown" id="targetDropdown"></div>
                 </div>
             </div>
-           
+            
             <div class="translation-container">
                 <div class="text-panel">
                     <textarea
@@ -817,19 +841,41 @@
                     </div>
                 </div>
             </div>
-           
+            
             <div class="bottom-bar">
                 <div class="detect-language" id="detectedLang"></div>
                 <button class="translate-btn" id="translateBtn">Translate</button>
             </div>
         </div>
-       
+        
         <!-- Monetag Ad Banner -->
         <div class="ad-banner-monetag">
-            <script async src="https://otieu.com/4/9785070"></script>
+            <script>
+                try {
+                    const iframe = document.createElement('iframe');
+                    iframe.src = 'https://otieu.com/4/9785070';
+                    iframe.width = '728';
+                    iframe.height = '90';
+                    iframe.frameBorder = '0';
+                    iframe.scrolling = 'no';
+                    iframe.onload = () => {
+                        try {
+                            if (!iframe.contentWindow.document.body.hasChildNodes()) {
+                                document.querySelector('.ad-banner-monetag').classList.add('ad-error');
+                            }
+                        } catch (e) {
+                            document.querySelector('.ad-banner-monetag').classList.add('ad-error');
+                        }
+                    };
+                    document.querySelector('.ad-banner-monetag').appendChild(iframe);
+                } catch (e) {
+                    console.log('Monetag ad failed to load:', e);
+                    document.querySelector('.ad-banner-monetag').classList.add('ad-error');
+                }
+            </script>
             <div class="ad-fallback">Ad not loaded. Please refresh.</div>
         </div>
-       
+        
         <!-- Affiliate Ads -->
         <div class="affiliate-ads">
             <a href="https://rzekl.com/g/pm1aev55clb63cb1a621219aa26f6f/" class="affiliate-ad alibaba-ad" target="_blank" rel="noopener">
@@ -850,7 +896,7 @@
                     </div>
                 </div>
             </a>
-          
+            
             <a href="https://plrvq.com/g/gp8po8i1u7b63cb1a621145d8e108c6/" class="affiliate-ad retouchme-ad" target="_blank" rel="noopener">
                 <div class="ad-content">
                     <div class="ad-logo">
@@ -877,7 +923,7 @@
                 </div>
             </a>
         </div>
-       
+        
         <!-- Translation History Section -->
         <div class="history-section" id="historySection">
             <div class="history-header">
@@ -888,7 +934,7 @@
         </div>
 
         <footer>
-            <p>© 2025 Nexo Translator. All Rights Reserved.</p>
+            <p>© Nexo Translator. All Rights Reserved.</p>
         </footer>
     </div>
     <script>
@@ -967,11 +1013,6 @@
                 name: 'LibreTranslate',
                 url: 'https://libretranslate.de/translate',
                 handler: handleLibreTranslateResponse
-            },
-            {
-                name: 'GoogleTranslate',
-                url: 'https://translate.googleapis.com/translate_a/single',
-                handler: handleGoogleTranslateResponse
             }
         ];
         // Initialize the app
@@ -1017,10 +1058,8 @@
             sourceText.addEventListener('input', function() {
                 updateCharCount();
                 showTranslateButton();
-              
                 clearTimeout(translationTimeout);
                 const text = sourceText.value.trim();
-              
                 if (text) {
                     translationTimeout = setTimeout(() => {
                         translateText();
@@ -1083,7 +1122,6 @@
             currentSourceLang = langCode;
             document.getElementById('sourceLangText').textContent = languages[langCode].name;
             document.getElementById('sourceDropdown').classList.remove('active');
-          
             updateTextDirection();
             const sourceText = document.getElementById('sourceText').value.trim();
             if (sourceText) {
@@ -1095,7 +1133,6 @@
             currentTargetLang = langCode;
             document.getElementById('targetLangText').textContent = languages[langCode].name;
             document.getElementById('targetDropdown').classList.remove('active');
-          
             updateTextDirection();
             const sourceText = document.getElementById('sourceText').value.trim();
             if (sourceText) {
@@ -1130,21 +1167,17 @@
         }
         async function translateText(manual = false) {
             if (isTranslating) return;
-          
             const sourceTextEl = document.getElementById('sourceText');
             const targetTextEl = document.getElementById('targetText');
             const text = sourceTextEl.value.trim();
-          
             if (!text) return;
             isTranslating = true;
             showLoadingState();
             try {
                 const sourceLang = currentSourceLang === 'auto' ? 'auto' : currentSourceLang;
                 const targetLang = currentTargetLang;
-              
                 // Try multiple APIs in sequence for better reliability
                 let translationResult = null;
-               
                 for (const api of TRANSLATION_APIS) {
                     try {
                         translationResult = await attemptTranslation(api, text, sourceLang, targetLang);
@@ -1158,7 +1191,6 @@
                     throw new Error('All translation services are currently unavailable');
                 }
                 const { translatedText, detectedLang } = translationResult;
-               
                 targetTextEl.value = translatedText;
                 updateTargetCount();
                 // Show detected language if auto-detect was used
@@ -1178,14 +1210,11 @@
         async function attemptTranslation(api, text, sourceLang, targetLang) {
             if (api.name === 'MyMemory') {
                 const response = await fetch(`${api.url}?q=${encodeURIComponent(text)}&langpair=${sourceLang}|${targetLang}`);
-               
                 if (!response.ok) {
                     throw new Error(`MyMemory API error: ${response.status}`);
                 }
-               
                 const data = await response.json();
                 return api.handler(data);
-               
             } else if (api.name === 'LibreTranslate') {
                 const response = await fetch(api.url, {
                     method: 'POST',
@@ -1199,25 +1228,12 @@
                         format: 'text'
                     })
                 });
-               
                 if (!response.ok) {
                     throw new Error(`LibreTranslate API error: ${response.status}`);
                 }
-               
-                const data = await response.json();
-                return api.handler(data);
-               
-            } else if (api.name === 'GoogleTranslate') {
-                const response = await fetch(`${api.url}?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`);
-               
-                if (!response.ok) {
-                    throw new Error(`Google Translate API error: ${response.status}`);
-                }
-               
                 const data = await response.json();
                 return api.handler(data);
             }
-           
             return null;
         }
         function handleMyMemoryResponse(data) {
@@ -1238,15 +1254,6 @@
             }
             throw new Error('Invalid LibreTranslate response');
         }
-        function handleGoogleTranslateResponse(data) {
-            if (data && data[0] && data[0][0] && data[0][0][0]) {
-                return {
-                    translatedText: data[0][0][0],
-                    detectedLang: data[2] || null
-                };
-            }
-            throw new Error('Invalid Google Translate response');
-        }
         function detectLanguageFromMyMemory(data) {
             if (data.responseStatus === 200 && data.responseData) {
                 if (data.matches && data.matches[0] && data.matches[0].segment) {
@@ -1263,7 +1270,6 @@
             const targetTextEl = document.getElementById('targetText');
             targetTextEl.value = '';
             updateTargetCount();
-          
             let message = 'Translation failed. Please try again.';
             if (error.message.includes('network') || error.message.includes('fetch')) {
                 message = 'Network error. Please check your internet connection.';
@@ -1277,7 +1283,6 @@
         function clearSource() {
             const sourceTextEl = document.getElementById('sourceText');
             const targetTextEl = document.getElementById('targetText');
-          
             sourceTextEl.value = '';
             targetTextEl.value = '';
             updateCharCount();
@@ -1295,12 +1300,10 @@
         function copyTranslation() {
             const targetTextEl = document.getElementById('targetText');
             const text = targetTextEl.value.trim();
-          
             if (!text) {
                 showToast('Nothing to copy');
                 return;
             }
-          
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(text).then(() => {
                     showToast('Translation copied to clipboard');
@@ -1320,24 +1323,19 @@
             document.body.appendChild(textArea);
             textArea.focus();
             textArea.select();
-          
             try {
                 const successful = document.execCommand('copy');
                 showToast(successful ? 'Translation copied to clipboard' : 'Could not copy text');
             } catch (err) {
                 showToast('Copy not supported in this browser');
             }
-          
             document.body.removeChild(textArea);
         }
         function speakText(text, langCode) {
             if (!text) return;
-          
             if ('speechSynthesis' in window) {
                 speechSynthesis.cancel();
-              
                 const utterance = new SpeechSynthesisUtterance(text);
-              
                 const speechLangMap = {
                     'zh': 'zh-CN',
                     'zh-TW': 'zh-TW',
@@ -1360,18 +1358,15 @@
                     'no': 'no-NO',
                     'fi': 'fi-FI'
                 };
-              
                 utterance.lang = speechLangMap[langCode] || langCode;
                 utterance.rate = 0.9;
                 utterance.pitch = 1;
                 utterance.volume = 1;
-              
                 utterance.onstart = () => showToast('Playing audio...');
                 utterance.onerror = (event) => {
                     console.error('Speech synthesis error:', event.error);
                     showToast('Could not play audio. Voice may not be available for this language.');
                 };
-              
                 speechSynthesis.speak(utterance);
             } else {
                 showToast('Text-to-speech not supported in this browser');
@@ -1387,28 +1382,23 @@
             }
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             recognition = new SpeechRecognition();
-          
             recognition.continuous = false;
             recognition.interimResults = true;
             recognition.maxAlternatives = 1;
-          
             recognition.onstart = () => {
                 isRecording = true;
                 const micBtn = document.getElementById('listenSource');
                 micBtn.classList.add('recording');
                 showToast('Listening... Speak now');
             };
-          
             recognition.onresult = (event) => {
                 let transcript = '';
                 for (let i = event.resultIndex; i < event.results.length; i++) {
                     transcript += event.results[i][0].transcript;
                 }
-              
                 const sourceText = document.getElementById('sourceText');
                 sourceText.value = transcript;
                 updateCharCount();
-              
                 if (event.results[event.results.length - 1].isFinal) {
                     showTranslateButton();
                     if (transcript.trim()) {
@@ -1416,19 +1406,16 @@
                     }
                 }
             };
-          
             recognition.onend = () => {
                 isRecording = false;
                 const micBtn = document.getElementById('listenSource');
                 micBtn.classList.remove('recording');
                 showToast('Recording stopped');
             };
-          
             recognition.onerror = (event) => {
                 isRecording = false;
                 const micBtn = document.getElementById('listenSource');
                 micBtn.classList.remove('recording');
-              
                 let errorMessage = 'Speech recognition error';
                 switch(event.error) {
                     case 'no-speech':
@@ -1458,15 +1445,12 @@
                 showToast('Speech recognition not supported');
                 return;
             }
-          
             if (isRecording) {
                 recognition.stop();
                 return;
             }
-          
             const langCode = currentSourceLang === 'auto' ? 'en-US' : getRecognitionLanguage(currentSourceLang);
             recognition.lang = langCode;
-          
             try {
                 recognition.start();
             } catch (error) {
@@ -1528,7 +1512,6 @@
                 'ur': 'ur-PK',
                 'gu': 'gu-IN'
             };
-          
             return recognitionLangMap[langCode] || 'en-US';
         }
         function addToHistory(source, target, sourceLang, targetLang) {
@@ -1546,7 +1529,6 @@
                     second: '2-digit'
                 })
             };
-          
             translationHistory.unshift(historyItem);
             if (translationHistory.length > 50) {
                 translationHistory = translationHistory.slice(0, 50);
@@ -1557,15 +1539,12 @@
         function updateHistoryUI() {
             const historyList = document.getElementById('historyList');
             const historySection = document.getElementById('historySection');
-           
             if (translationHistory.length === 0) {
                 historySection.style.display = 'none';
                 return;
             }
-           
             historySection.style.display = 'block';
             historyList.innerHTML = '';
-          
             translationHistory.forEach((item, index) => {
                 const div = document.createElement('div');
                 div.className = 'history-item';
@@ -1630,7 +1609,6 @@
                             document.getElementById('targetLangText').textContent = languages[prefs.targetLang].name;
                         }
                     }
-                  
                     const history = localStorage.getItem('nexoTranslatorHistory');
                     if (history) {
                         translationHistory = JSON.parse(history);
@@ -1680,7 +1658,6 @@
             const sourceCount = document.getElementById('sourceCount');
             const current = sourceText.value.length;
             sourceCount.textContent = `${current} / 5,000`;
-           
             if (current > 4500) {
                 sourceCount.style.color = '#ff4444';
             } else {
@@ -1697,12 +1674,10 @@
             if (existingToast) {
                 existingToast.remove();
             }
-          
             const toast = document.createElement('div');
             toast.className = 'toast';
             toast.textContent = message;
             document.body.appendChild(toast);
-          
             setTimeout(() => {
                 toast.remove();
             }, 3500);
@@ -1710,13 +1685,11 @@
         function updateTextDirection() {
             const sourcePanel = document.getElementById('sourceText').parentElement;
             const targetPanel = document.getElementById('targetText').parentElement;
-          
             if (languages[currentSourceLang] && languages[currentSourceLang].rtl) {
                 sourcePanel.setAttribute('dir', 'rtl');
             } else {
                 sourcePanel.removeAttribute('dir');
             }
-          
             if (languages[currentTargetLang] && languages[currentTargetLang].rtl) {
                 targetPanel.setAttribute('dir', 'rtl');
             } else {
@@ -1726,4 +1699,3 @@
     </script>
 </body>
 </html>
-```
