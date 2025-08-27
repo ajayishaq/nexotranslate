@@ -39,17 +39,7 @@
     <link rel="alternate" hreflang="ha" href="https://nexotranslator.live/ha">
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
-    <!-- Adsterra Banner Script (300x250) -->
-    <script type="text/javascript">
-        atOptions = {
-            'key' : 'e127e3b53bca5c1364eee3b652b6776c',
-            'format' : 'iframe',
-            'height' : 250,
-            'width' : 300,
-            'params' : {}
-        };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/e127e3b53bca5c1364eee3b652b6776c/invoke.js" async></script>
+<script async="async" data-cfasync="false" src="//pl27522444.effectivecpmrate.com/7b840595be84cbbf15b6cb07ff79d0bf/invoke.js"></script>//www.highperformanceformat.com/e127e3b53bca5c1364eee3b652b6776c/invoke.js" async></script>
     <!-- Monetag Direct Link -->
     <script async src="https://otieu.com/4/9785070" onerror="console.log('Monetag script failed to load');"></script>
     <!-- Schema.org Structured Data -->
@@ -141,22 +131,23 @@
             text-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
             margin-bottom: 0.5rem;
         }
-        .ad-banner-adsterra {
-            width: 100%;
-            max-width: 300px;
-            min-height: 250px;
-            animation: slideInUp 0.8s ease-out 0.1s both;
-            border-radius: 12px;
-            overflow: hidden;
-            background: rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            margin: 1.5rem auto;
-            position: relative;
-            z-index: 10;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        ..ad-banner-adsterra [id^="container-"] {
+    width: 100%;
+    max-width: 300px;
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    overflow: hidden;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+@media (max-width: 768px) {
+    .ad-banner-adsterra [id^="container-"] {
+        max-width: 100%;
+    }
+}        }
         .ad-banner-adsterra iframe {
             width: 300px;
             height: 250px;
@@ -874,65 +865,46 @@
                 <button class="translate-btn" id="translateBtn">Translate</button>
             </div>
         </div>
-        <!-- Adsterra 300x250 Banner -->
+        <!-- Adsterra Native Banner -->
 <div class="ad-banner-adsterra">
-    <div id="adsterra-banner"></div>
+    <div id="container-7b840595be84cbbf15b6cb07ff79d0bf"></div>
     <div class="ad-fallback">Ad not loaded. Please check your ad blocker or refresh the page.</div>
     <script>
         (function() {
-            const adContainer = document.getElementById('adsterra-banner');
+            const adContainer = document.getElementById('container-7b840595be84cbbf15b6cb07ff79d0bf');
             const fallback = document.querySelector('.ad-banner-adsterra .ad-fallback');
             let retries = 3;
             let attempt = 0;
 
-            function loadAdsterraAd() {
+            function loadNativeBannerAd() {
                 try {
-                    // Ensure atOptions is defined
-                    if (!window.atOptions) {
-                        window.atOptions = {
-                            'key': 'e127e3b53bca5c1364eee3b652b6776c',
-                            'format': 'iframe',
-                            'height': 250,
-                            'width': 300,
-                            'params': {}
-                        };
-                    }
-
-                    // Create iframe
-                    const iframe = document.createElement('iframe');
-                    iframe.width = '300';
-                    iframe.height = '250';
-                    iframe.frameBorder = '0';
-                    iframe.scrolling = 'no';
-                    iframe.title = 'Adsterra Advertisement';
-                    adContainer.appendChild(iframe);
-
-                    // Check if ad loaded successfully
-                    iframe.onload = () => {
-                        try {
-                            if (!iframe.contentWindow.document.body.hasChildNodes()) {
-                                console.warn('Adsterra iframe is empty');
-                                handleAdError();
-                            }
-                        } catch (e) {
-                            console.error('Adsterra iframe check failed:', e);
-                            handleAdError();
-                        }
-                    };
-
-                    // Trigger Adsterra script if not already loaded
-                    if (!document.querySelector('script[src*="highperformanceformat.com"]')) {
+                    // Load Adsterra Native Banner script
+                    if (!document.querySelector('script[src*="effectivecpmrate.com/7b840595be84cbbf15b6cb07ff79d0bf"]')) {
                         const script = document.createElement('script');
-                        script.src = '//www.highperformanceformat.com/e127e3b53bca5c1364eee3b652b6776c/invoke.js';
+                        script.src = '//pl27522444.effectivecpmrate.com/7b840595be84cbbf15b6cb07ff79d0bf/invoke.js';
                         script.async = true;
+                        script.setAttribute('data-cfasync', 'false');
                         script.onerror = () => {
-                            console.error('Adsterra script failed to load');
+                            console.error('Adsterra Native Banner script failed to load');
                             handleAdError();
                         };
                         document.head.appendChild(script);
                     }
+
+                    // Check if ad loaded
+                    setTimeout(() => {
+                        try {
+                            if (!adContainer.hasChildNodes() || adContainer.innerHTML.trim() === '') {
+                                console.warn('Adsterra Native Banner container is empty');
+                                handleAdError();
+                            }
+                        } catch (e) {
+                            console.error('Adsterra Native Banner check failed:', e);
+                            handleAdError();
+                        }
+                    }, 3000);
                 } catch (e) {
-                    console.error('Adsterra ad setup failed:', e);
+                    console.error('Adsterra Native Banner setup failed:', e);
                     handleAdError();
                 }
             }
@@ -940,8 +912,8 @@
             function handleAdError() {
                 attempt++;
                 if (attempt < retries) {
-                    console.log(`Retrying Adsterra ad load (attempt ${attempt + 1}/${retries})`);
-                    setTimeout(loadAdsterraAd, 2000);
+                    console.log(`Retrying Adsterra Native Banner load (attempt ${attempt + 1}/${retries})`);
+                    setTimeout(loadNativeBannerAd, 2000);
                 } else {
                     document.querySelector('.ad-banner-adsterra').classList.add('ad-error');
                     fallback.textContent = 'Ad failed to load. Please disable ad blocker or try again later.';
@@ -949,10 +921,12 @@
             }
 
             // Initial ad load attempt
-            loadAdsterraAd();
+            loadNativeBannerAd();
         })();
     </script>
-</div>        
+</div>       
+                   
+                  
         <!-- Monetag Ad Banner -->
         <div class="ad-banner-monetag">
             <script>
