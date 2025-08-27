@@ -45,6 +45,10 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
    
+    <!-- AdSense Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8974648383136150"
+     crossorigin="anonymous"></script>
+   
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
     {
@@ -133,11 +137,25 @@
             text-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
             margin-bottom: 0.5rem;
         }
-        .ad-banner-top {
+        .ad-banner-top, .ad-banner-bottom {
             width: 100%;
             max-width: 728px;
             height: 90px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(0, 0, 0, 0.5);
+            font-size: 0.9rem;
+        }
+        .ad-banner-top {
             animation: slideInUp 0.8s ease-out 0.1s both;
+        }
+        .ad-banner-bottom {
+            animation: slideInUp 0.8s ease-out 0.4s both;
         }
         .main-container {
             background: rgba(255, 255, 255, 0.9);
@@ -421,12 +439,6 @@
             border-top: 2px solid rgba(0, 0, 0, 0.4);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-        }
-        .ad-banner-bottom {
-            width: 100%;
-            max-width: 728px;
-            height: 90px;
-            animation: slideInUp 0.8s ease-out 0.4s both;
         }
         .affiliate-ads {
             display: grid;
@@ -734,9 +746,20 @@
         <div class="header">
             <h1 class="logo">nexo translator</h1>
         </div>
-        <div class="ad-banner-top" style="display: none;">
-            <div id="frame" style="width: 100%;"><iframe data-aa="2407892" src="//aa-ads.com/2407892?size=Adaptive&background_color=0f0e0e" style="border:0px; padding:0; width:100%; height:100%; overflow:hidden; background-color: transparent;"></iframe><a style="display: block; text-align: right; font-size: 12px" id="frame-link" href="https://aads.com/?partner=2407892">Advertise here</a></div>
+        
+        <!-- AdSense Top Banner -->
+        <div class="ad-banner-top">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-8974648383136150"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
+        
         <div class="main-container">
             <div class="language-bar">
                 <div class="language-selector">
@@ -796,9 +819,20 @@
                 <button class="translate-btn" id="translateBtn">Translate</button>
             </div>
         </div>
+        
+        <!-- AdSense Bottom Banner -->
         <div class="ad-banner-bottom">
-            <div id="frame" style="width: 100%;"><iframe data-aa="2407892" src="//aa-ads.com/2407892?size=Adaptive&background_color=0f0e0e" style="border:0px; padding:0; width:100%; height:100%; overflow:hidden; background-color: transparent;"></iframe><a style="display: block; text-align: right; font-size: 12px" id="frame-link" href="https://aads.com/?partner=2407892">Advertise here</a></div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-8974648383136150"
+                 data-ad-slot="0987654321"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         </div>
+        
         <div class="affiliate-ads">
             <a href="https://rzekl.com/g/pm1aev55clb63cb1a621219aa26f6f/" class="affiliate-ad alibaba-ad" target="_blank" rel="noopener">
                 <div class="ad-content">
@@ -940,7 +974,7 @@
         let recognition = null;
         let isRecording = false;
         let translationHistory = [];
-        // Translation API configuration
+        // Translation API configuration - using HTTPS
         const TRANSLATION_API_URL = 'https://api.mymemory.translated.net/get';
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
@@ -1110,7 +1144,7 @@
                 const sourceLang = currentSourceLang === 'auto' ? 'auto' : currentSourceLang;
                 const targetLang = currentTargetLang;
                
-                // Use MyMemory API
+                // Use MyMemory API with HTTPS
                 const response = await fetch(`${TRANSLATION_API_URL}?q=${encodeURIComponent(text)}&langpair=${sourceLang}|${targetLang}`);
                
                 if (!response.ok) {
