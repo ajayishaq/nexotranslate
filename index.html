@@ -40,8 +40,6 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
     <script async="async" data-cfasync="false" src="//pl27522444.effectivecpmrate.com/7b840595be84cbbf15b6cb07ff79d0bf/invoke.js"></script>
-    <!-- Monetag Direct Link -->
-    <script async src="https://otieu.com/4/9785070" onerror="console.log('Monetag script failed to load');"></script>
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
     {
@@ -162,35 +160,6 @@
             font-size: 0.9rem;
         }
         .ad-banner-adsterra.ad-error .ad-fallback {
-            display: block;
-        }
-        .ad-banner-monetag {
-            width: 100%;
-            max-width: 750px;
-            min-height: 100px;
-            animation: slideInUp 0.8s ease-out 0.1s both;
-            border-radius: 12px;
-            overflow: hidden;
-            background: rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            margin: 1.5rem auto;
-            position: relative;
-            z-index: 10;
-        }
-        .ad-banner-monetag iframe {
-            width: 100%;
-            height: 90px;
-            border: none;
-            border-radius: 12px;
-        }
-        .ad-banner-monetag .ad-fallback {
-            display: none;
-            text-align: center;
-            padding: 1rem;
-            color: rgba(0, 0, 0, 0.6);
-            font-size: 0.9rem;
-        }
-        .ad-banner-monetag.ad-error .ad-fallback {
             display: block;
         }
         .main-container {
@@ -768,15 +737,6 @@
                 width: 100%;
                 height: 52px;
             }
-            .ad-banner-monetag {
-                max-width: 100%;
-                width: 100%;
-                min-height: 90px;
-            }
-            .ad-banner-monetag iframe {
-                width: 100%;
-                height: 90px;
-            }
             .ad-banner-adsterra {
                 max-width: 100%;
                 width: 100%;
@@ -926,34 +886,6 @@
     </script>
 </div>       
                    
-                  
-        <!-- Monetag Ad Banner -->
-        <div class="ad-banner-monetag">
-            <script>
-                try {
-                    const iframe = document.createElement('iframe');
-                    iframe.src = 'https://otieu.com/4/9785070';
-                    iframe.width = '728';
-                    iframe.height = '90';
-                    iframe.frameBorder = '0';
-                    iframe.scrolling = 'no';
-                    iframe.onload = () => {
-                        try {
-                            if (!iframe.contentWindow.document.body.hasChildNodes()) {
-                                document.querySelector('.ad-banner-monetag').classList.add('ad-error');
-                            }
-                        } catch (e) {
-                            document.querySelector('.ad-banner-monetag').classList.add('ad-error');
-                        }
-                    };
-                    document.querySelector('.ad-banner-monetag').appendChild(iframe);
-                } catch (e) {
-                    console.log('Monetag ad failed to load:', e);
-                    document.querySelector('.ad-banner-monetag').classList.add('ad-error');
-                }
-            </script>
-            <div class="ad-fallback">Ad not loaded. Please refresh.</div>
-        </div>
         
         <!-- Affiliate Ads -->
         <div class="affiliate-ads">
