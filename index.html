@@ -825,68 +825,7 @@
                 <button class="translate-btn" id="translateBtn">Translate</button>
             </div>
         </div>
-        <!-- Adsterra Native Banner -->
-<div class="ad-banner-adsterra">
-    <div id="container-7b840595be84cbbf15b6cb07ff79d0bf"></div>
-    <div class="ad-fallback">Ad not loaded. Please check your ad blocker or refresh the page.</div>
-    <script>
-        (function() {
-            const adContainer = document.getElementById('container-7b840595be84cbbf15b6cb07ff79d0bf');
-            const fallback = document.querySelector('.ad-banner-adsterra .ad-fallback');
-            let retries = 3;
-            let attempt = 0;
-
-            function loadNativeBannerAd() {
-                try {
-                    // Load Adsterra Native Banner script
-                    if (!document.querySelector('script[src*="effectivecpmrate.com/7b840595be84cbbf15b6cb07ff79d0bf"]')) {
-                        const script = document.createElement('script');
-                        script.src = '//pl27522444.effectivecpmrate.com/7b840595be84cbbf15b6cb07ff79d0bf/invoke.js';
-                        script.async = true;
-                        script.setAttribute('data-cfasync', 'false');
-                        script.onerror = () => {
-                            console.error('Adsterra Native Banner script failed to load');
-                            handleAdError();
-                        };
-                        document.head.appendChild(script);
-                    }
-
-                    // Check if ad loaded
-                    setTimeout(() => {
-                        try {
-                            if (!adContainer.hasChildNodes() || adContainer.innerHTML.trim() === '') {
-                                console.warn('Adsterra Native Banner container is empty');
-                                handleAdError();
-                            }
-                        } catch (e) {
-                            console.error('Adsterra Native Banner check failed:', e);
-                            handleAdError();
-                        }
-                    }, 3000);
-                } catch (e) {
-                    console.error('Adsterra Native Banner setup failed:', e);
-                    handleAdError();
-                }
-            }
-
-            function handleAdError() {
-                attempt++;
-                if (attempt < retries) {
-                    console.log(`Retrying Adsterra Native Banner load (attempt ${attempt + 1}/${retries})`);
-                    setTimeout(loadNativeBannerAd, 2000);
-                } else {
-                    document.querySelector('.ad-banner-adsterra').classList.add('ad-error');
-                    fallback.textContent = 'Ad failed to load. Please disable ad blocker or try again later.';
-                }
-            }
-
-            // Initial ad load attempt
-            loadNativeBannerAd();
-        })();
-    </script>
-</div>       
-                   
-        
+               
         <!-- Affiliate Ads -->
         <div class="affiliate-ads">
             <a href="https://rzekl.com/g/pm1aev55clb63cb1a621219aa26f6f/" class="affiliate-ad alibaba-ad" target="_blank" rel="noopener">
