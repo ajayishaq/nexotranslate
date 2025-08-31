@@ -934,6 +934,63 @@
     </div>
 
     <script>
+        // Language mappings for better compatibility
+        const languageMap = {
+            'en': { deepl: 'EN', libre: 'en', display: 'English' },
+            'es': { deepl: 'ES', libre: 'es', display: 'Spanish' },
+            'fr': { deepl: 'FR', libre: 'fr', display: 'French' },
+            'de': { deepl: 'DE', libre: 'de', display: 'German' },
+            'it': { deepl: 'IT', libre: 'it', display: 'Italian' },
+            'pt': { deepl: 'PT', libre: 'pt', display: 'Portuguese' },
+            'ru': { deepl: 'RU', libre: 'ru', display: 'Russian' },
+            'zh': { deepl: 'ZH', libre: 'zh', display: 'Chinese' },
+            'ja': { deepl: 'JA', libre: 'ja', display: 'Japanese' },
+            'ko': { deepl: 'KO', libre: 'ko', display: 'Korean' },
+            'ar': { deepl: null, libre: 'ar', display: 'Arabic' },
+            'nl': { deepl: 'NL', libre: 'nl', display: 'Dutch' },
+            'sv': { deepl: 'SV', libre: 'sv', display: 'Swedish' },
+            'no': { deepl: 'NB', libre: 'no', display: 'Norwegian' },
+            'da': { deepl: 'DA', libre: 'da', display: 'Danish' },
+            'fi': { deepl: 'FI', libre: 'fi', display: 'Finnish' },
+            'pl': { deepl: 'PL', libre: 'pl', display: 'Polish' },
+            'tr': { deepl: 'TR', libre: 'tr', display: 'Turkish' },
+            'hi': { deepl: null, libre: 'hi', display: 'Hindi' },
+            'bn': { deepl: null, libre: 'bn', display: 'Bengali' },
+            'th': { deepl: null, libre: 'th', display: 'Thai' },
+            'vi': { deepl: null, libre: 'vi', display: 'Vietnamese' },
+            'id': { deepl: null, libre: 'id', display: 'Indonesian' },
+            'ms': { deepl: null, libre: 'ms', display: 'Malay' },
+            'el': { deepl: 'EL', libre: 'el', display: 'Greek' },
+            'he': { deepl: null, libre: 'he', display: 'Hebrew' },
+            'cs': { deepl: 'CS', libre: 'cs', display: 'Czech' },
+            'sk': { deepl: 'SK', libre: 'sk', display: 'Slovak' },
+            'hu': { deepl: 'HU', libre: 'hu', display: 'Hungarian' },
+            'ro': { deepl: 'RO', libre: 'ro', display: 'Romanian' },
+            'bg': { deepl: 'BG', libre: 'bg', display: 'Bulgarian' },
+            'uk': { deepl: 'UK', libre: 'uk', display: 'Ukrainian' },
+            'hr': { deepl: null, libre: 'hr', display: 'Croatian' },
+            'sr': { deepl: null, libre: 'sr', display: 'Serbian' },
+            'sl': { deepl: 'SL', libre: 'sl', display: 'Slovenian' },
+            'lt': { deepl: 'LT', libre: 'lt', display: 'Lithuanian' },
+            'lv': { deepl: 'LV', libre: 'lv', display: 'Latvian' },
+            'et': { deepl: 'ET', libre: 'et', display: 'Estonian' },
+            'fa': { deepl: null, libre: 'fa', display: 'Persian' },
+            'sw': { deepl: null, libre: 'sw', display: 'Swahili' },
+            'am': { deepl: null, libre: 'am', display: 'Amharic' },
+            'zu': { deepl: null, libre: 'zu', display: 'Zulu' },
+            'xh': { deepl: null, libre: 'xh', display: 'Xhosa' },
+            'so': { deepl: null, libre: 'so', display: 'Somali' },
+            'ta': { deepl: null, libre: 'ta', display: 'Tamil' },
+            'te': { deepl: null, libre: 'te', display: 'Telugu' },
+            'ml': { deepl: null, libre: 'ml', display: 'Malayalam' },
+            'kn': { deepl: null, libre: 'kn', display: 'Kannada' },
+            'gu': { deepl: null, libre: 'gu', display: 'Gujarati' },
+            'pa': { deepl: null, libre: 'pa', display: 'Punjabi' },
+            'ha': { deepl: null, libre: 'ha', display: 'Hausa' },
+            'yo': { deepl: null, libre: 'yo', display: 'Yoruba' },
+            'ig': { deepl: null, libre: 'ig', display: 'Igbo' }
+        };
+
         // Language selection functionality
         const sourceLangBtn = document.getElementById('source-lang-btn');
         const targetLangBtn = document.getElementById('target-lang-btn');
@@ -957,12 +1014,18 @@
 
         let sourceLang = 'auto';
         let targetLang = 'en';
-        let translationHistory = JSON.parse(localStorage.getItem('translationHistory')) || [];
-        const translationCache = JSON.parse(localStorage.getItem('translationCache')) || {};
+        let translationHistory = [];
         let recognition = null;
 
-        // DeepL API key (replace with your actual key if needed, this is a placeholder)
-        const DEEPL_API_KEY = '4f59481b-ba19-414a-8ba3-493f48aae7d2:fx';
+        // Load translation history from memory
+        try {
+            const stored = localStorage.getItem('translationHistory');
+            if (stored) {
+                translationHistory = JSON.parse(stored);
+            }
+        } catch (error) {
+            console.warn('Could not load translation history:', error);
+        }
 
         // Initialize translation button visibility
         translateBtn.classList.remove('visible');
@@ -1002,9 +1065,19 @@
 
         // Swap languages
         swapBtn.addEventListener('click', () => {
+            if (sourceLang === 'auto') {
+                showToast('Cannot swap when source is set to Auto Detect');
+                return;
+            }
+            
             [sourceLang, targetLang] = [targetLang, sourceLang];
-            sourceLangBtn.querySelector('span').textContent = targetLangBtn.querySelector('span').textContent;
-            targetLangBtn.querySelector('span').textContent = sourceLang === 'auto' ? 'Auto Detect' : sourceLangBtn.querySelector('span').textContent;
+            
+            const sourceText_val = sourceLangBtn.querySelector('span').textContent;
+            const targetText_val = targetLangBtn.querySelector('span').textContent;
+            
+            sourceLangBtn.querySelector('span').textContent = targetText_val;
+            targetLangBtn.querySelector('span').textContent = sourceText_val;
+            
             const tempText = sourceText.value;
             sourceText.value = translatedText.value;
             translatedText.value = tempText;
@@ -1030,134 +1103,208 @@
             }
         }
 
-        // Translation cache management
-        function getCachedTranslation(text, source, target) {
-            const key = `${text}:${source}:${target}`;
-            return translationCache[key];
-        }
-
-        function setCachedTranslation(text, source, target, translatedText) {
-            const key = `${text}:${source}:${target}`;
-            translationCache[key] = {
-                translatedText,
-                timestamp: Date.now()
-            };
-            const keys = Object.keys(translationCache);
-            if (keys.length > 100) {
-                delete translationCache[keys[0]];
-            }
-            localStorage.setItem('translationCache', JSON.stringify(translationCache));
-        }
-
-        // Translation Functions
-        async function translateWithDeepL(text, source, target) {
-            try {
-                if (!DEEPL_API_KEY) throw new Error('DeepL API key not set');
-                const url = 'https://api-free.deepl.com/v2/translate';
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `DeepL-Auth-Key ${DEEPL_API_KEY}`,
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: new URLSearchParams({
-                        'text': text,
-                        'source_lang': source === 'auto' ? 'EN' : source.toUpperCase(),
-                        'target_lang': target.toUpperCase()
-                    })
-                });
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                const data = await response.json();
-                if (data.translations && data.translations[0] && data.translations[0].text) {
-                    return data.translations[0].text;
-                }
-                throw new Error('No translation data from DeepL');
-            } catch (error) {
-                console.warn('DeepL failed:', error.message);
-                return null;
-            }
-        }
-
-        async function translateWithLibreTranslate(text, source, target) {
-            try {
-                const response = await fetch('https://libretranslate.com/translate', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ q: text, source: source, target: target, format: 'text' }),
-                });
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                const data = await response.json();
-                if (data.error) throw new Error(data.error);
-                return data.translatedText;
-            } catch (error) {
-                console.warn('LibreTranslate failed:', error.message);
-                return null;
-            }
-        }
-
-        async function translateWithMyMemory(text, source, target) {
-            try {
-                if (source === 'auto') throw new Error('Auto detection not supported for MyMemory');
-                const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${source}|${target}`;
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                const data = await response.json();
-                if (data.responseData && data.responseData.translatedText) {
-                    return data.responseData.translatedText;
-                }
-                throw new Error('No translation data or unsupported language pair');
-            } catch (error) {
-                console.warn('MyMemory failed:', error.message);
-                return null;
-            }
-        }
-
-        async function translateWithApertium(text, source, target) {
-            try {
-                if (source === 'auto') throw new Error('Auto detection not supported for Apertium');
-                const url = `https://api.apertium.org/translate?q=${encodeURIComponent(text)}&langpair=${source}-${target}&markUnknown=no`;
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                const data = await response.json();
-                if (data.responseData && data.responseData.translatedText) {
-                    return data.responseData.translatedText;
-                }
-                throw new Error('No translation data or unsupported language pair');
-            } catch (error) {
-                console.warn('Apertium failed:', error.message);
-                return null;
-            }
-        }
-
+        // Enhanced language detection with multiple methods
         async function detectLanguage(text) {
             try {
-                if (!text.trim()) return 'EN';
-                const response = await fetch('https://libretranslate.com/detect', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ q: text }),
-                });
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                const data = await response.json();
-                if (data && data[0] && data[0].language) {
-                    const langMap = {
-                        'zh': 'ZH', 'zh-hans': 'ZH', 'zh-hant': 'ZH',
-                        'pt': 'PT', 'pt-br': 'PT', 'pt-pt': 'PT',
-                        'zh-cn': 'ZH', 'zh-tw': 'ZH'
-                    };
-                    return langMap[data[0].language] || data[0].language.toUpperCase();
+                if (!text.trim()) return 'en';
+                
+                // Method 1: Pattern-based detection (most reliable for script-based languages)
+                const scriptPatterns = {
+                    'ar': /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/,
+                    'zh': /[\u4e00-\u9fff\u3400-\u4dbf\u20000-\u2a6df\u2a700-\u2b73f]/,
+                    'ja': /[\u3040-\u309f\u30a0-\u30ff\u4e00-\u9fff]/,
+                    'ko': /[\uac00-\ud7af\u1100-\u11ff\u3130-\u318f]/,
+                    'hi': /[\u0900-\u097f]/,
+                    'th': /[\u0e00-\u0e7f]/,
+                    'he': /[\u0590-\u05ff]/,
+                    'ru': /[\u0400-\u04ff]/,
+                    'el': /[\u0370-\u03ff]/,
+                    'bn': /[\u0980-\u09ff]/,
+                    'ta': /[\u0b80-\u0bff]/,
+                    'te': /[\u0c00-\u0c7f]/,
+                    'kn': /[\u0c80-\u0cff]/,
+                    'ml': /[\u0d00-\u0d7f]/,
+                    'gu': /[\u0a80-\u0aff]/,
+                    'pa': /[\u0a00-\u0a7f]/
+                };
+                
+                // Check for distinctive scripts first
+                for (const [lang, pattern] of Object.entries(scriptPatterns)) {
+                    if (pattern.test(text) && (text.match(pattern) || []).length > text.length * 0.3) {
+                        return lang;
+                    }
                 }
-                return 'EN'; // Default to English if detection fails
+                
+                // Method 2: Try Google Translate's detection via MyMemory
+                try {
+                    const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.slice(0, 100))}&langpair=auto|en`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.responseData && data.responseData.match) {
+                            // Extract source language from match field
+                            const match = data.responseData.match;
+                            if (match > 0.7) {
+                                // This is a rough heuristic - MyMemory doesn't directly provide detected language
+                                // but we can make educated guesses based on common patterns
+                            }
+                        }
+                    }
+                } catch (e) {
+                    // Ignore errors, continue to next method
+                }
+                
+                // Method 3: Simple word-based detection for Latin scripts
+                const commonWords = {
+                    'en': ['the', 'and', 'that', 'have', 'for', 'not', 'with', 'you', 'this', 'but', 'his', 'from', 'they'],
+                    'es': ['que', 'de', 'no', 'a', 'la', 'el', 'es', 'y', 'en', 'un', 'ser', 'se', 'te', 'lo', 'le', 'da', 'su', 'por', 'son', 'con', 'para', 'al', 'como', 'las', 'ha', 'si', 'me', 'o'],
+                    'fr': ['le', 'de', 'et', 'à', 'un', 'il', 'être', 'et', 'en', 'avoir', 'que', 'pour', 'dans', 'ce', 'son', 'une', 'sur', 'avec', 'ne', 'se', 'pas', 'tout', 'plus', 'par', 'grand', 'ces', 'me', 'même'],
+                    'de': ['der', 'die', 'und', 'in', 'den', 'von', 'zu', 'das', 'mit', 'sich', 'des', 'auf', 'für', 'ist', 'im', 'dem', 'nicht', 'ein', 'eine', 'als', 'auch', 'es', 'an', 'werden', 'aus', 'er', 'hat', 'dass', 'sie'],
+                    'pt': ['que', 'não', 'um', 'o', 'a', 'do', 'da', 'em', 'para', 'é', 'com', 'uma', 'os', 'no', 'se', 'na', 'por', 'mais', 'as', 'dos', 'como', 'mas', 'foi', 'ao', 'ele', 'das', 'tem', 'à', 'seu', 'sua'],
+                    'it': ['che', 'di', 'a', 'è', 'il', 'un', 'la', 'in', 'non', 'e', 'per', 'una', 'da', 'con', 'i', 'si', 'le', 'del', 'lo', 'come', 'al', 'ma', 'se', 'ci', 'anche', 'tutto', 'nella', 'della', 'tra'],
+                    'nl': ['de', 'van', 'en', 'in', 'het', 'een', 'is', 'te', 'dat', 'op', 'met', 'hij', 'voor', 'niet', 'aan', 'zijn', 'worden', 'door', 'er', 'bij', 'om', 'nog', 'worden', 'ook', 'tot', 'je', 'hebben', 'of', 'naar']
+                };
+                
+                const words = text.toLowerCase().match(/\b\w+\b/g) || [];
+                let bestLang = 'en';
+                let maxScore = 0;
+                
+                for (const [lang, wordList] of Object.entries(commonWords)) {
+                    let score = 0;
+                    for (const word of words) {
+                        if (wordList.includes(word)) score++;
+                    }
+                    if (score > maxScore && words.length > 0) {
+                        maxScore = score;
+                        bestLang = lang;
+                    }
+                }
+                
+                // Only return detected language if confidence is reasonable
+                if (maxScore / words.length > 0.1 || words.length < 3) {
+                    return bestLang;
+                }
+                
+                return 'en'; // Default fallback
+                
             } catch (error) {
-                console.error('Language detection error:', error.message);
-                showToast(`Language detection failed: ${error.message}`);
-                return 'EN';
+                console.error('Language detection error:', error);
+                return 'en';
+            }
+        }
+
+        // Google Translate via MyMemory (more reliable)
+        async function translateWithGoogle(text, source, target) {
+            try {
+                let effectiveSource = source;
+                
+                if (source === 'auto') {
+                    effectiveSource = await detectLanguage(text);
+                    if (effectiveSource && languageMap[effectiveSource]) {
+                        detectedLanguage.textContent = `Detected: ${languageMap[effectiveSource].display}`;
+                    }
+                }
+                
+                const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${effectiveSource}|${target}`;
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`Translation API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.responseData && data.responseData.translatedText && 
+                    data.responseData.translatedText !== text) {
+                    return data.responseData.translatedText;
+                }
+                
+                throw new Error('No valid translation received');
+            } catch (error) {
+                console.warn('Google translation failed:', error.message);
+                return null;
+            }
+        }
+
+        // LibreTranslate (backup method)
+        async function translateWithLibreTranslate(text, source, target) {
+            try {
+                let effectiveSource = source;
+                
+                if (source === 'auto') {
+                    effectiveSource = await detectLanguage(text);
+                    if (effectiveSource && languageMap[effectiveSource]) {
+                        detectedLanguage.textContent = `Detected: ${languageMap[effectiveSource].display}`;
+                    }
+                }
+                
+                // Use a different LibreTranslate instance
+                const response = await fetch('https://translate.argosopentech.com/translate', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        q: text,
+                        source: languageMap[effectiveSource]?.libre || effectiveSource || 'auto',
+                        target: languageMap[target]?.libre || target,
+                        format: 'text'
+                    }),
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`LibreTranslate API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                return data.translatedText;
+            } catch (error) {
+                console.warn('LibreTranslate translation failed:', error.message);
+                return null;
+            }
+        }
+
+        // MyMemory translation with fallback
+        async function translateWithMyMemory(text, source, target) {
+            try {
+                let effectiveSource = source;
+                
+                if (source === 'auto') {
+                    effectiveSource = await detectLanguage(text);
+                    if (!effectiveSource) effectiveSource = 'en';
+                }
+                
+                const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${effectiveSource}|${target}`;
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`MyMemory API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.responseData && data.responseData.translatedText) {
+                    return data.responseData.translatedText;
+                }
+                
+                throw new Error('No translation data from MyMemory');
+            } catch (error) {
+                console.warn('MyMemory translation failed:', error.message);
+                return null;
             }
         }
 
         // Web Speech API for voice input
         function updateSpeechRecognitionLang() {
-            if (recognition) recognition.lang = sourceLang === 'auto' ? 'en-US' : sourceLang;
+            if (recognition) {
+                const speechLang = sourceLang === 'auto' ? 'en-US' : `${sourceLang}-${sourceLang.toUpperCase()}`;
+                recognition.lang = speechLang;
+            }
         }
 
         if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
@@ -1165,70 +1312,143 @@
             recognition = new SpeechRecognition();
             recognition.continuous = false;
             recognition.interimResults = true;
-            recognition.lang = sourceLang === 'auto' ? 'en-US' : sourceLang;
+            recognition.lang = 'en-US';
 
-            recognition.onstart = () => { micBtn.classList.add('recording'); showToast('Recording... Speak now.'); };
+            recognition.onstart = () => {
+                micBtn.classList.add('recording');
+                showToast('Recording... Speak now.');
+            };
+            
             recognition.onresult = (event) => {
-                let interimTranscript = '', finalTranscript = '';
+                let interimTranscript = '';
+                let finalTranscript = '';
+                
                 for (let i = event.resultIndex; i < event.results.length; i++) {
                     const transcript = event.results[i][0].transcript;
-                    if (event.results[i].isFinal) finalTranscript += transcript;
-                    else interimTranscript += transcript;
+                    if (event.results[i].isFinal) {
+                        finalTranscript += transcript;
+                    } else {
+                        interimTranscript += transcript;
+                    }
                 }
+                
                 sourceText.value = finalTranscript || interimTranscript;
                 charCount.textContent = `${sourceText.value.length}/5000`;
                 updateTranslateButton();
             };
-            recognition.onend = () => { micBtn.classList.remove('recording'); showToast('Recording stopped.'); };
-            recognition.onerror = (event) => { micBtn.classList.remove('recording'); showToast(`Voice recognition error: ${event.error}`); };
+            
+            recognition.onend = () => {
+                micBtn.classList.remove('recording');
+                showToast('Recording stopped.');
+            };
+            
+            recognition.onerror = (event) => {
+                micBtn.classList.remove('recording');
+                showToast(`Voice recognition error: ${event.error}`);
+            };
 
             micBtn.addEventListener('click', () => {
-                if (micBtn.classList.contains('recording')) recognition.stop();
-                else try { recognition.start(); } catch (error) { showToast('Failed to start voice recognition.'); }
+                if (micBtn.classList.contains('recording')) {
+                    recognition.stop();
+                } else {
+                    try {
+                        recognition.start();
+                    } catch (error) {
+                        showToast('Failed to start voice recognition.');
+                    }
+                }
             });
         } else {
             micBtn.disabled = true;
             micBtn.title = 'Voice input not supported in this browser';
-            showToast('Voice input not supported in this browser.');
         }
 
-        // Translate button with enhanced logic
+        // Enhanced translate function with better error handling and fallbacks
         translateBtn.addEventListener('click', async () => {
+            const inputText = sourceText.value.trim();
+            if (!inputText) {
+                showToast('Please enter some text to translate.');
+                return;
+            }
+
+            // Don't translate if source and target are the same
+            if (sourceLang === targetLang && sourceLang !== 'auto') {
+                showToast('Source and target languages are the same.');
+                return;
+            }
+
             translateBtn.disabled = true;
             translateBtn.innerHTML = '<span class="spinner"></span> Translating...';
+            
             try {
-                let effectiveSourceLang = sourceLang;
-                if (sourceLang === 'auto' && sourceText.value.trim().length > 5) { // Require minimum length for accuracy
-                    effectiveSourceLang = await detectLanguage(sourceText.value);
-                    detectedLanguage.textContent = `Detected: ${effectiveSourceLang}`;
-                } else if (sourceLang === 'auto') {
-                    effectiveSourceLang = 'EN'; // Default to English for short text
-                    detectedLanguage.textContent = `Detected: ${effectiveSourceLang} (short text)`;
+                let result = null;
+                let detectedLang = sourceLang;
+                
+                // If using auto-detect, try to detect language first
+                if (sourceLang === 'auto') {
+                    detectedLang = await detectLanguage(inputText);
+                    if (detectedLang && languageMap[detectedLang]) {
+                        detectedLanguage.textContent = `Detected: ${languageMap[detectedLang].display}`;
+                        
+                        // Check if detected language is same as target
+                        if (detectedLang === targetLang) {
+                            showToast('Text appears to already be in the target language.');
+                            translateBtn.disabled = false;
+                            translateBtn.innerHTML = 'Translate';
+                            return;
+                        }
+                    } else {
+                        detectedLang = 'en'; // Default fallback
+                        detectedLanguage.textContent = 'Detected: English (fallback)';
+                    }
                 }
-                let result = await translateWithDeepL(sourceText.value, effectiveSourceLang, targetLang);
-                if (!result && effectiveSourceLang !== 'EN') {
-                    result = await translateWithDeepL(sourceText.value, 'EN', targetLang); // Retry with English as fallback
+                
+                // Try translation services in order of reliability
+                
+                // 1. Try Google via MyMemory (most reliable free option)
+                result = await translateWithGoogle(inputText, detectedLang, targetLang);
+                
+                // 2. Fallback to LibreTranslate alternative
+                if (!result) {
+                    result = await translateWithLibreTranslate(inputText, detectedLang, targetLang);
                 }
-                if (!result) result = await translateWithLibreTranslate(sourceText.value, effectiveSourceLang, targetLang);
-                if (!result) result = await translateWithMyMemory(sourceText.value, effectiveSourceLang, targetLang);
-                if (!result) result = await translateWithApertium(sourceText.value, effectiveSourceLang, targetLang);
-                if (result) {
+                
+                // 3. Final fallback to direct MyMemory
+                if (!result) {
+                    result = await translateWithMyMemory(inputText, detectedLang, targetLang);
+                }
+                
+                if (result && result.trim() && result.toLowerCase() !== inputText.toLowerCase()) {
                     translatedText.value = result;
-                    addToHistory(sourceText.value, result, effectiveSourceLang, targetLang);
+                    addToHistory(inputText, result, detectedLang, targetLang);
+                    showToast('Translation completed successfully!');
                 } else {
-                    showToast('All translation APIs failed or language pair not supported. Try a different language.');
+                    showToast('Unable to translate. Try a different language pair or check your internet connection.');
+                    translatedText.value = '';
                 }
+                
             } catch (error) {
                 console.error('Translation error:', error);
-                showToast(`Translation failed: ${error.message}`);
+                showToast('Translation service temporarily unavailable. Please try again.');
+                translatedText.value = '';
             }
+            
             translateBtn.disabled = false;
             translateBtn.innerHTML = 'Translate';
         });
 
-        // Copy text
+        // Copy text functionality
         function copyText(text) {
-            navigator.clipboard.writeText(text).then(() => showToast('Text copied to clipboard!'));
+            if (!text.trim()) {
+                showToast('No text to copy.');
+                return;
+            }
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Text copied to clipboard!');
+            }).catch(() => {
+                showToast('Failed to copy text.');
+            });
         }
 
         copySourceBtn.addEventListener('click', () => copyText(sourceText.value));
@@ -1236,39 +1456,74 @@
 
         // Speech synthesis
         function speakText(text, lang) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = lang === 'auto' ? 'en-US' : lang.toLowerCase();
-            speechSynthesis.speak(utterance);
+            if (!text.trim()) {
+                showToast('No text to speak.');
+                return;
+            }
+            
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel(); // Cancel any ongoing speech
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = lang === 'auto' ? 'en-US' : `${lang}-${lang.toUpperCase()}`;
+                utterance.rate = 0.9;
+                utterance.pitch = 1;
+                
+                utterance.onerror = () => {
+                    showToast('Speech synthesis failed.');
+                };
+                
+                speechSynthesis.speak(utterance);
+            } else {
+                showToast('Speech synthesis not supported in this browser.');
+            }
         }
 
-        speakSourceBtn.addEventListener('click', () => speakText(sourceText.value, sourceLang));
+        speakSourceBtn.addEventListener('click', () => {
+            const lang = sourceLang === 'auto' ? 'en' : sourceLang;
+            speakText(sourceText.value, lang);
+        });
+        
         speakTranslatedBtn.addEventListener('click', () => speakText(translatedText.value, targetLang));
 
-        // Translation history
+        // Translation history management
         function addToHistory(sourceText, translatedText, sourceLang, targetLang) {
             const historyItem = {
                 id: Date.now(),
-                sourceText: sourceText.slice(0, 50) + (sourceText.length > 50 ? '...' : ''),
-                translatedText: translatedText.slice(0, 50) + (translatedText.length > 50 ? '...' : ''),
-                sourceLang: sourceLang.toUpperCase(),
-                targetLang: targetLang.toUpperCase(),
+                sourceText: sourceText.slice(0, 100) + (sourceText.length > 100 ? '...' : ''),
+                translatedText: translatedText.slice(0, 100) + (translatedText.length > 100 ? '...' : ''),
+                sourceLang: languageMap[sourceLang]?.display || sourceLang.toUpperCase(),
+                targetLang: languageMap[targetLang]?.display || targetLang.toUpperCase(),
                 timestamp: new Date().toLocaleString()
             };
+            
             translationHistory.unshift(historyItem);
-            translationHistory = translationHistory.slice(0, 10);
-            localStorage.setItem('translationHistory', JSON.stringify(translationHistory));
+            translationHistory = translationHistory.slice(0, 10); // Keep only last 10
+            
+            try {
+                localStorage.setItem('translationHistory', JSON.stringify(translationHistory));
+            } catch (error) {
+                console.warn('Failed to save translation history:', error);
+            }
+            
             renderHistory();
         }
 
         function renderHistory() {
             historyList.innerHTML = '';
+            
+            if (translationHistory.length === 0) {
+                historyList.innerHTML = '<div class="history-item">No translation history yet.</div>';
+                return;
+            }
+            
             translationHistory.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'history-item';
                 div.innerHTML = `
                     <strong>${item.sourceLang}:</strong> ${item.sourceText}<br>
                     <strong>${item.targetLang}:</strong> ${item.translatedText}<br>
-                    <small>${item.timestamp}</small>
+                    <small style="color: rgba(0,0,0,0.5);">${item.timestamp}</small>
                 `;
                 historyList.appendChild(div);
             });
@@ -1276,22 +1531,55 @@
 
         clearHistoryBtn.addEventListener('click', () => {
             translationHistory = [];
-            localStorage.removeItem('translationHistory');
+            try {
+                localStorage.removeItem('translationHistory');
+            } catch (error) {
+                console.warn('Failed to clear translation history:', error);
+            }
             renderHistory();
             showToast('History cleared!');
         });
 
-        // Toast notification
+        // Toast notification system
         function showToast(message) {
+            // Remove existing toasts
+            document.querySelectorAll('.toast').forEach(toast => toast.remove());
+            
             const toast = document.createElement('div');
             toast.className = 'toast';
             toast.textContent = message;
             document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 4000);
+            
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.remove();
+                }
+            }, 4000);
         }
 
-        // Initialize history
-        renderHistory();
+        // Auto-translate on Enter key
+        sourceText.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey && sourceText.value.trim()) {
+                e.preventDefault();
+                if (!translateBtn.disabled) {
+                    translateBtn.click();
+                }
+            }
+        });
+
+        // Initialize the application
+        function initialize() {
+            renderHistory();
+            updateTranslateButton();
+            
+            // Show welcome message
+            setTimeout(() => {
+                showToast('Welcome to Nexo Translator! Enter text and click translate or press Enter.');
+            }, 1000);
+        }
+
+        // Start the application
+        initialize();
     </script>
 </body>
 </html>
