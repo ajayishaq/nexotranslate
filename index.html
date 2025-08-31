@@ -961,6 +961,10 @@
         const translationCache = JSON.parse(localStorage.getItem('translationCache')) || {};
         let recognition = null;
 
+        // Replace with your DeepL API key
+        const DEEPL_API_KEY = '4f59481b-ba19-414a-8ba3-493f48aae7d2:fx';
+// Add your key here
+
         // Initialize translation button visibility
         translateBtn.classList.remove('visible');
 
@@ -1048,7 +1052,35 @@
             localStorage.setItem('translationCache', JSON.stringify(translationCache));
         }
 
-        // Multi-API Translation Functions with Language Code Handling
+        // Multi-API Translation Functions with DeepL
+        async function translateWithDeepL(text, source, target) {
+            try {
+                if (!DEEPL_API_KEY) throw new Error('DeepL API key not set');
+                const url = 'https://api-free.deepl.com/v2/translate';
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `DeepL-Auth-Key ${DEEPL_API_KEY}`,
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        'text': text,
+                        'source_lang': source === 'auto' ? 'EN' : source.toUpperCase(),
+                        'target_lang': target.toUpperCase()
+                    })
+                });
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const data = await response.json();
+                if (data.translations && data.translations[0] && data.translations[0].text) {
+                    return data.translations[0].text;
+                }
+                throw new Error('No translation data');
+            } catch (error) {
+                console.warn('DeepL failed:', error);
+                return null;
+            }
+        }
+
         async function translateWithLibreTranslate(text, source, target) {
             try {
                 const response = await fetch('https://libretranslate.com/translate', {
@@ -1076,7 +1108,7 @@
                 if (data.responseData && data.responseData.translatedText) {
                     return data.responseData.translatedText;
                 }
-                throw new Error('No translation data');
+                throw new Error('No translation data or unsupported language pair');
             } catch (error) {
                 console.warn('MyMemory failed:', error);
                 return null;
@@ -1109,12 +1141,18 @@
                 });
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const data = await response.json();
-                if (data[0] && data[0].language) return data[0].language;
-                return 'en'; // Default to English if detection fails
+                if (data[0] && data[0].language) {
+                    const langMap = {
+                        'zh': 'ZH', 'zh-hans': 'ZH', 'zh-hant': 'ZH',
+                        // Add more mappings if needed
+                    };
+                    return langMap[data[0].language] || data[0].language.toUpperCase();
+                }
+                return 'EN'; // Default to English if detection fails
             } catch (error) {
                 console.error('Language detection error:', error);
                 showToast(`Language detection failed: ${error.message}`);
-                return 'en';
+                return 'EN';
             }
         }
 
@@ -1155,17 +1193,18 @@
             showToast('Voice input not supported in this browser.');
         }
 
-        // Translate button with multi-API fallback and language handling
+        // Translate button with DeepL as primary
         translateBtn.addEventListener('click', async () => {
             translateBtn.disabled = true;
             translateBtn.innerHTML = '<span class="spinner"></span> Translating...';
             try {
                 let effectiveSourceLang = sourceLang;
-                if (sourceLang === 'auto') {
+                if (sourceLang === 'auto' && sourceText.value.trim()) {
                     effectiveSourceLang = await detectLanguage(sourceText.value);
-                    detectedLanguage.textContent = `Detected: ${effectiveSourceLang.toUpperCase()}`;
+                    detectedLanguage.textContent = `Detected: ${effectiveSourceLang}`;
                 }
-                let result = await translateWithLibreTranslate(sourceText.value, effectiveSourceLang, targetLang);
+                let result = await translateWithDeepL(sourceText.value, effectiveSourceLang, targetLang);
+                if (!result) result = await translateWithLibreTranslate(sourceText.value, effectiveSourceLang, targetLang);
                 if (!result) result = await translateWithMyMemory(sourceText.value, effectiveSourceLang, targetLang);
                 if (!result) result = await translateWithApertium(sourceText.value, effectiveSourceLang, targetLang);
                 if (result) {
