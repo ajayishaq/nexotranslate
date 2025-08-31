@@ -121,12 +121,20 @@
             animation: fadeInDown 0.8s ease-out;
         }
         .logo {
-            font-size: 2rem;
+            font-size: 3.5rem;
             font-weight: 700;
             letter-spacing: -0.03em;
             color: #000000;
             text-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0;
+            line-height: 1;
+        }
+        .logo-subtitle {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #4a5568;
+            letter-spacing: 0.05em;
+            margin-top: 0.25rem;
         }
         .main-container {
             background: rgba(255, 255, 255, 0.9);
@@ -655,6 +663,12 @@
                 padding: 1rem;
                 gap: 1.5rem;
             }
+            .logo {
+                font-size: 2.5rem;
+            }
+            .logo-subtitle {
+                font-size: 1rem;
+            }
             .translation-container {
                 grid-template-columns: 1fr;
             }
@@ -703,9 +717,6 @@
                 width: 100%;
                 height: 52px;
             }
-            .logo {
-                font-size: 1.5rem;
-            }
             .main-container {
                 margin-right: 0;
             }
@@ -718,7 +729,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1 class="logo">nexo translator</h1>
+            <h1 class="logo">NEXO</h1>
+            <div class="logo-subtitle">TRANSLATOR</div>
         </div>
         
         <div class="main-container">
@@ -1372,219 +1384,3 @@
                 'ko': 'ko-KR',
                 'zh': 'zh-CN',
                 'zh-TW': 'zh-TW',
-                'ar': 'ar-SA',
-                'hi': 'hi-IN',
-                'tr': 'tr-TR',
-                'pl': 'pl-PL',
-                'nl': 'nl-NL',
-                'sv': 'sv-SE',
-                'da': 'da-DK',
-                'no': 'no-NO',
-                'fi': 'fi-FI',
-                'he': 'he-IL',
-                'th': 'th-TH',
-                'vi': 'vi-VN',
-                'id': 'id-ID',
-                'ms': 'ms-MY',
-                'uk': 'uk-UA',
-                'cs': 'cs-CZ',
-                'sk': 'sk-SK',
-                'ro': 'ro-RO',
-                'hu': 'hu-HU',
-                'bg': 'bg-BG',
-                'hr': 'hr-HR',
-                'sr': 'sr-RS',
-                'sl': 'sl-SI',
-                'et': 'et-EE',
-                'lv': 'lv-LV',
-                'lt': 'lt-LT',
-                'ca': 'ca-ES',
-                'eu': 'eu-ES',
-                'gl': 'gl-ES',
-                'ha': 'ha-NG',
-                'am': 'am-ET',
-                'sw': 'sw-TZ',
-                'zu': 'zu-ZA',
-                'af': 'af-ZA',
-                'yo': 'yo-NG',
-                'ig': 'ig-NG',
-                'tl': 'tl-PH',
-                'fa': 'fa-IR',
-                'ur': 'ur-PK',
-                'gu': 'gu-IN'
-            };
-            return recognitionLangMap[langCode] || 'en-US';
-        }
-        function addToHistory(source, target, sourceLang, targetLang) {
-            const historyItem = {
-                source,
-                target,
-                sourceLang,
-                targetLang,
-                timestamp: new Date().toLocaleString('en-US', {
-                    month: '2-digit',
-                    day: '2-digit',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit'
-                })
-            };
-            translationHistory.unshift(historyItem);
-            if (translationHistory.length > 50) {
-                translationHistory = translationHistory.slice(0, 50);
-            }
-            saveUserPreferences();
-            updateHistoryUI();
-        }
-        function updateHistoryUI() {
-            const historyList = document.getElementById('historyList');
-            const historySection = document.getElementById('historySection');
-            if (translationHistory.length === 0) {
-                historySection.style.display = 'none';
-                return;
-            }
-            historySection.style.display = 'block';
-            historyList.innerHTML = '';
-            translationHistory.forEach((item, index) => {
-                const div = document.createElement('div');
-                div.className = 'history-item';
-                const sourcePreview = item.source.length > 50 ? item.source.substring(0, 50) + '...' : item.source;
-                const targetPreview = item.target.length > 50 ? item.target.substring(0, 50) + '...' : item.target;
-                div.innerHTML = `
-                    <div class="history-source">${escapeHtml(sourcePreview)} <span style="opacity: 0.6;">(${languages[item.sourceLang].name})</span></div>
-                    <div class="history-target">${escapeHtml(targetPreview)} <span style="opacity: 0.6;">(${languages[item.targetLang].name})</span></div>
-                    <div style="font-size: 0.8rem; color: rgba(0, 0, 0, 0.5); margin-top: 0.5rem;">${item.timestamp}</div>
-                `;
-                div.onclick = () => loadHistoryItem(item);
-                historyList.appendChild(div);
-            });
-        }
-        function clearHistory() {
-            if (!translationHistory.length) {
-                showToast('No history to clear');
-                return;
-            }
-            const historyItems = document.querySelectorAll('.history-item');
-            historyItems.forEach((item, index) => {
-                setTimeout(() => {
-                    item.classList.add('clearing');
-                }, index * 50);
-            });
-            setTimeout(() => {
-                translationHistory = [];
-                updateHistoryUI();
-                saveUserPreferences();
-                showToast('Translation history cleared');
-            }, historyItems.length * 50 + 300);
-        }
-        function loadHistoryItem(item) {
-            selectSourceLanguage(item.sourceLang);
-            selectTargetLanguage(item.targetLang);
-            document.getElementById('sourceText').value = item.source;
-            document.getElementById('targetText').value = item.target;
-            updateCharCount();
-            updateTargetCount();
-            showToast('Loaded from history');
-        }
-        function escapeHtml(unsafe) {
-            return unsafe
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-        function loadUserPreferences() {
-            try {
-                if (typeof(Storage) !== "undefined" && localStorage) {
-                    const saved = localStorage.getItem('nexoTranslatorPreferences');
-                    if (saved) {
-                        const prefs = JSON.parse(saved);
-                        if (prefs.sourceLang && languages[prefs.sourceLang]) {
-                            currentSourceLang = prefs.sourceLang;
-                            document.getElementById('sourceLangText').textContent = languages[prefs.sourceLang].name;
-                        }
-                        if (prefs.targetLang && languages[prefs.targetLang]) {
-                            currentTargetLang = prefs.targetLang;
-                            document.getElementById('targetLangText').textContent = languages[prefs.targetLang].name;
-                        }
-                    }
-                    const history = localStorage.getItem('nexoTranslatorHistory');
-                    if (history) {
-                        translationHistory = JSON.parse(history);
-                    }
-                }
-            } catch (e) {
-                console.warn('Could not load from localStorage:', e);
-            }
-            updateTextDirection();
-        }
-        function saveUserPreferences() {
-            try {
-                if (typeof(Storage) !== "undefined" && localStorage) {
-                    const prefs = {
-                        sourceLang: currentSourceLang,
-                        targetLang: currentTargetLang
-                    };
-                    localStorage.setItem('nexoTranslatorPreferences', JSON.stringify(prefs));
-                    localStorage.setItem('nexoTranslatorHistory', JSON.stringify(translationHistory));
-                }
-            } catch (e) {
-                console.warn('Could not save to localStorage:', e);
-            }
-        }
-        function updateCharCount() {
-            const sourceText = document.getElementById('sourceText').value;
-            document.getElementById('sourceCount').textContent = `${sourceText.length} / 5,000`;
-        }
-        function updateTargetCount() {
-            const targetText = document.getElementById('targetText').value;
-            document.getElementById('targetCount').textContent = `${targetText.length} characters`;
-        }
-        function showTranslateButton() {
-            const translateBtn = document.getElementById('translateBtn');
-            translateBtn.classList.add('visible');
-        }
-        function hideTranslateButton() {
-            const translateBtn = document.getElementById('translateBtn');
-            translateBtn.classList.remove('visible');
-        }
-        function showLoadingState() {
-            const translateBtn = document.getElementById('translateBtn');
-            translateBtn.disabled = true;
-            translateBtn.innerHTML = '<span class="spinner"></span>';
-        }
-        function hideLoadingState() {
-            const translateBtn = document.getElementById('translateBtn');
-            translateBtn.disabled = false;
-            translateBtn.textContent = 'Translate';
-        }
-        function showToast(message) {
-            const existingToast = document.querySelector('.toast');
-            if (existingToast) {
-                existingToast.remove();
-            }
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.remove();
-            }, 3300);
-        }
-        function updateTextDirection() {
-            const sourceTextEl = document.getElementById('sourceText');
-            const targetTextEl = document.getElementById('targetText');
-            sourceTextEl.removeAttribute('dir');
-            targetTextEl.removeAttribute('dir');
-            if (languages[currentSourceLang] && languages[currentSourceLang].rtl) {
-                sourceTextEl.setAttribute('dir', 'rtl');
-            }
-            if (languages[currentTargetLang] && languages[currentTargetLang].rtl) {
-                targetTextEl.setAttribute('dir', 'rtl');
-            }
-        }
-    </script>
-</body>
-</html>
