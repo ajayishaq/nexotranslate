@@ -961,9 +961,8 @@
         const translationCache = JSON.parse(localStorage.getItem('translationCache')) || {};
         let recognition = null;
 
-        // Replace with your DeepL API key
+        // DeepL API key (replace with your actual key if needed, this is a placeholder)
         const DEEPL_API_KEY = '4f59481b-ba19-414a-8ba3-493f48aae7d2:fx';
-// Add your key here
 
         // Initialize translation button visibility
         translateBtn.classList.remove('visible');
@@ -1003,16 +1002,14 @@
 
         // Swap languages
         swapBtn.addEventListener('click', () => {
-            if (sourceLang !== 'auto') {
-                [sourceLang, targetLang] = [targetLang, sourceLang];
-                sourceLangBtn.querySelector('span').textContent = targetLangBtn.querySelector('span').textContent;
-                targetLangBtn.querySelector('span').textContent = sourceLang === 'auto' ? 'Auto Detect' : sourceLangBtn.querySelector('span').textContent;
-                const tempText = sourceText.value;
-                sourceText.value = translatedText.value;
-                translatedText.value = tempText;
-                updateTranslateButton();
-                updateSpeechRecognitionLang();
-            }
+            [sourceLang, targetLang] = [targetLang, sourceLang];
+            sourceLangBtn.querySelector('span').textContent = targetLangBtn.querySelector('span').textContent;
+            targetLangBtn.querySelector('span').textContent = sourceLang === 'auto' ? 'Auto Detect' : sourceLangBtn.querySelector('span').textContent;
+            const tempText = sourceText.value;
+            sourceText.value = translatedText.value;
+            translatedText.value = tempText;
+            updateTranslateButton();
+            updateSpeechRecognitionLang();
         });
 
         // Character count
@@ -1052,7 +1049,7 @@
             localStorage.setItem('translationCache', JSON.stringify(translationCache));
         }
 
-        // Multi-API Translation Functions with DeepL
+        // Translation Functions
         async function translateWithDeepL(text, source, target) {
             try {
                 if (!DEEPL_API_KEY) throw new Error('DeepL API key not set');
@@ -1074,9 +1071,9 @@
                 if (data.translations && data.translations[0] && data.translations[0].text) {
                     return data.translations[0].text;
                 }
-                throw new Error('No translation data');
+                throw new Error('No translation data from DeepL');
             } catch (error) {
-                console.warn('DeepL failed:', error);
+                console.warn('DeepL failed:', error.message);
                 return null;
             }
         }
@@ -1093,7 +1090,7 @@
                 if (data.error) throw new Error(data.error);
                 return data.translatedText;
             } catch (error) {
-                console.warn('LibreTranslate failed:', error);
+                console.warn('LibreTranslate failed:', error.message);
                 return null;
             }
         }
@@ -1110,7 +1107,7 @@
                 }
                 throw new Error('No translation data or unsupported language pair');
             } catch (error) {
-                console.warn('MyMemory failed:', error);
+                console.warn('MyMemory failed:', error.message);
                 return null;
             }
         }
@@ -1127,13 +1124,14 @@
                 }
                 throw new Error('No translation data or unsupported language pair');
             } catch (error) {
-                console.warn('Apertium failed:', error);
+                console.warn('Apertium failed:', error.message);
                 return null;
             }
         }
 
         async function detectLanguage(text) {
             try {
+                if (!text.trim()) return 'EN';
                 const response = await fetch('https://libretranslate.com/detect', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -1141,16 +1139,17 @@
                 });
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const data = await response.json();
-                if (data[0] && data[0].language) {
+                if (data && data[0] && data[0].language) {
                     const langMap = {
                         'zh': 'ZH', 'zh-hans': 'ZH', 'zh-hant': 'ZH',
-                        // Add more mappings if needed
+                        'pt': 'PT', 'pt-br': 'PT', 'pt-pt': 'PT',
+                        'zh-cn': 'ZH', 'zh-tw': 'ZH'
                     };
                     return langMap[data[0].language] || data[0].language.toUpperCase();
                 }
                 return 'EN'; // Default to English if detection fails
             } catch (error) {
-                console.error('Language detection error:', error);
+                console.error('Language detection error:', error.message);
                 showToast(`Language detection failed: ${error.message}`);
                 return 'EN';
             }
@@ -1193,17 +1192,23 @@
             showToast('Voice input not supported in this browser.');
         }
 
-        // Translate button with DeepL as primary
+        // Translate button with enhanced logic
         translateBtn.addEventListener('click', async () => {
             translateBtn.disabled = true;
             translateBtn.innerHTML = '<span class="spinner"></span> Translating...';
             try {
                 let effectiveSourceLang = sourceLang;
-                if (sourceLang === 'auto' && sourceText.value.trim()) {
+                if (sourceLang === 'auto' && sourceText.value.trim().length > 5) { // Require minimum length for accuracy
                     effectiveSourceLang = await detectLanguage(sourceText.value);
                     detectedLanguage.textContent = `Detected: ${effectiveSourceLang}`;
+                } else if (sourceLang === 'auto') {
+                    effectiveSourceLang = 'EN'; // Default to English for short text
+                    detectedLanguage.textContent = `Detected: ${effectiveSourceLang} (short text)`;
                 }
                 let result = await translateWithDeepL(sourceText.value, effectiveSourceLang, targetLang);
+                if (!result && effectiveSourceLang !== 'EN') {
+                    result = await translateWithDeepL(sourceText.value, 'EN', targetLang); // Retry with English as fallback
+                }
                 if (!result) result = await translateWithLibreTranslate(sourceText.value, effectiveSourceLang, targetLang);
                 if (!result) result = await translateWithMyMemory(sourceText.value, effectiveSourceLang, targetLang);
                 if (!result) result = await translateWithApertium(sourceText.value, effectiveSourceLang, targetLang);
@@ -1211,10 +1216,10 @@
                     translatedText.value = result;
                     addToHistory(sourceText.value, result, effectiveSourceLang, targetLang);
                 } else {
-                    showToast('All translation APIs failed or language pair not supported. Please try a different language.');
+                    showToast('All translation APIs failed or language pair not supported. Try a different language.');
                 }
             } catch (error) {
-                console.error('Translation process error:', error);
+                console.error('Translation error:', error);
                 showToast(`Translation failed: ${error.message}`);
             }
             translateBtn.disabled = false;
@@ -1232,7 +1237,7 @@
         // Speech synthesis
         function speakText(text, lang) {
             const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = lang === 'auto' ? 'en-US' : lang;
+            utterance.lang = lang === 'auto' ? 'en-US' : lang.toLowerCase();
             speechSynthesis.speak(utterance);
         }
 
@@ -1245,8 +1250,8 @@
                 id: Date.now(),
                 sourceText: sourceText.slice(0, 50) + (sourceText.length > 50 ? '...' : ''),
                 translatedText: translatedText.slice(0, 50) + (translatedText.length > 50 ? '...' : ''),
-                sourceLang,
-                targetLang,
+                sourceLang: sourceLang.toUpperCase(),
+                targetLang: targetLang.toUpperCase(),
                 timestamp: new Date().toLocaleString()
             };
             translationHistory.unshift(historyItem);
@@ -1261,8 +1266,8 @@
                 const div = document.createElement('div');
                 div.className = 'history-item';
                 div.innerHTML = `
-                    <strong>${item.sourceLang.toUpperCase()}:</strong> ${item.sourceText}<br>
-                    <strong>${item.targetLang.toUpperCase()}:</strong> ${item.translatedText}<br>
+                    <strong>${item.sourceLang}:</strong> ${item.sourceText}<br>
+                    <strong>${item.targetLang}:</strong> ${item.translatedText}<br>
                     <small>${item.timestamp}</small>
                 `;
                 historyList.appendChild(div);
