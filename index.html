@@ -8,7 +8,6 @@
     <meta name="keywords" content="translator, online translator, free translator, language translator, multilingual translator, Hausa translator, Yoruba translator, Arabic translator, Spanish translator, fast translation, speech-to-text">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
     <style>
 /* Reset and Base Styles */
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -519,142 +518,6 @@ body::before {
   50% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
 }
 
-/* Camera Interface */
-.camera-interface {
-  display: none;
-  flex-direction: column;
-  height: 100%;
-}
-
-.camera-interface.active {
-  display: flex;
-}
-
-.camera-placeholder {
-  display: block;
-}
-
-.camera-placeholder.hidden {
-  display: none;
-}
-
-.camera-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 24px;
-  border-bottom: 1px solid var(--glass-border);
-}
-
-.camera-container {
-  position: relative;
-  flex: 1;
-  min-height: 400px;
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-#camera-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.camera-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-}
-
-.scan-frame {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 300px;
-  aspect-ratio: 3/2;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.scan-corners {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.scan-corners::before,
-.scan-corners::after {
-  content: '';
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border: 3px solid #ffffff;
-}
-
-.scan-corners::before {
-  top: -3px;
-  left: -3px;
-  border-right: none;
-  border-bottom: none;
-}
-
-.scan-corners::after {
-  top: -3px;
-  right: -3px;
-  border-left: none;
-  border-bottom: none;
-}
-
-.scan-line {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #ffffff, transparent);
-  animation: scan 2s ease-in-out infinite;
-}
-
-@keyframes scan {
-  0%, 100% { transform: translateY(0); opacity: 1; }
-  50% { transform: translateY(150px); opacity: 0.5; }
-}
-
-.camera-status {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 16px;
-  font-size: 14px;
-  text-align: center;
-}
-
-.camera-controls {
-  padding: 20px 24px;
-  text-align: center;
-  border-top: 1px solid var(--glass-border);
-}
-
-.detected-text-panel {
-  padding: 20px 24px;
-  border-top: 1px solid var(--glass-border);
-  background: var(--surface-tertiary);
-}
 
 /* Translate Section */
 .translate-section {
@@ -930,22 +793,23 @@ body::before {
   font-size: 18px;
   font-weight: 600;
   color: var(--text-primary);
+  margin: 0;
 }
 
 .clear-history-btn {
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 12px;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  border-radius: var(--border-radius);
   padding: 8px 16px;
   font-size: 12px;
+  color: var(--text-secondary);
   cursor: pointer;
   transition: var(--transition);
 }
 
 .clear-history-btn:hover {
-  background: var(--primary-hover);
-  transform: scale(1.02);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .history-list {
@@ -1045,37 +909,36 @@ body::before {
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="sun-icon">
                         <path d="M12 17.5C15.04 17.5 17.5 15.04 17.5 12C17.5 8.96 15.04 6.5 12 6.5C8.96 6.5 6.5 8.96 6.5 12C6.5 15.04 8.96 17.5 12 17.5ZM12 0L13.39 4.42C13.52 4.82 13.86 5.1 14.27 5.1H19L15.13 7.97C14.8 8.21 14.66 8.63 14.78 9.02L16.5 14L12 10.5L7.5 14L9.22 9.02C9.34 8.63 9.2 8.21 8.87 7.97L5 5.1H9.73C10.14 5.1 10.48 4.82 10.61 4.42L12 0Z"/>
                     </svg>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="moon-icon" style="display: none;">
-                        <path d="M12 3C16.97 3 21 7.03 21 12C21 16.97 16.97 21 12 21C7.03 21 3 16.97 3 12C3 7.03 7.03 3 12 3ZM12 1C5.93 1 1 5.93 1 12C1 18.07 5.93 23 12 23C18.07 23 23 18.07 23 12C23 5.93 18.07 1 12 1ZM12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18V6Z"/>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="moon-icon" style="display: none;">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
                     </svg>
                 </button>
                 <div class="social-header">
-                    <a href="https://twitter.com/nexotranslator" class="social-link" target="_blank" title="Follow us on Twitter">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <a href="https://x.com/nexotranslator" class="social-link" target="_blank" rel="noopener" aria-label="Twitter">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                         </svg>
                     </a>
-                    <a href="https://instagram.com/nexotranslator" class="social-link" target="_blank" title="Follow us on Instagram">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.79-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    <a href="https://github.com/nexotranslator" class="social-link" target="_blank" rel="noopener" aria-label="GitHub">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                         </svg>
                     </a>
                 </div>
             </div>
         </header>
-        <!-- Home Section -->
-        <div class="section active" id="home-section">
-            <main class="main-translator" role="main" aria-label="Translation Interface">
-                <div class="language-detector" id="language-detector">Detected: Spanish</div>
-                <div class="language-header">
-                    <div class="language-selector">
-                        <button class="language-btn" id="source-lang-btn" aria-haspopup="listbox" aria-label="Select source language">
-                            <div class="language-flag">🌐</div>
-                            <span>Auto Detect</span>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M7 10l5 5 5-5z"/>
-                            </svg>
-                        </button>
+        
+        <main class="main-translator" role="main" id="home-section">
+            <div class="language-detector" id="language-detector">Detected: English</div>
+            <div class="language-header">
+                <div class="language-selector">
+                    <button class="language-btn" id="source-lang-btn" aria-haspopup="listbox" aria-label="Select source language">
+                        <div class="language-flag">🏳</div>
+                        <span>Auto Detect</span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 10l5 5 5-5z"/>
+                        </svg>
+                    </button>
                     <div class="language-dropdown" id="source-lang-dropdown" role="listbox">
                         <div class="language-option" data-lang="auto" role="option">Auto Detect</div>
                         <div class="language-option" data-lang="en" role="option">English</div>
@@ -1276,132 +1139,102 @@ body::before {
             <p>&copy; Nexo Translator. All rights reserved.</p>
         </footer>
         
-        <!-- Camera Section -->
-        <div class="section" id="camera-section">
-            <div class="main-translator">
-                <div class="camera-interface">
-                    <div class="camera-header">
-                        <h2 style="color: var(--text-primary); margin: 0; font-size: 18px;">Camera Translation</h2>
-                        <button class="control-btn" id="close-camera-btn" title="Close camera">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="camera-container">
-                        <video id="camera-video" autoplay playsinline muted></video>
-                        <canvas id="camera-canvas" style="display: none;"></canvas>
-                        <div class="camera-overlay">
-                            <div class="scan-frame">
-                                <div class="scan-corners"></div>
-                                <div class="scan-line"></div>
-                            </div>
-                        </div>
-                        <div class="camera-status" id="camera-status">Position text within the frame</div>
-                    </div>
-                    <div class="camera-controls">
-                        <button class="translate-btn" id="capture-btn" disabled>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5zM19 7h-3V6a2 2 0 00-2-2h-4a2 2 0 00-2 2v1H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2z"/>
-                            </svg>
-                            <span>Capture & Translate</span>
-                        </button>
-                    </div>
-                    <div class="detected-text-panel" id="detected-text-panel" style="display: none;">
-                        <h3 style="color: var(--text-primary); margin-bottom: 12px; font-size: 14px;">Detected Text:</h3>
-                        <div class="text-area" id="detected-text" readonly style="min-height: 100px; background: var(--surface-secondary);"></div>
-                        <div class="panel-controls" style="justify-content: center; gap: 12px;">
-                            <button class="control-btn" id="use-detected-text" title="Use this text">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                                </svg>
-                            </button>
-                            <button class="control-btn" id="retake-photo" title="Retake photo">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="camera-placeholder" id="camera-placeholder">
-                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 40px; text-align: center;">
-                        <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor" style="margin-bottom: 20px; color: var(--text-secondary);">
-                            <path d="M12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5zM19 7h-3V6a2 2 0 00-2-2h-4a2 2 0 00-2 2v1H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2z"/>
-                        </svg>
-                        <h2 style="color: var(--text-primary); margin-bottom: 12px; font-size: 20px;">Camera Translation</h2>
-                        <p style="color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; max-width: 300px;">Point your camera at text to instantly translate it. Works with 11+ languages.</p>
-                        <button class="translate-btn" id="start-camera-btn">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M8 5v14l11-7z"/>
-                            </svg>
-                            <span>Start Camera</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- History Section -->
-        <div class="section" id="history-section">
-            <div class="history-section">
-                <div class="history-header">
-                    <h2>Translation History</h2>
-                    <button class="clear-history-btn" id="clear-history-btn-main" aria-label="Clear translation history">Clear All</button>
-                </div>
-                <div class="history-list" id="history-list-main">
-                    <p style="text-align: center; color: var(--text-secondary); padding: 40px 0;">No translations yet. Start translating to see your history here!</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Bottom Navigation -->
-        <nav class="bottom-nav" role="navigation" aria-label="Main navigation">
-            <button class="nav-item active" id="nav-home" data-section="home-section" title="Home">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-                </svg>
-                <span class="nav-label">Home</span>
-            </button>
-            <button class="nav-item" id="nav-camera" data-section="camera-section" title="Camera">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5zM19 7h-3V6a2 2 0 00-2-2h-4a2 2 0 00-2 2v1H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2z"/>
-                </svg>
-                <span class="nav-label">Camera</span>
-            </button>
-            <button class="nav-item" id="nav-history" data-section="history-section" title="History">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
-                </svg>
-                <span class="nav-label">History</span>
-            </button>
-        </nav>
-        
-        <!-- Quick Translate FAB -->
-        <button class="fab" id="quick-translate-fab" title="Quick Translate" aria-label="Quick translate">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
-            </svg>
-        </button>
     </div>
     
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav" role="navigation" aria-label="Main navigation">
+        <button class="nav-item active" id="nav-home" data-section="home-section">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+            <div class="nav-label">Home</div>
+        </button>
+        <button class="nav-item" id="nav-history" data-section="home-section">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+            </svg>
+            <div class="nav-label">History</div>
+        </button>
+    </nav>
+    
+    <!-- Floating Action Button -->
+    <button class="fab" id="quick-translate-fab" title="Quick translate">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.01-4.65.47-6.87l-.46-.66L10 5l-.27.24c-.14.14-.35.43-.35.43-.14.14-.39.39-.39.39l-.17.15c-1.01 1.01-1.01 2.65 0 3.66.55.55 1.25.82 1.94.82.1 0 .2-.01.3-.02l2.43 2.39c.39.39 1.02.39 1.41 0 .39-.38.39-1.01 0-1.4z"/>
+            <path d="M9.5 9.5c-.39-.39-1.02-.39-1.41 0l-4.7 4.7c-.39.39-.39 1.02 0 1.41l2.83 2.83c.39.39 1.02.39 1.41 0l4.7-4.7c.39-.39.39-1.02 0-1.41L9.5 9.5zM2 20h20v2H2v-2z"/>
+        </svg>
+    </button>
+
     <script>
-class EnhancedNexoTranslator {
+class NexoTranslator {
     constructor() {
+        this.languageMap = {
+            auto: { display: "Auto Detect", speechCode: null },
+            en: { display: "English", speechCode: "en-US" },
+            es: { display: "Spanish", speechCode: "es-ES" },
+            fr: { display: "French", speechCode: "fr-FR" },
+            de: { display: "German", speechCode: "de-DE" },
+            it: { display: "Italian", speechCode: "it-IT" },
+            pt: { display: "Portuguese", speechCode: "pt-PT" },
+            ru: { display: "Russian", speechCode: "ru-RU" },
+            zh: { display: "Chinese (Simplified)", speechCode: "zh-CN" },
+            ja: { display: "Japanese", speechCode: "ja-JP" },
+            ko: { display: "Korean", speechCode: "ko-KR" },
+            ar: { display: "Arabic", speechCode: "ar-SA" },
+            nl: { display: "Dutch", speechCode: "nl-NL" },
+            sv: { display: "Swedish", speechCode: "sv-SE" },
+            no: { display: "Norwegian", speechCode: "no-NO" },
+            da: { display: "Danish", speechCode: "da-DK" },
+            fi: { display: "Finnish", speechCode: "fi-FI" },
+            pl: { display: "Polish", speechCode: "pl-PL" },
+            tr: { display: "Turkish", speechCode: "tr-TR" },
+            hi: { display: "Hindi", speechCode: "hi-IN" },
+            bn: { display: "Bengali", speechCode: "bn-IN" },
+            th: { display: "Thai", speechCode: "th-TH" },
+            vi: { display: "Vietnamese", speechCode: "vi-VN" },
+            id: { display: "Indonesian", speechCode: "id-ID" },
+            ms: { display: "Malay", speechCode: "ms-MY" },
+            el: { display: "Greek", speechCode: "el-GR" },
+            he: { display: "Hebrew", speechCode: "he-IL" },
+            cs: { display: "Czech", speechCode: "cs-CZ" },
+            sk: { display: "Slovak", speechCode: "sk-SK" },
+            hu: { display: "Hungarian", speechCode: "hu-HU" },
+            ro: { display: "Romanian", speechCode: "ro-RO" },
+            bg: { display: "Bulgarian", speechCode: "bg-BG" },
+            uk: { display: "Ukrainian", speechCode: "uk-UA" },
+            hr: { display: "Croatian", speechCode: "hr-HR" },
+            sr: { display: "Serbian", speechCode: "sr-RS" },
+            sl: { display: "Slovenian", speechCode: "sl-SI" },
+            lt: { display: "Lithuanian", speechCode: "lt-LT" },
+            lv: { display: "Latvian", speechCode: "lv-LV" },
+            et: { display: "Estonian", speechCode: "et-EE" },
+            fa: { display: "Persian", speechCode: "fa-IR" },
+            sw: { display: "Swahili", speechCode: "sw-KE" },
+            am: { display: "Amharic", speechCode: "am-ET" },
+            zu: { display: "Zulu", speechCode: "zu-ZA" },
+            xh: { display: "Xhosa", speechCode: "xh-ZA" },
+            so: { display: "Somali", speechCode: "so-SO" },
+            ta: { display: "Tamil", speechCode: "ta-IN" },
+            te: { display: "Telugu", speechCode: "te-IN" },
+            ml: { display: "Malayalam", speechCode: "ml-IN" },
+            kn: { display: "Kannada", speechCode: "kn-IN" },
+            gu: { display: "Gujarati", speechCode: "gu-IN" },
+            pa: { display: "Punjabi", speechCode: "pa-IN" },
+            ha: { display: "Hausa", speechCode: "ha-NG" },
+            yo: { display: "Yoruba", speechCode: "yo-NG" },
+            ig: { display: "Igbo", speechCode: "ig-NG" }
+        };
+        
         this.sourceLanguage = "auto";
         this.targetLanguage = "en";
-        this.debounceTimer = null;
+        this.elements = {};
         this.isRecording = false;
         this.recognition = null;
-        this.currentSection = 'home-section';
-        
-        this.initializeElements();
-        this.setupTranslator();
-        this.loadTheme();
+        this.init();
+        this.loadHistory();
     }
 
-    initializeElements() {
+    init() {
         this.elements = {
             sourceLangBtn: document.getElementById("source-lang-btn"),
             targetLangBtn: document.getElementById("target-lang-btn"),
@@ -1412,82 +1245,19 @@ class EnhancedNexoTranslator {
             translatedText: document.getElementById("translated-text"),
             translateBtn: document.getElementById("translate-btn"),
             charCount: document.getElementById("char-count"),
-            detectedLanguage: document.getElementById("detected-language"),
-            errorMessage: document.getElementById("error-message"),
             micBtn: document.getElementById("mic-btn"),
             copySourceBtn: document.getElementById("copy-source-btn"),
             copyTranslatedBtn: document.getElementById("copy-translated-btn"),
             speakSourceBtn: document.getElementById("speak-source-btn"),
             speakTranslatedBtn: document.getElementById("speak-translated-btn"),
-            clearHistoryBtn: document.getElementById("clear-history-btn"),
-            historyList: document.getElementById("history-list")
+            detectedLanguage: document.getElementById("detected-language"),
+            errorMessage: document.getElementById("error-message"),
+            historyList: document.getElementById("history-list"),
+            clearHistoryBtn: document.getElementById("clear-history-btn")
         };
-        
-        this.languageMap = {
-            auto: {display: "Auto Detect", flag: "🌐", speechCode: null},
-            en: {display: "English", flag: "🇺🇸", speechCode: "en-US"},
-            es: {display: "Spanish", flag: "🇪🇸", speechCode: "es-ES"},
-            fr: {display: "French", flag: "🇫🇷", speechCode: "fr-FR"},
-            de: {display: "German", flag: "🇩🇪", speechCode: "de-DE"},
-            it: {display: "Italian", flag: "🇮🇹", speechCode: "it-IT"},
-            pt: {display: "Portuguese", flag: "🇵🇹", speechCode: "pt-PT"},
-            ru: {display: "Russian", flag: "🇷🇺", speechCode: "ru-RU"},
-            zh: {display: "Chinese (Simplified)", flag: "🇨🇳", speechCode: "zh-CN"},
-            ja: {display: "Japanese", flag: "🇯🇵", speechCode: "ja-JP"},
-            ko: {display: "Korean", flag: "🇰🇷", speechCode: "ko-KR"},
-            ar: {display: "Arabic", flag: "🇸🇦", speechCode: "ar-SA"},
-            nl: {display: "Dutch", flag: "🇳🇱", speechCode: "nl-NL"},
-            sv: {display: "Swedish", flag: "🇸🇪", speechCode: "sv-SE"},
-            no: {display: "Norwegian", flag: "🇳🇴", speechCode: "no-NO"},
-            da: {display: "Danish", flag: "🇩🇰", speechCode: "da-DK"},
-            fi: {display: "Finnish", flag: "🇫🇮", speechCode: "fi-FI"},
-            pl: {display: "Polish", flag: "🇵🇱", speechCode: "pl-PL"},
-            tr: {display: "Turkish", flag: "🇹🇷", speechCode: "tr-TR"},
-            hi: {display: "Hindi", flag: "🇮🇳", speechCode: "hi-IN"},
-            bn: {display: "Bengali", flag: "🇧🇩", speechCode: "bn-BD"},
-            th: {display: "Thai", flag: "🇹🇭", speechCode: "th-TH"},
-            vi: {display: "Vietnamese", flag: "🇻🇳", speechCode: "vi-VN"},
-            id: {display: "Indonesian", flag: "🇮🇩", speechCode: "id-ID"},
-            ms: {display: "Malay", flag: "🇲🇾", speechCode: "ms-MY"},
-            el: {display: "Greek", flag: "🇬🇷", speechCode: "el-GR"},
-            he: {display: "Hebrew", flag: "🇮🇱", speechCode: "he-IL"},
-            cs: {display: "Czech", flag: "🇨🇿", speechCode: "cs-CZ"},
-            sk: {display: "Slovak", flag: "🇸🇰", speechCode: "sk-SK"},
-            hu: {display: "Hungarian", flag: "🇭🇺", speechCode: "hu-HU"},
-            ro: {display: "Romanian", flag: "🇷🇴", speechCode: "ro-RO"},
-            bg: {display: "Bulgarian", flag: "🇧🇬", speechCode: "bg-BG"},
-            uk: {display: "Ukrainian", flag: "🇺🇦", speechCode: "uk-UA"},
-            hr: {display: "Croatian", flag: "🇭🇷", speechCode: "hr-HR"},
-            sr: {display: "Serbian", flag: "🇷🇸", speechCode: "sr-RS"},
-            sl: {display: "Slovenian", flag: "🇸🇮", speechCode: "sl-SI"},
-            lt: {display: "Lithuanian", flag: "🇱🇹", speechCode: "lt-LT"},
-            lv: {display: "Latvian", flag: "🇱🇻", speechCode: "lv-LV"},
-            et: {display: "Estonian", flag: "🇪🇪", speechCode: "et-EE"},
-            fa: {display: "Persian", flag: "🇮🇷", speechCode: "fa-IR"},
-            sw: {display: "Swahili", flag: "🇰🇪", speechCode: "sw-KE"},
-            am: {display: "Amharic", flag: "🇪🇹", speechCode: "am-ET"},
-            zu: {display: "Zulu", flag: "🇿🇦", speechCode: "zu-ZA"},
-            xh: {display: "Xhosa", flag: "🇿🇦", speechCode: "xh-ZA"},
-            so: {display: "Somali", flag: "🇸🇴", speechCode: "so-SO"},
-            ta: {display: "Tamil", flag: "🇮🇳", speechCode: "ta-IN"},
-            te: {display: "Telugu", flag: "🇮🇳", speechCode: "te-IN"},
-            ml: {display: "Malayalam", flag: "🇮🇳", speechCode: "ml-IN"},
-            kn: {display: "Kannada", flag: "🇮🇳", speechCode: "kn-IN"},
-            gu: {display: "Gujarati", flag: "🇮🇳", speechCode: "gu-IN"},
-            pa: {display: "Punjabi", flag: "🇮🇳", speechCode: "pa-IN"},
-            ha: {display: "Hausa", flag: "🇳🇬", speechCode: "ha-NG"},
-            yo: {display: "Yoruba", flag: "🇳🇬", speechCode: "yo-NG"},
-            ig: {display: "Igbo", flag: "🇳🇬", speechCode: "ig-NG"}
-        };
-    }
 
-    setupTranslator() {
         this.bindEvents();
         this.setupSpeechRecognition();
-        this.setupThemeToggle();
-        this.setupNavigation();
-        this.setupEnhancedFeatures();
-        this.loadTranslationHistory();
     }
 
     bindEvents() {
@@ -1534,39 +1304,32 @@ class EnhancedNexoTranslator {
 
             this.recognition.onstart = () => {
                 this.isRecording = true;
-                this.elements.micBtn.classList.add("recording");
+                this.elements.micBtn.classList.add("active");
             };
 
             this.recognition.onresult = (event) => {
-                let interimTranscript = "";
                 let finalTranscript = "";
-
                 for (let i = event.resultIndex; i < event.results.length; i++) {
-                    const transcript = event.results[i][0].transcript;
                     if (event.results[i].isFinal) {
-                        finalTranscript += transcript;
-                    } else {
-                        interimTranscript += transcript;
+                        finalTranscript += event.results[i][0].transcript;
                     }
                 }
-
-                this.elements.sourceText.value = finalTranscript + interimTranscript;
-                this.updateCharCount();
-
                 if (finalTranscript) {
-                    this.debounceTranslate();
+                    this.elements.sourceText.value = finalTranscript;
+                    this.updateCharCount();
+                    this.translateText();
                 }
             };
 
             this.recognition.onend = () => {
                 this.isRecording = false;
-                this.elements.micBtn.classList.remove("recording");
+                this.elements.micBtn.classList.remove("active");
             };
 
             this.recognition.onerror = (event) => {
                 this.showError("Voice input error: " + event.error);
                 this.isRecording = false;
-                this.elements.micBtn.classList.remove("recording");
+                this.elements.micBtn.classList.remove("active");
             };
         }
     }
@@ -1622,13 +1385,12 @@ class EnhancedNexoTranslator {
         
         this.closeAllDropdowns();
         
-        if (this.elements.sourceText.value) {
-            this.translateText();
+        if (this.recognition && isSource) {
+            this.recognition.lang = this.getRecognitionLanguage();
         }
         
-        // Update speech recognition language if source language changed
-        if (isSource && this.recognition) {
-            this.recognition.lang = this.getRecognitionLanguage();
+        if (this.elements.sourceText.value.trim()) {
+            this.translateText();
         }
     }
 
@@ -1646,9 +1408,11 @@ class EnhancedNexoTranslator {
         this.elements.sourceText.value = this.elements.translatedText.value;
         this.elements.translatedText.value = tempText;
         
-        this.updateCharCount();
+        if (this.recognition) {
+            this.recognition.lang = this.getRecognitionLanguage();
+        }
         
-        if (this.elements.sourceText.value) {
+        if (this.elements.sourceText.value.trim()) {
             this.translateText();
         }
     }
@@ -1657,10 +1421,10 @@ class EnhancedNexoTranslator {
         const count = this.elements.sourceText.value.length;
         this.elements.charCount.textContent = `${count}/5000`;
         
-        if (count >= 5000) {
-            this.elements.charCount.style.color = '#d93025';
+        if (count > 4500) {
+            this.elements.charCount.style.color = "#d93025";
         } else {
-            this.elements.charCount.style.color = 'var(--text-tertiary)';
+            this.elements.charCount.style.color = "var(--text-tertiary)";
         }
     }
 
@@ -1670,7 +1434,37 @@ class EnhancedNexoTranslator {
             if (this.elements.sourceText.value.trim()) {
                 this.translateText();
             }
-        }, 800);
+        }, 500);
+    }
+
+    async translateText() {
+        const text = this.elements.sourceText.value.trim();
+        if (!text) return;
+
+        this.elements.translateBtn.disabled = true;
+        this.elements.translateBtn.textContent = "Translating...";
+        this.hideError();
+
+        try {
+            const translation = await this.callTranslationAPI(text, this.sourceLanguage, this.targetLanguage);
+            this.elements.translatedText.value = translation.text;
+            
+            if (translation.detectedLanguage && this.sourceLanguage === "auto") {
+                const detectedLang = this.languageMap[translation.detectedLanguage];
+                if (detectedLang) {
+                    this.elements.detectedLanguage.textContent = `Detected: ${detectedLang.display}`;
+                }
+            } else {
+                this.elements.detectedLanguage.textContent = "Ready to translate";
+            }
+            
+            this.saveToHistory(text, translation.text, this.sourceLanguage, this.targetLanguage);
+        } catch (error) {
+            this.showError("Translation failed: " + error.message);
+        } finally {
+            this.elements.translateBtn.disabled = false;
+            this.elements.translateBtn.textContent = "Translate";
+        }
     }
 
     async callTranslationAPI(text, sourceLang, targetLang) {
@@ -1781,119 +1575,147 @@ class EnhancedNexoTranslator {
 
         if (this.isRecording) {
             this.recognition.stop();
-            this.elements.micBtn.classList.remove('recording');
         } else {
             this.recognition.start();
-            this.elements.micBtn.classList.add('recording');
         }
     }
 
-    copyToClipboard(text) {
+    async copyToClipboard(text) {
         if (!text) return;
         
-        navigator.clipboard.writeText(text).then(() => {
-            this.showSuccess("Copied to clipboard!");
-        }).catch(() => {
-            // Fallback for older browsers
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand("copy");
-            document.body.removeChild(textArea);
-            this.showSuccess("Copied to clipboard!");
-        });
+        try {
+            await navigator.clipboard.writeText(text);
+            this.showSuccess("Copied to clipboard");
+        } catch (error) {
+            this.showError("Failed to copy to clipboard");
+        }
     }
 
-    speakText(text, lang) {
+    speakText(text, language) {
         if (!text) return;
         
-        const utterance = new SpeechSynthesisUtterance(text);
-        const langMap = this.languageMap[lang];
-        
-        if (langMap && langMap.speechCode) {
-            utterance.lang = langMap.speechCode;
+        if ("speechSynthesis" in window) {
+            speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            const langCode = this.languageMap[language]?.speechCode || "en-US";
+            utterance.lang = langCode;
+            speechSynthesis.speak(utterance);
+        } else {
+            this.showError("Text-to-speech not supported in this browser");
         }
-        
-        speechSynthesis.speak(utterance);
     }
 
     saveToHistory(sourceText, translatedText, sourceLang, targetLang) {
-        const historyItem = {
+        const history = JSON.parse(localStorage.getItem("nexoTranslatorHistory") || "[]");
+        const entry = {
             id: Date.now(),
             sourceText,
             translatedText,
-            sourceLang: this.languageMap[sourceLang].display,
-            targetLang: this.languageMap[targetLang].display,
-            timestamp: new Date().toLocaleDateString()
+            sourceLang,
+            targetLang,
+            timestamp: new Date().toISOString()
         };
         
-        let history = JSON.parse(localStorage.getItem("nexo-history") || "[]");
-        history.unshift(historyItem);
+        history.unshift(entry);
+        if (history.length > 50) history.splice(50);
         
-        // Keep only last 50 items
-        history = history.slice(0, 50);
-        
-        localStorage.setItem("nexo-history", JSON.stringify(history));
+        localStorage.setItem("nexoTranslatorHistory", JSON.stringify(history));
         this.renderHistory();
     }
 
-    loadTranslationHistory() {
+    loadHistory() {
         this.renderHistory();
     }
 
     renderHistory() {
-        const history = JSON.parse(localStorage.getItem("nexo-history") || "[]");
-        const historyLists = [this.elements.historyList, document.getElementById('history-list-main')];
+        const history = JSON.parse(localStorage.getItem("nexoTranslatorHistory") || "[]");
         
-        historyLists.forEach(historyList => {
-            if (!historyList) return;
-            
-            if (history.length === 0) {
-                historyList.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px 0;">No translations yet. Start translating to see your history here!</p>';
-                return;
-            }
-            
-            historyList.innerHTML = history.map(item => `
-                <div class="history-item" onclick="nexoTranslator.useHistoryItem('${item.sourceText}')">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                        <span style="font-size: 12px; color: var(--text-secondary);">${item.sourceLang} → ${item.targetLang}</span>
-                        <span style="font-size: 12px; color: var(--text-tertiary);">${item.timestamp}</span>
-                    </div>
-                    <div style="margin-bottom: 8px;">
-                        <div style="font-weight: 500; color: var(--text-primary); margin-bottom: 4px;">${item.sourceText}</div>
-                        <div style="color: var(--text-secondary);">${item.translatedText}</div>
-                    </div>
+        if (history.length === 0) {
+            this.elements.historyList.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 20px;">No translation history yet.</p>';
+            return;
+        }
+        
+        this.elements.historyList.innerHTML = history.map(entry => `
+            <div class="history-item" onclick="nexoTranslator.loadHistoryItem('${entry.id}')">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span style="font-size: 12px; color: var(--text-secondary);">
+                        ${this.languageMap[entry.sourceLang]?.display || entry.sourceLang} → 
+                        ${this.languageMap[entry.targetLang]?.display || entry.targetLang}
+                    </span>
+                    <span style="font-size: 12px; color: var(--text-tertiary);">
+                        ${new Date(entry.timestamp).toLocaleDateString()}
+                    </span>
                 </div>
-            `).join("");
-        });
+                <div style="font-size: 14px; margin-bottom: 4px;">${entry.sourceText.substring(0, 100)}${entry.sourceText.length > 100 ? '...' : ''}</div>
+                <div style="font-size: 14px; color: var(--text-secondary);">${entry.translatedText.substring(0, 100)}${entry.translatedText.length > 100 ? '...' : ''}</div>
+            </div>
+        `).join('');
     }
 
-    useHistoryItem(text) {
-        this.elements.sourceText.value = text;
-        this.updateCharCount();
-        this.navigateToSection('home-section');
-        document.getElementById('nav-home').classList.add('active');
-        document.querySelectorAll('.nav-item:not(#nav-home)').forEach(nav => nav.classList.remove('active'));
-        this.translateText();
+    loadHistoryItem(id) {
+        const history = JSON.parse(localStorage.getItem("nexoTranslatorHistory") || "[]");
+        const entry = history.find(item => item.id == id);
+        
+        if (entry) {
+            this.elements.sourceText.value = entry.sourceText;
+            this.elements.translatedText.value = entry.translatedText;
+            this.sourceLanguage = entry.sourceLang;
+            this.targetLanguage = entry.targetLang;
+            
+            this.elements.sourceLangBtn.querySelector("span").textContent = this.languageMap[entry.sourceLang]?.display || entry.sourceLang;
+            this.elements.targetLangBtn.querySelector("span").textContent = this.languageMap[entry.targetLang]?.display || entry.targetLang;
+            
+            this.updateCharCount();
+        }
     }
 
     clearHistory() {
-        localStorage.removeItem("nexo-history");
-        this.renderHistory();
-        this.showSuccess("History cleared!");
+        if (confirm("Are you sure you want to clear all translation history?")) {
+            localStorage.removeItem("nexoTranslatorHistory");
+            this.renderHistory();
+        }
     }
 
     showError(message) {
         this.elements.errorMessage.textContent = message;
         this.elements.errorMessage.style.display = "block";
-        setTimeout(() => {
-            this.elements.errorMessage.style.display = "none";
-        }, 5000);
+        setTimeout(() => this.hideError(), 5000);
     }
 
     hideError() {
         this.elements.errorMessage.style.display = "none";
+    }
+
+    showSuccess(message) {
+        // Create a temporary success message
+        const successDiv = document.createElement("div");
+        successDiv.textContent = message;
+        successDiv.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            z-index: 10000;
+            font-size: 14px;
+        `;
+        
+        document.body.appendChild(successDiv);
+        setTimeout(() => document.body.removeChild(successDiv), 2000);
+    }
+}
+
+// Enhanced NexoTranslator with modern UI features
+class EnhancedNexoTranslator extends NexoTranslator {
+    constructor() {
+        super();
+        this.currentSection = 'home-section';
+        this.setupThemeToggle();
+        this.setupNavigation();
+        this.setupEnhancedFeatures();
+        this.loadTheme();
     }
 
     setupThemeToggle() {
@@ -1939,8 +1761,6 @@ class EnhancedNexoTranslator {
         // Language detector chip
         this.setupLanguageDetector();
 
-        // Camera functionality
-        this.setupCameraFeature();
 
         // Enhanced animations on elements
         this.setupAnimations();
@@ -2016,200 +1836,12 @@ class EnhancedNexoTranslator {
     }
 
     setupAnimations() {
-        // Add intersection observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe elements for animations
+        // Lightweight animations for better performance
         document.querySelectorAll('.affiliate-ad, .history-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-            observer.observe(el);
+            el.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
         });
     }
 
-    setupCameraFeature() {
-        this.cameraElements = {
-            startBtn: document.getElementById('start-camera-btn'),
-            closeBtn: document.getElementById('close-camera-btn'),
-            captureBtn: document.getElementById('capture-btn'),
-            video: document.getElementById('camera-video'),
-            canvas: document.getElementById('camera-canvas'),
-            status: document.getElementById('camera-status'),
-            interface: document.querySelector('.camera-interface'),
-            placeholder: document.getElementById('camera-placeholder'),
-            detectedTextPanel: document.getElementById('detected-text-panel'),
-            detectedText: document.getElementById('detected-text'),
-            useTextBtn: document.getElementById('use-detected-text'),
-            retakeBtn: document.getElementById('retake-photo')
-        };
-
-        this.cameraStream = null;
-        this.isProcessingOCR = false;
-
-        // Event listeners
-        if (this.cameraElements.startBtn) {
-            this.cameraElements.startBtn.addEventListener('click', () => this.startCameraTranslation());
-        }
-        if (this.cameraElements.closeBtn) {
-            this.cameraElements.closeBtn.addEventListener('click', () => this.stopCamera());
-        }
-        if (this.cameraElements.captureBtn) {
-            this.cameraElements.captureBtn.addEventListener('click', () => this.captureAndRecognizeText());
-        }
-        if (this.cameraElements.useTextBtn) {
-            this.cameraElements.useTextBtn.addEventListener('click', () => this.useDetectedText());
-        }
-        if (this.cameraElements.retakeBtn) {
-            this.cameraElements.retakeBtn.addEventListener('click', () => this.retakePhoto());
-        }
-    }
-
-    async startCameraTranslation() {
-        try {
-            // Request camera permission
-            this.cameraStream = await navigator.mediaDevices.getUserMedia({ 
-                video: { 
-                    facingMode: 'environment', // Use back camera if available
-                    width: { ideal: 1280 },
-                    height: { ideal: 720 }
-                } 
-            });
-
-            // Show camera interface
-            this.cameraElements.placeholder.classList.add('hidden');
-            this.cameraElements.interface.classList.add('active');
-            this.cameraElements.video.srcObject = this.cameraStream;
-            
-            // Enable capture button once video is ready
-            this.cameraElements.video.onloadedmetadata = () => {
-                this.cameraElements.captureBtn.disabled = false;
-                this.updateCameraStatus('Ready to capture');
-            };
-
-        } catch (error) {
-            console.error('Camera access error:', error);
-            if (error.name === 'NotAllowedError') {
-                this.showError('Camera access denied. Please allow camera permission and try again.');
-            } else if (error.name === 'NotFoundError') {
-                this.showError('No camera found on this device.');
-            } else {
-                this.showError('Unable to access camera: ' + error.message);
-            }
-        }
-    }
-
-    stopCamera() {
-        if (this.cameraStream) {
-            this.cameraStream.getTracks().forEach(track => track.stop());
-            this.cameraStream = null;
-        }
-        
-        // Hide camera interface
-        this.cameraElements.interface.classList.remove('active');
-        this.cameraElements.placeholder.classList.remove('hidden');
-        this.cameraElements.captureBtn.disabled = true;
-        this.cameraElements.detectedTextPanel.style.display = 'none';
-        this.updateCameraStatus('Position text within the frame');
-    }
-
-    async captureAndRecognizeText() {
-        if (this.isProcessingOCR) return;
-        
-        this.isProcessingOCR = true;
-        this.updateCameraStatus('Capturing and analyzing text...');
-        this.cameraElements.captureBtn.disabled = true;
-
-        try {
-            // Capture frame from video
-            const canvas = this.cameraElements.canvas;
-            const context = canvas.getContext('2d');
-            const video = this.cameraElements.video;
-            
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0);
-            
-            // Convert to image data
-            const imageData = canvas.toDataURL('image/jpeg', 0.8);
-            
-            // Perform OCR using Tesseract.js
-            const result = await Tesseract.recognize(imageData, 'eng+spa+fra+deu+ita+por+rus+ara+zho+jpn+kor', {
-                logger: progress => {
-                    if (progress.status === 'recognizing text') {
-                        const percent = Math.round(progress.progress * 100);
-                        this.updateCameraStatus(`Analyzing text... ${percent}%`);
-                    }
-                }
-            });
-            
-            const detectedText = result.data.text.trim();
-            
-            if (detectedText && detectedText.length > 2) {
-                this.showDetectedText(detectedText);
-            } else {
-                this.updateCameraStatus('No text detected. Try repositioning the camera.');
-                this.cameraElements.captureBtn.disabled = false;
-            }
-            
-        } catch (error) {
-            console.error('OCR error:', error);
-            this.showError('Failed to analyze text. Please try again.');
-            this.cameraElements.captureBtn.disabled = false;
-            this.updateCameraStatus('Ready to capture');
-        } finally {
-            this.isProcessingOCR = false;
-        }
-    }
-
-    showDetectedText(text) {
-        this.cameraElements.detectedText.textContent = text;
-        this.cameraElements.detectedTextPanel.style.display = 'block';
-        this.updateCameraStatus('Text detected successfully!');
-    }
-
-    useDetectedText() {
-        const detectedText = this.cameraElements.detectedText.textContent;
-        
-        // Switch back to home section
-        this.navigateToSection('home-section');
-        document.getElementById('nav-home').classList.add('active');
-        document.querySelectorAll('.nav-item:not(#nav-home)').forEach(nav => nav.classList.remove('active'));
-        
-        // Fill the source text and translate
-        this.elements.sourceText.value = detectedText;
-        this.updateCharCount();
-        this.translateText();
-        
-        // Stop camera
-        this.stopCamera();
-        
-        this.showSuccess('Text captured from camera!');
-    }
-
-    retakePhoto() {
-        this.cameraElements.detectedTextPanel.style.display = 'none';
-        this.cameraElements.captureBtn.disabled = false;
-        this.updateCameraStatus('Ready to capture');
-    }
-
-    updateCameraStatus(message) {
-        if (this.cameraElements.status) {
-            this.cameraElements.status.textContent = message;
-        }
-    }
 
     // Override the existing translateText method to add language detection
     async translateText() {
