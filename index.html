@@ -8,7 +8,6 @@
     <meta name="keywords" content="translator, online translator, free translator, language translator, multilingual translator, Hausa translator, Yoruba translator, Arabic translator, Spanish translator, fast translation, speech-to-text">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
     <style>
 /* Reset and Base Styles */
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -517,143 +516,6 @@ body::before {
 @keyframes recording-pulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
   50% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
-}
-
-/* Camera Interface */
-.camera-interface {
-  display: none;
-  flex-direction: column;
-  height: 100%;
-}
-
-.camera-interface.active {
-  display: flex;
-}
-
-.camera-placeholder {
-  display: block;
-}
-
-.camera-placeholder.hidden {
-  display: none;
-}
-
-.camera-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 24px;
-  border-bottom: 1px solid var(--glass-border);
-}
-
-.camera-container {
-  position: relative;
-  flex: 1;
-  min-height: 400px;
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-#camera-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.camera-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-}
-
-.scan-frame {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 300px;
-  aspect-ratio: 3/2;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.scan-corners {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.scan-corners::before,
-.scan-corners::after {
-  content: '';
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border: 3px solid #ffffff;
-}
-
-.scan-corners::before {
-  top: -3px;
-  left: -3px;
-  border-right: none;
-  border-bottom: none;
-}
-
-.scan-corners::after {
-  top: -3px;
-  right: -3px;
-  border-left: none;
-  border-bottom: none;
-}
-
-.scan-line {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #ffffff, transparent);
-  animation: scan 2s ease-in-out infinite;
-}
-
-@keyframes scan {
-  0%, 100% { transform: translateY(0); opacity: 1; }
-  50% { transform: translateY(150px); opacity: 0.5; }
-}
-
-.camera-status {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 16px;
-  font-size: 14px;
-  text-align: center;
-}
-
-.camera-controls {
-  padding: 20px 24px;
-  text-align: center;
-  border-top: 1px solid var(--glass-border);
-}
-
-.detected-text-panel {
-  padding: 20px 24px;
-  border-top: 1px solid var(--glass-border);
-  background: var(--surface-tertiary);
 }
 
 /* Translate Section */
@@ -1276,73 +1138,6 @@ body::before {
             <p>&copy; Nexo Translator. All rights reserved.</p>
         </footer>
         
-        <!-- Camera Section -->
-        <div class="section" id="camera-section">
-            <div class="main-translator">
-                <div class="camera-interface">
-                    <div class="camera-header">
-                        <h2 style="color: var(--text-primary); margin: 0; font-size: 18px;">Camera Translation</h2>
-                        <button class="control-btn" id="close-camera-btn" title="Close camera">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="camera-container">
-                        <video id="camera-video" autoplay playsinline muted></video>
-                        <canvas id="camera-canvas" style="display: none;"></canvas>
-                        <div class="camera-overlay">
-                            <div class="scan-frame">
-                                <div class="scan-corners"></div>
-                                <div class="scan-line"></div>
-                            </div>
-                        </div>
-                        <div class="camera-status" id="camera-status">Position text within the frame</div>
-                    </div>
-                    <div class="camera-controls">
-                        <button class="translate-btn" id="capture-btn" disabled>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5zM19 7h-3V6a2 2 0 00-2-2h-4a2 2 0 00-2 2v1H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2z"/>
-                            </svg>
-                            <span>Capture & Translate</span>
-                        </button>
-                    </div>
-                    <div class="detected-text-panel" id="detected-text-panel" style="display: none;">
-                        <h3 style="color: var(--text-primary); margin-bottom: 12px; font-size: 14px;">Detected Text:</h3>
-                        <div class="text-area" id="detected-text" readonly style="min-height: 100px; background: var(--surface-secondary);"></div>
-                        <div class="panel-controls" style="justify-content: center; gap: 12px;">
-                            <button class="control-btn" id="use-detected-text" title="Use this text">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                                </svg>
-                            </button>
-                            <button class="control-btn" id="retake-photo" title="Retake photo">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="camera-placeholder" id="camera-placeholder">
-                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 40px; text-align: center;">
-                        <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor" style="margin-bottom: 20px; color: var(--text-secondary);">
-                            <path d="M12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5zM19 7h-3V6a2 2 0 00-2-2h-4a2 2 0 00-2 2v1H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2z"/>
-                        </svg>
-                        <h2 style="color: var(--text-primary); margin-bottom: 12px; font-size: 20px;">Camera Translation</h2>
-                        <p style="color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; max-width: 300px;">Point your camera at text to instantly translate it. Works with 11+ languages.</p>
-                        <button class="translate-btn" id="start-camera-btn">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M8 5v14l11-7z"/>
-                            </svg>
-                            <span>Start Camera</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
         <!-- History Section -->
         <div class="section" id="history-section">
             <div class="history-section">
@@ -1363,12 +1158,6 @@ body::before {
                     <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
                 </svg>
                 <span class="nav-label">Home</span>
-            </button>
-            <button class="nav-item" id="nav-camera" data-section="camera-section" title="Camera">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5zM19 7h-3V6a2 2 0 00-2-2h-4a2 2 0 00-2 2v1H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2z"/>
-                </svg>
-                <span class="nav-label">Camera</span>
             </button>
             <button class="nav-item" id="nav-history" data-section="history-section" title="History">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -1773,6 +1562,37 @@ class EnhancedNexoTranslator {
         return maxMatches > 0 ? detectedLang : 'en';
     }
 
+    async translateText() {
+        const text = this.elements.sourceText.value.trim();
+        if (!text) return;
+
+        this.elements.translateBtn.disabled = true;
+        this.elements.translateBtn.textContent = "Translating...";
+        this.hideError();
+
+        try {
+            const translation = await this.callTranslationAPI(text, this.sourceLanguage, this.targetLanguage);
+            this.elements.translatedText.value = translation.text;
+            
+            if (translation.detectedLanguage && this.sourceLanguage === "auto") {
+                const detectedLang = this.languageMap[translation.detectedLanguage];
+                if (detectedLang) {
+                    this.elements.detectedLanguage.textContent = `Detected: ${detectedLang.display}`;
+                    this.showLanguageDetected(translation.detectedLanguage);
+                }
+            } else {
+                this.elements.detectedLanguage.textContent = "Ready to translate";
+            }
+            
+            this.saveToHistory(text, translation.text, this.sourceLanguage, this.targetLanguage);
+        } catch (error) {
+            this.showError("Translation failed: " + error.message);
+        } finally {
+            this.elements.translateBtn.disabled = false;
+            this.elements.translateBtn.textContent = "Translate";
+        }
+    }
+
     toggleVoiceInput() {
         if (!this.recognition) {
             this.showError("Voice input not supported in this browser");
@@ -1939,9 +1759,6 @@ class EnhancedNexoTranslator {
         // Language detector chip
         this.setupLanguageDetector();
 
-        // Camera functionality
-        this.setupCameraFeature();
-
         // Enhanced animations on elements
         this.setupAnimations();
     }
@@ -2038,225 +1855,6 @@ class EnhancedNexoTranslator {
             el.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
             observer.observe(el);
         });
-    }
-
-    setupCameraFeature() {
-        this.cameraElements = {
-            startBtn: document.getElementById('start-camera-btn'),
-            closeBtn: document.getElementById('close-camera-btn'),
-            captureBtn: document.getElementById('capture-btn'),
-            video: document.getElementById('camera-video'),
-            canvas: document.getElementById('camera-canvas'),
-            status: document.getElementById('camera-status'),
-            interface: document.querySelector('.camera-interface'),
-            placeholder: document.getElementById('camera-placeholder'),
-            detectedTextPanel: document.getElementById('detected-text-panel'),
-            detectedText: document.getElementById('detected-text'),
-            useTextBtn: document.getElementById('use-detected-text'),
-            retakeBtn: document.getElementById('retake-photo')
-        };
-
-        this.cameraStream = null;
-        this.isProcessingOCR = false;
-
-        // Event listeners
-        if (this.cameraElements.startBtn) {
-            this.cameraElements.startBtn.addEventListener('click', () => this.startCameraTranslation());
-        }
-        if (this.cameraElements.closeBtn) {
-            this.cameraElements.closeBtn.addEventListener('click', () => this.stopCamera());
-        }
-        if (this.cameraElements.captureBtn) {
-            this.cameraElements.captureBtn.addEventListener('click', () => this.captureAndRecognizeText());
-        }
-        if (this.cameraElements.useTextBtn) {
-            this.cameraElements.useTextBtn.addEventListener('click', () => this.useDetectedText());
-        }
-        if (this.cameraElements.retakeBtn) {
-            this.cameraElements.retakeBtn.addEventListener('click', () => this.retakePhoto());
-        }
-    }
-
-    async startCameraTranslation() {
-        try {
-            // Request camera permission
-            this.cameraStream = await navigator.mediaDevices.getUserMedia({ 
-                video: { 
-                    facingMode: 'environment', // Use back camera if available
-                    width: { ideal: 1280 },
-                    height: { ideal: 720 }
-                } 
-            });
-
-            // Show camera interface
-            this.cameraElements.placeholder.classList.add('hidden');
-            this.cameraElements.interface.classList.add('active');
-            this.cameraElements.video.srcObject = this.cameraStream;
-            
-            // Enable capture button once video is ready
-            this.cameraElements.video.onloadedmetadata = () => {
-                this.cameraElements.captureBtn.disabled = false;
-                this.updateCameraStatus('Ready to capture');
-            };
-
-        } catch (error) {
-            console.error('Camera access error:', error);
-            if (error.name === 'NotAllowedError') {
-                this.showError('Camera access denied. Please allow camera permission and try again.');
-            } else if (error.name === 'NotFoundError') {
-                this.showError('No camera found on this device.');
-            } else {
-                this.showError('Unable to access camera: ' + error.message);
-            }
-        }
-    }
-
-    stopCamera() {
-        if (this.cameraStream) {
-            this.cameraStream.getTracks().forEach(track => track.stop());
-            this.cameraStream = null;
-        }
-        
-        // Hide camera interface
-        this.cameraElements.interface.classList.remove('active');
-        this.cameraElements.placeholder.classList.remove('hidden');
-        this.cameraElements.captureBtn.disabled = true;
-        this.cameraElements.detectedTextPanel.style.display = 'none';
-        this.updateCameraStatus('Position text within the frame');
-    }
-
-    async captureAndRecognizeText() {
-        if (this.isProcessingOCR) return;
-        
-        this.isProcessingOCR = true;
-        this.updateCameraStatus('Capturing and analyzing text...');
-        this.cameraElements.captureBtn.disabled = true;
-
-        try {
-            // Capture frame from video
-            const canvas = this.cameraElements.canvas;
-            const context = canvas.getContext('2d');
-            const video = this.cameraElements.video;
-            
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0);
-            
-            // Convert to image data
-            const imageData = canvas.toDataURL('image/jpeg', 0.8);
-            
-            // Perform OCR using Tesseract.js
-            const result = await Tesseract.recognize(imageData, 'eng+spa+fra+deu+ita+por+rus+ara+zho+jpn+kor', {
-                logger: progress => {
-                    if (progress.status === 'recognizing text') {
-                        const percent = Math.round(progress.progress * 100);
-                        this.updateCameraStatus(`Analyzing text... ${percent}%`);
-                    }
-                }
-            });
-            
-            const detectedText = result.data.text.trim();
-            
-            if (detectedText && detectedText.length > 2) {
-                this.showDetectedText(detectedText);
-            } else {
-                this.updateCameraStatus('No text detected. Try repositioning the camera.');
-                this.cameraElements.captureBtn.disabled = false;
-            }
-            
-        } catch (error) {
-            console.error('OCR error:', error);
-            this.showError('Failed to analyze text. Please try again.');
-            this.cameraElements.captureBtn.disabled = false;
-            this.updateCameraStatus('Ready to capture');
-        } finally {
-            this.isProcessingOCR = false;
-        }
-    }
-
-    showDetectedText(text) {
-        this.cameraElements.detectedText.textContent = text;
-        this.cameraElements.detectedTextPanel.style.display = 'block';
-        this.updateCameraStatus('Text detected successfully!');
-    }
-
-    useDetectedText() {
-        const detectedText = this.cameraElements.detectedText.textContent;
-        
-        // Switch back to home section
-        this.navigateToSection('home-section');
-        document.getElementById('nav-home').classList.add('active');
-        document.querySelectorAll('.nav-item:not(#nav-home)').forEach(nav => nav.classList.remove('active'));
-        
-        // Fill the source text and translate
-        this.elements.sourceText.value = detectedText;
-        this.updateCharCount();
-        this.translateText();
-        
-        // Stop camera
-        this.stopCamera();
-        
-        this.showSuccess('Text captured from camera!');
-    }
-
-    retakePhoto() {
-        this.cameraElements.detectedTextPanel.style.display = 'none';
-        this.cameraElements.captureBtn.disabled = false;
-        this.updateCameraStatus('Ready to capture');
-    }
-
-    updateCameraStatus(message) {
-        if (this.cameraElements.status) {
-            this.cameraElements.status.textContent = message;
-        }
-    }
-
-    // Override the existing translateText method to add language detection
-    async translateText() {
-        const text = this.elements.sourceText.value.trim();
-        if (!text) return;
-
-        this.elements.translateBtn.disabled = true;
-        this.elements.translateBtn.querySelector('span').textContent = "Translating...";
-        this.hideError();
-
-        try {
-            const translation = await this.callTranslationAPI(text, this.sourceLanguage, this.targetLanguage);
-            this.elements.translatedText.value = translation.text;
-            
-            if (translation.detectedLanguage && this.sourceLanguage === "auto") {
-                const detectedLang = this.languageMap[translation.detectedLanguage];
-                if (detectedLang) {
-                    this.elements.detectedLanguage.textContent = `Detected: ${detectedLang.display}`;
-                    this.showLanguageDetected(translation.detectedLanguage);
-                }
-            } else {
-                this.elements.detectedLanguage.textContent = "Ready to translate";
-            }
-            
-            this.saveToHistory(text, translation.text, this.sourceLanguage, this.targetLanguage);
-        } catch (error) {
-            this.showError("Translation failed: " + error.message);
-        } finally {
-            this.elements.translateBtn.disabled = false;
-            this.elements.translateBtn.querySelector('span').textContent = "Translate";
-        }
-    }
-
-    // Override voice input to add recording animation
-    toggleVoiceInput() {
-        if (!this.recognition) {
-            this.showError("Voice input not supported in this browser");
-            return;
-        }
-
-        if (this.isRecording) {
-            this.recognition.stop();
-            this.elements.micBtn.classList.remove('recording');
-        } else {
-            this.recognition.start();
-            this.elements.micBtn.classList.add('recording');
-        }
     }
 
     // Enhanced success message with modern styling
