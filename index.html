@@ -8,94 +8,181 @@
     <meta name="keywords" content="translator, online translator, free translator, language translator, multilingual translator, Hausa translator, Yoruba translator, Arabic translator, Spanish translator, fast translation, speech-to-text">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
     <style>
 /* Reset and Base Styles */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --primary-color: #1a73e8;
-  --primary-hover: #1557b0;
-  --surface-color: #ffffff;
-  --surface-secondary: #f8f9fa;
-  --border-light: #dadce0;
-  --text-primary: #202124;
-  --text-secondary: #5f6368;
-  --text-tertiary: #80868b;
-  --shadow-light: 0 2px 10px rgba(0,0,0,0.1);
-  --shadow-medium: 0 4px 20px rgba(0,0,0,0.15);
-  --border-radius: 12px;
-  --border-radius-large: 20px;
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Light Mode Colors */
+  --primary-color: #1a1a1a;
+  --primary-hover: #000000;
+  --primary-light: rgba(26, 26, 26, 0.1);
+  --accent-color: #333333;
+  --accent-hover: #1a1a1a;
+  --surface-color: rgba(255, 255, 255, 0.9);
+  --surface-secondary: rgba(248, 250, 252, 0.95);
+  --surface-tertiary: rgba(241, 245, 249, 0.8);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  --border-light: rgba(0, 0, 0, 0.08);
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --text-tertiary: #999999;
+  --shadow-light: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  --backdrop-filter: blur(20px);
+  --border-radius: 16px;
+  --border-radius-large: 24px;
+  --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --gradient-bg: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
+}
+
+[data-theme="dark"] {
+  /* Dark Mode Colors */
+  --primary-color: #ffffff;
+  --primary-hover: #f8f9fa;
+  --primary-light: rgba(255, 255, 255, 0.1);
+  --accent-color: #e9ecef;
+  --accent-hover: #f8f9fa;
+  --surface-color: rgba(26, 26, 26, 0.9);
+  --surface-secondary: rgba(51, 51, 51, 0.8);
+  --surface-tertiary: rgba(77, 77, 77, 0.6);
+  --glass-bg: rgba(26, 26, 26, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --border-light: rgba(255, 255, 255, 0.08);
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --text-tertiary: #999999;
+  --shadow-light: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --shadow-medium: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  --gradient-bg: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  --gradient-card: linear-gradient(145deg, rgba(26,26,26,0.9) 0%, rgba(51,51,51,0.7) 100%);
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e8eaed 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+  background: var(--gradient-bg);
   min-height: 100vh;
   color: var(--text-primary);
-  line-height: 1.5;
+  line-height: 1.6;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.15) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .app-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 20px 20px 100px;
   min-height: 100vh;
+  position: relative;
+  z-index: 1;
 }
 
 /* Header */
 .header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 40px;
-  padding: 20px 8px;
+  padding: 20px;
   position: relative;
+  backdrop-filter: var(--backdrop-filter);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-large);
+  box-shadow: var(--shadow-glass);
 }
 
 .logo {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 12px;
 }
 
 .logo-icon {
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   transition: var(--transition);
+  background: var(--gradient-card);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
 }
 
 .logo-icon:hover {
-  transform: scale(1.05);
+  transform: scale(1.05) rotate(2deg);
 }
 
 .logo-icon img {
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   object-fit: contain;
   filter: contrast(1.1) saturate(1.1);
 }
 
-.social-header {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
+
+.header-controls {
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 16px;
+}
+
+.theme-toggle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  color: var(--text-secondary);
+}
+
+.theme-toggle:hover {
+  background: var(--primary-light);
+  color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+.social-header {
+  display: flex;
+  gap: 12px;
 }
 
 .social-link {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: var(--surface-color);
-  border: 2px solid var(--border-light);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,40 +192,83 @@ body {
 }
 
 .social-link:hover {
-  border-color: var(--primary-color);
+  background: var(--primary-light);
   color: var(--primary-color);
+  transform: translateY(-2px) scale(1.1);
+  box-shadow: var(--shadow-light);
 }
 
 /* Main Translator */
 .main-translator {
-  background: var(--surface-color);
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-filter);
+  border: 1px solid var(--glass-border);
   border-radius: var(--border-radius-large);
-  box-shadow: var(--shadow-medium);
+  box-shadow: var(--shadow-glass);
   overflow: hidden;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.main-translator::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+  opacity: 0.3;
+  z-index: 1;
 }
 
 .language-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 24px;
+  padding: 24px;
   border-bottom: 1px solid var(--border-light);
-  gap: 16px;
+  gap: 20px;
+  position: relative;
+  z-index: 100;
+}
+
+.language-detector {
+  position: absolute;
+  top: -8px;
+  left: 24px;
+  background: var(--primary-light);
+  color: var(--primary-color);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: var(--transition);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.language-detector.show {
+  opacity: 1;
+  transform: translateY(-8px);
 }
 
 .language-selector {
   position: relative;
   flex: 1;
-  max-width: 200px;
+  max-width: 220px;
+  z-index: 200;
 }
 
 .language-btn {
-  background: var(--surface-color);
-  border: 2px solid var(--border-light);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
   border-radius: var(--border-radius);
-  padding: 12px 16px;
-  font-size: 14px;
+  padding: 14px 18px;
+  font-size: 15px;
   font-weight: 500;
   color: var(--text-primary);
   cursor: pointer;
@@ -147,26 +277,39 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
 }
 
 .language-btn:hover {
   border-color: var(--primary-color);
-  background: rgba(26,115,232,0.04);
+  background: var(--primary-light);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-light);
+}
+
+.language-flag {
+  width: 20px;
+  height: 15px;
+  border-radius: 3px;
+  background: var(--gradient-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
 }
 
 .language-dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
+  position: fixed !important;
   background: var(--surface-color);
   border: 1px solid var(--border-light);
   border-radius: var(--border-radius);
-  box-shadow: var(--shadow-medium);
-  z-index: 1000;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25) !important;
+  z-index: 9999 !important;
   max-height: 300px;
   overflow-y: auto;
   display: none;
+  min-width: 220px;
+  backdrop-filter: blur(20px) !important;
 }
 
 .language-dropdown.active {
@@ -192,57 +335,97 @@ body {
 }
 
 .swap-btn {
-  background: var(--surface-color);
-  border: 2px solid var(--border-light);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
   border-radius: 50%;
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: var(--transition);
   color: var(--text-secondary);
+  position: relative;
+  overflow: hidden;
+}
+
+.swap-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: var(--primary-color);
+  border-radius: 50%;
+  transition: var(--transition);
+  transform: translate(-50%, -50%);
+  opacity: 0.1;
 }
 
 .swap-btn:hover {
   border-color: var(--primary-color);
   color: var(--primary-color);
-  transform: rotate(180deg);
+  transform: rotate(180deg) scale(1.1);
+  box-shadow: var(--shadow-light);
+}
+
+.swap-btn:hover::before {
+  width: 100%;
+  height: 100%;
 }
 
 /* Translation Area */
 .translation-area {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 300px;
+  min-height: 350px;
+  gap: 2px;
+  overflow: hidden;
+  border-radius: 0 0 var(--border-radius-large) var(--border-radius-large);
 }
 
 .text-panel {
   position: relative;
   display: flex;
   flex-direction: column;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  transition: var(--transition);
 }
 
 .text-panel:first-child {
-  border-right: 1px solid var(--border-light);
+  border-right: 1px solid var(--glass-border);
+}
+
+.text-panel:hover {
+  background: var(--surface-secondary);
 }
 
 .text-area {
   border: none;
   outline: none;
-  padding: 24px;
-  font-size: 16px;
-  line-height: 1.6;
+  padding: 28px;
+  font-size: 17px;
+  line-height: 1.7;
   color: var(--text-primary);
   background: transparent;
   resize: none;
   flex: 1;
-  min-height: 300px;
+  min-height: 350px;
+  font-family: inherit;
+  transition: var(--transition);
 }
 
 .text-area::placeholder {
   color: var(--text-tertiary);
+  font-style: italic;
+}
+
+.text-area:focus {
+  color: var(--text-primary);
 }
 
 .char-count {
@@ -262,34 +445,236 @@ body {
 }
 
 .control-btn {
-  background: transparent;
-  border: none;
-  border-radius: 8px;
-  width: 40px;
-  height: 40px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   color: var(--text-secondary);
   transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.control-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: var(--primary-color);
+  border-radius: 50%;
+  transition: var(--transition);
+  transform: translate(-50%, -50%);
+  opacity: 0.1;
+  z-index: 0;
 }
 
 .control-btn:hover {
-  background: var(--surface-secondary);
   color: var(--primary-color);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: var(--shadow-light);
+}
+
+.control-btn:hover::before {
+  width: 120%;
+  height: 120%;
 }
 
 .control-btn.active {
   background: var(--primary-color);
   color: white;
+  box-shadow: var(--shadow-medium);
+}
+
+.control-btn.active::before {
+  background: rgba(255,255,255,0.2);
+  width: 100%;
+  height: 100%;
+}
+
+.microphone-btn {
+  animation: pulse 2s infinite;
+}
+
+.microphone-btn.recording {
+  animation: recording-pulse 1s infinite;
+  background: #ef4444;
+  color: white;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes recording-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+  50% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+}
+
+/* Camera Interface */
+.camera-interface {
+  display: none;
+  flex-direction: column;
+  height: 100%;
+}
+
+.camera-interface.active {
+  display: flex;
+}
+
+.camera-placeholder {
+  display: block;
+}
+
+.camera-placeholder.hidden {
+  display: none;
+}
+
+.camera-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.camera-container {
+  position: relative;
+  flex: 1;
+  min-height: 400px;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#camera-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.camera-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.scan-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 300px;
+  aspect-ratio: 3/2;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.scan-corners {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.scan-corners::before,
+.scan-corners::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #ffffff;
+}
+
+.scan-corners::before {
+  top: -3px;
+  left: -3px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.scan-corners::after {
+  top: -3px;
+  right: -3px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ffffff, transparent);
+  animation: scan 2s ease-in-out infinite;
+}
+
+@keyframes scan {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(150px); opacity: 0.5; }
+}
+
+.camera-status {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 16px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.camera-controls {
+  padding: 20px 24px;
+  text-align: center;
+  border-top: 1px solid var(--glass-border);
+}
+
+.detected-text-panel {
+  padding: 20px 24px;
+  border-top: 1px solid var(--glass-border);
+  background: var(--surface-tertiary);
 }
 
 /* Translate Section */
 .translate-section {
-  padding: 20px 24px;
-  background: var(--surface-secondary);
+  padding: 24px 28px;
+  background: var(--surface-tertiary);
+  backdrop-filter: blur(20px);
   text-align: center;
+  border-top: 1px solid var(--glass-border);
+  position: relative;
+}
+
+.translate-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+  opacity: 0.4;
 }
 
 .translate-btn {
@@ -297,23 +682,48 @@ body {
   color: white;
   border: none;
   border-radius: var(--border-radius);
-  padding: 12px 32px;
-  font-size: 14px;
-  font-weight: 500;
+  padding: 16px 40px;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
-  min-width: 120px;
+  min-width: 140px;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: var(--shadow-medium);
+}
+
+.translate-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: var(--transition);
 }
 
 .translate-btn:hover {
-  background: var(--primary-hover);
-  transform: translateY(-1px);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: var(--shadow-glass);
+}
+
+.translate-btn:hover::before {
+  left: 100%;
+}
+
+.translate-btn:active {
+  transform: translateY(-1px) scale(0.98);
 }
 
 .translate-btn:disabled {
   background: var(--text-tertiary);
   cursor: not-allowed;
   transform: none;
+  opacity: 0.6;
 }
 
 .detect-language {
@@ -332,30 +742,137 @@ body {
   display: none;
 }
 
+/* Bottom Navigation */
+.bottom-nav {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-filter);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-large);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--shadow-glass);
+  z-index: 1500;
+  transition: var(--transition);
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  color: var(--text-secondary);
+  position: relative;
+  background: transparent;
+  border: none;
+}
+
+.nav-item.active {
+  background: var(--primary-color);
+  color: white;
+  box-shadow: var(--shadow-medium);
+}
+
+.nav-item:hover:not(.active) {
+  background: var(--primary-light);
+  color: var(--primary-color);
+  transform: translateY(-2px) scale(1.1);
+}
+
+.nav-label {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 500;
+  opacity: 0;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.nav-item:hover .nav-label,
+.nav-item.active .nav-label {
+  opacity: 1;
+}
+
+/* Floating Action Button */
+.fab {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-glass);
+  z-index: 1400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.fab:hover {
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: var(--shadow-medium);
+}
+
 /* Ads Section */
 .ads-section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  margin-bottom: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin: 40px 0;
 }
 
 .affiliate-ad {
   display: block;
-  background: var(--surface-color);
-  border: 1px solid var(--border-light);
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-filter);
+  border: 1px solid var(--glass-border);
   border-radius: var(--border-radius-large);
-  padding: 20px;
+  padding: 24px;
   text-decoration: none;
   color: inherit;
   transition: var(--transition);
-  box-shadow: var(--shadow-light);
+  box-shadow: var(--shadow-glass);
+  position: relative;
+  overflow: hidden;
+}
+
+.affiliate-ad::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  transform: scaleX(0);
+  transition: var(--transition);
 }
 
 .affiliate-ad:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px) scale(1.02);
   box-shadow: var(--shadow-medium);
-  border-color: var(--primary-color);
+}
+
+.affiliate-ad:hover::before {
+  transform: scaleX(1);
 }
 
 .ad-content h3 {
@@ -373,10 +890,33 @@ body {
 
 /* History Section */
 .history-section {
-  background: var(--surface-color);
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-filter);
+  border: 1px solid var(--glass-border);
   border-radius: var(--border-radius-large);
-  box-shadow: var(--shadow-light);
-  padding: 24px;
+  box-shadow: var(--shadow-glass);
+  padding: 28px;
+  margin-bottom: 40px;
+}
+
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .history-header {
@@ -390,23 +930,22 @@ body {
   font-size: 18px;
   font-weight: 600;
   color: var(--text-primary);
-  margin: 0;
 }
 
 .clear-history-btn {
-  background: transparent;
-  border: 1px solid var(--border-light);
-  border-radius: var(--border-radius);
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 12px;
   padding: 8px 16px;
   font-size: 12px;
-  color: var(--text-secondary);
   cursor: pointer;
   transition: var(--transition);
 }
 
 .clear-history-btn:hover {
-  border-color: var(--primary-color);
-  color: var(--primary-color);
+  background: var(--primary-hover);
+  transform: scale(1.02);
 }
 
 .history-list {
@@ -417,14 +956,36 @@ body {
 
 .history-item {
   background: var(--surface-secondary);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
   border-radius: var(--border-radius);
-  padding: 16px;
+  padding: 20px;
   transition: var(--transition);
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.history-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--primary-color);
+  transform: scaleY(0);
+  transition: var(--transition);
 }
 
 .history-item:hover {
-  background: #e8eaed;
+  background: var(--primary-light);
+  transform: translateX(8px);
+  box-shadow: var(--shadow-light);
+}
+
+.history-item:hover::before {
+  transform: scaleY(1);
 }
 
 /* Footer */
@@ -479,28 +1040,42 @@ body {
                     <img src="attached_assets/IMG_20250826_073618_116_1757157131293.webp" alt="Nexo Translator Logo" />
                 </div>
             </div>
-            <div class="social-header">
-                <a href="https://twitter.com/nexotranslator" class="social-link" target="_blank" title="Follow us on Twitter" aria-label="Follow Nexo Translator on Twitter">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            <div class="header-controls">
+                <button class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="sun-icon">
+                        <path d="M12 17.5C15.04 17.5 17.5 15.04 17.5 12C17.5 8.96 15.04 6.5 12 6.5C8.96 6.5 6.5 8.96 6.5 12C6.5 15.04 8.96 17.5 12 17.5ZM12 0L13.39 4.42C13.52 4.82 13.86 5.1 14.27 5.1H19L15.13 7.97C14.8 8.21 14.66 8.63 14.78 9.02L16.5 14L12 10.5L7.5 14L9.22 9.02C9.34 8.63 9.2 8.21 8.87 7.97L5 5.1H9.73C10.14 5.1 10.48 4.82 10.61 4.42L12 0Z"/>
                     </svg>
-                </a>
-                <a href="https://instagram.com/nexotranslator" class="social-link" target="_blank" title="Follow us on Instagram" aria-label="Follow Nexo Translator on Instagram">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="moon-icon" style="display: none;">
+                        <path d="M12 3C16.97 3 21 7.03 21 12C21 16.97 16.97 21 12 21C7.03 21 3 16.97 3 12C3 7.03 7.03 3 12 3ZM12 1C5.93 1 1 5.93 1 12C1 18.07 5.93 23 12 23C18.07 23 23 18.07 23 12C23 5.93 18.07 1 12 1ZM12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18V6Z"/>
                     </svg>
-                </a>
+                </button>
+                <div class="social-header">
+                    <a href="https://twitter.com/nexotranslator" class="social-link" target="_blank" title="Follow us on Twitter">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                    <a href="https://instagram.com/nexotranslator" class="social-link" target="_blank" title="Follow us on Instagram">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.79-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                </div>
             </div>
         </header>
-        <main class="main-translator" role="main" aria-label="Translation Interface">
-            <div class="language-header">
-                <div class="language-selector">
-                    <button class="language-btn" id="source-lang-btn" aria-haspopup="listbox" aria-label="Select source language">
-                        <span>Auto Detect</span>
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M7 10l5 5 5-5z"/>
-                        </svg>
-                    </button>
+        <!-- Home Section -->
+        <div class="section active" id="home-section">
+            <main class="main-translator" role="main" aria-label="Translation Interface">
+                <div class="language-detector" id="language-detector">Detected: Spanish</div>
+                <div class="language-header">
+                    <div class="language-selector">
+                        <button class="language-btn" id="source-lang-btn" aria-haspopup="listbox" aria-label="Select source language">
+                            <div class="language-flag">🌐</div>
+                            <span>Auto Detect</span>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M7 10l5 5 5-5z"/>
+                            </svg>
+                        </button>
                     <div class="language-dropdown" id="source-lang-dropdown" role="listbox">
                         <div class="language-option" data-lang="auto" role="option">Auto Detect</div>
                         <div class="language-option" data-lang="en" role="option">English</div>
@@ -563,13 +1138,14 @@ body {
                         <path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"/>
                     </svg>
                 </button>
-                <div class="language-selector">
-                    <button class="language-btn" id="target-lang-btn" aria-haspopup="listbox" aria-label="Select target language">
-                        <span>English</span>
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M7 10l5 5 5-5z"/>
-                        </svg>
-                    </button>
+                    <div class="language-selector">
+                        <button class="language-btn" id="target-lang-btn" aria-haspopup="listbox" aria-label="Select target language">
+                            <div class="language-flag">🇺🇸</div>
+                            <span>English</span>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M7 10l5 5 5-5z"/>
+                            </svg>
+                        </button>
                     <div class="language-dropdown" id="target-lang-dropdown" role="listbox">
                         <div class="language-option" data-lang="en" role="option">English</div>
                         <div class="language-option" data-lang="es" role="option">Spanish</div>
@@ -699,78 +1275,133 @@ body {
         <footer class="footer" role="contentinfo">
             <p>&copy; Nexo Translator. All rights reserved.</p>
         </footer>
-    </div>
-
-    <script>
-class NexoTranslator {
-    constructor() {
-        this.languageMap = {
-            auto: { display: "Auto Detect", speechCode: null },
-            en: { display: "English", speechCode: "en-US" },
-            es: { display: "Spanish", speechCode: "es-ES" },
-            fr: { display: "French", speechCode: "fr-FR" },
-            de: { display: "German", speechCode: "de-DE" },
-            it: { display: "Italian", speechCode: "it-IT" },
-            pt: { display: "Portuguese", speechCode: "pt-PT" },
-            ru: { display: "Russian", speechCode: "ru-RU" },
-            zh: { display: "Chinese (Simplified)", speechCode: "zh-CN" },
-            ja: { display: "Japanese", speechCode: "ja-JP" },
-            ko: { display: "Korean", speechCode: "ko-KR" },
-            ar: { display: "Arabic", speechCode: "ar-SA" },
-            nl: { display: "Dutch", speechCode: "nl-NL" },
-            sv: { display: "Swedish", speechCode: "sv-SE" },
-            no: { display: "Norwegian", speechCode: "no-NO" },
-            da: { display: "Danish", speechCode: "da-DK" },
-            fi: { display: "Finnish", speechCode: "fi-FI" },
-            pl: { display: "Polish", speechCode: "pl-PL" },
-            tr: { display: "Turkish", speechCode: "tr-TR" },
-            hi: { display: "Hindi", speechCode: "hi-IN" },
-            bn: { display: "Bengali", speechCode: "bn-IN" },
-            th: { display: "Thai", speechCode: "th-TH" },
-            vi: { display: "Vietnamese", speechCode: "vi-VN" },
-            id: { display: "Indonesian", speechCode: "id-ID" },
-            ms: { display: "Malay", speechCode: "ms-MY" },
-            el: { display: "Greek", speechCode: "el-GR" },
-            he: { display: "Hebrew", speechCode: "he-IL" },
-            cs: { display: "Czech", speechCode: "cs-CZ" },
-            sk: { display: "Slovak", speechCode: "sk-SK" },
-            hu: { display: "Hungarian", speechCode: "hu-HU" },
-            ro: { display: "Romanian", speechCode: "ro-RO" },
-            bg: { display: "Bulgarian", speechCode: "bg-BG" },
-            uk: { display: "Ukrainian", speechCode: "uk-UA" },
-            hr: { display: "Croatian", speechCode: "hr-HR" },
-            sr: { display: "Serbian", speechCode: "sr-RS" },
-            sl: { display: "Slovenian", speechCode: "sl-SI" },
-            lt: { display: "Lithuanian", speechCode: "lt-LT" },
-            lv: { display: "Latvian", speechCode: "lv-LV" },
-            et: { display: "Estonian", speechCode: "et-EE" },
-            fa: { display: "Persian", speechCode: "fa-IR" },
-            sw: { display: "Swahili", speechCode: "sw-KE" },
-            am: { display: "Amharic", speechCode: "am-ET" },
-            zu: { display: "Zulu", speechCode: "zu-ZA" },
-            xh: { display: "Xhosa", speechCode: "xh-ZA" },
-            so: { display: "Somali", speechCode: "so-SO" },
-            ta: { display: "Tamil", speechCode: "ta-IN" },
-            te: { display: "Telugu", speechCode: "te-IN" },
-            ml: { display: "Malayalam", speechCode: "ml-IN" },
-            kn: { display: "Kannada", speechCode: "kn-IN" },
-            gu: { display: "Gujarati", speechCode: "gu-IN" },
-            pa: { display: "Punjabi", speechCode: "pa-IN" },
-            ha: { display: "Hausa", speechCode: "ha-NG" },
-            yo: { display: "Yoruba", speechCode: "yo-NG" },
-            ig: { display: "Igbo", speechCode: "ig-NG" }
-        };
         
+        <!-- Camera Section -->
+        <div class="section" id="camera-section">
+            <div class="main-translator">
+                <div class="camera-interface">
+                    <div class="camera-header">
+                        <h2 style="color: var(--text-primary); margin: 0; font-size: 18px;">Camera Translation</h2>
+                        <button class="control-btn" id="close-camera-btn" title="Close camera">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="camera-container">
+                        <video id="camera-video" autoplay playsinline muted></video>
+                        <canvas id="camera-canvas" style="display: none;"></canvas>
+                        <div class="camera-overlay">
+                            <div class="scan-frame">
+                                <div class="scan-corners"></div>
+                                <div class="scan-line"></div>
+                            </div>
+                        </div>
+                        <div class="camera-status" id="camera-status">Position text within the frame</div>
+                    </div>
+                    <div class="camera-controls">
+                        <button class="translate-btn" id="capture-btn" disabled>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5zM19 7h-3V6a2 2 0 00-2-2h-4a2 2 0 00-2 2v1H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2z"/>
+                            </svg>
+                            <span>Capture & Translate</span>
+                        </button>
+                    </div>
+                    <div class="detected-text-panel" id="detected-text-panel" style="display: none;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 12px; font-size: 14px;">Detected Text:</h3>
+                        <div class="text-area" id="detected-text" readonly style="min-height: 100px; background: var(--surface-secondary);"></div>
+                        <div class="panel-controls" style="justify-content: center; gap: 12px;">
+                            <button class="control-btn" id="use-detected-text" title="Use this text">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                                </svg>
+                            </button>
+                            <button class="control-btn" id="retake-photo" title="Retake photo">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="camera-placeholder" id="camera-placeholder">
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 40px; text-align: center;">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor" style="margin-bottom: 20px; color: var(--text-secondary);">
+                            <path d="M12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5zM19 7h-3V6a2 2 0 00-2-2h-4a2 2 0 00-2 2v1H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2z"/>
+                        </svg>
+                        <h2 style="color: var(--text-primary); margin-bottom: 12px; font-size: 20px;">Camera Translation</h2>
+                        <p style="color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; max-width: 300px;">Point your camera at text to instantly translate it. Works with 11+ languages.</p>
+                        <button class="translate-btn" id="start-camera-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                            <span>Start Camera</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- History Section -->
+        <div class="section" id="history-section">
+            <div class="history-section">
+                <div class="history-header">
+                    <h2>Translation History</h2>
+                    <button class="clear-history-btn" id="clear-history-btn-main" aria-label="Clear translation history">Clear All</button>
+                </div>
+                <div class="history-list" id="history-list-main">
+                    <p style="text-align: center; color: var(--text-secondary); padding: 40px 0;">No translations yet. Start translating to see your history here!</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav" role="navigation" aria-label="Main navigation">
+            <button class="nav-item active" id="nav-home" data-section="home-section" title="Home">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+                <span class="nav-label">Home</span>
+            </button>
+            <button class="nav-item" id="nav-camera" data-section="camera-section" title="Camera">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5zM19 7h-3V6a2 2 0 00-2-2h-4a2 2 0 00-2 2v1H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2z"/>
+                </svg>
+                <span class="nav-label">Camera</span>
+            </button>
+            <button class="nav-item" id="nav-history" data-section="history-section" title="History">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+                </svg>
+                <span class="nav-label">History</span>
+            </button>
+        </nav>
+        
+        <!-- Quick Translate FAB -->
+        <button class="fab" id="quick-translate-fab" title="Quick Translate" aria-label="Quick translate">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
+            </svg>
+        </button>
+    </div>
+    
+    <script>
+class EnhancedNexoTranslator {
+    constructor() {
         this.sourceLanguage = "auto";
         this.targetLanguage = "en";
-        this.elements = {};
+        this.debounceTimer = null;
         this.isRecording = false;
         this.recognition = null;
-        this.init();
-        this.loadHistory();
+        this.currentSection = 'home-section';
+        
+        this.initializeElements();
+        this.setupTranslator();
+        this.loadTheme();
     }
 
-    init() {
+    initializeElements() {
         this.elements = {
             sourceLangBtn: document.getElementById("source-lang-btn"),
             targetLangBtn: document.getElementById("target-lang-btn"),
@@ -781,19 +1412,82 @@ class NexoTranslator {
             translatedText: document.getElementById("translated-text"),
             translateBtn: document.getElementById("translate-btn"),
             charCount: document.getElementById("char-count"),
+            detectedLanguage: document.getElementById("detected-language"),
+            errorMessage: document.getElementById("error-message"),
             micBtn: document.getElementById("mic-btn"),
             copySourceBtn: document.getElementById("copy-source-btn"),
             copyTranslatedBtn: document.getElementById("copy-translated-btn"),
             speakSourceBtn: document.getElementById("speak-source-btn"),
             speakTranslatedBtn: document.getElementById("speak-translated-btn"),
-            detectedLanguage: document.getElementById("detected-language"),
-            errorMessage: document.getElementById("error-message"),
-            historyList: document.getElementById("history-list"),
-            clearHistoryBtn: document.getElementById("clear-history-btn")
+            clearHistoryBtn: document.getElementById("clear-history-btn"),
+            historyList: document.getElementById("history-list")
         };
+        
+        this.languageMap = {
+            auto: {display: "Auto Detect", flag: "🌐", speechCode: null},
+            en: {display: "English", flag: "🇺🇸", speechCode: "en-US"},
+            es: {display: "Spanish", flag: "🇪🇸", speechCode: "es-ES"},
+            fr: {display: "French", flag: "🇫🇷", speechCode: "fr-FR"},
+            de: {display: "German", flag: "🇩🇪", speechCode: "de-DE"},
+            it: {display: "Italian", flag: "🇮🇹", speechCode: "it-IT"},
+            pt: {display: "Portuguese", flag: "🇵🇹", speechCode: "pt-PT"},
+            ru: {display: "Russian", flag: "🇷🇺", speechCode: "ru-RU"},
+            zh: {display: "Chinese (Simplified)", flag: "🇨🇳", speechCode: "zh-CN"},
+            ja: {display: "Japanese", flag: "🇯🇵", speechCode: "ja-JP"},
+            ko: {display: "Korean", flag: "🇰🇷", speechCode: "ko-KR"},
+            ar: {display: "Arabic", flag: "🇸🇦", speechCode: "ar-SA"},
+            nl: {display: "Dutch", flag: "🇳🇱", speechCode: "nl-NL"},
+            sv: {display: "Swedish", flag: "🇸🇪", speechCode: "sv-SE"},
+            no: {display: "Norwegian", flag: "🇳🇴", speechCode: "no-NO"},
+            da: {display: "Danish", flag: "🇩🇰", speechCode: "da-DK"},
+            fi: {display: "Finnish", flag: "🇫🇮", speechCode: "fi-FI"},
+            pl: {display: "Polish", flag: "🇵🇱", speechCode: "pl-PL"},
+            tr: {display: "Turkish", flag: "🇹🇷", speechCode: "tr-TR"},
+            hi: {display: "Hindi", flag: "🇮🇳", speechCode: "hi-IN"},
+            bn: {display: "Bengali", flag: "🇧🇩", speechCode: "bn-BD"},
+            th: {display: "Thai", flag: "🇹🇭", speechCode: "th-TH"},
+            vi: {display: "Vietnamese", flag: "🇻🇳", speechCode: "vi-VN"},
+            id: {display: "Indonesian", flag: "🇮🇩", speechCode: "id-ID"},
+            ms: {display: "Malay", flag: "🇲🇾", speechCode: "ms-MY"},
+            el: {display: "Greek", flag: "🇬🇷", speechCode: "el-GR"},
+            he: {display: "Hebrew", flag: "🇮🇱", speechCode: "he-IL"},
+            cs: {display: "Czech", flag: "🇨🇿", speechCode: "cs-CZ"},
+            sk: {display: "Slovak", flag: "🇸🇰", speechCode: "sk-SK"},
+            hu: {display: "Hungarian", flag: "🇭🇺", speechCode: "hu-HU"},
+            ro: {display: "Romanian", flag: "🇷🇴", speechCode: "ro-RO"},
+            bg: {display: "Bulgarian", flag: "🇧🇬", speechCode: "bg-BG"},
+            uk: {display: "Ukrainian", flag: "🇺🇦", speechCode: "uk-UA"},
+            hr: {display: "Croatian", flag: "🇭🇷", speechCode: "hr-HR"},
+            sr: {display: "Serbian", flag: "🇷🇸", speechCode: "sr-RS"},
+            sl: {display: "Slovenian", flag: "🇸🇮", speechCode: "sl-SI"},
+            lt: {display: "Lithuanian", flag: "🇱🇹", speechCode: "lt-LT"},
+            lv: {display: "Latvian", flag: "🇱🇻", speechCode: "lv-LV"},
+            et: {display: "Estonian", flag: "🇪🇪", speechCode: "et-EE"},
+            fa: {display: "Persian", flag: "🇮🇷", speechCode: "fa-IR"},
+            sw: {display: "Swahili", flag: "🇰🇪", speechCode: "sw-KE"},
+            am: {display: "Amharic", flag: "🇪🇹", speechCode: "am-ET"},
+            zu: {display: "Zulu", flag: "🇿🇦", speechCode: "zu-ZA"},
+            xh: {display: "Xhosa", flag: "🇿🇦", speechCode: "xh-ZA"},
+            so: {display: "Somali", flag: "🇸🇴", speechCode: "so-SO"},
+            ta: {display: "Tamil", flag: "🇮🇳", speechCode: "ta-IN"},
+            te: {display: "Telugu", flag: "🇮🇳", speechCode: "te-IN"},
+            ml: {display: "Malayalam", flag: "🇮🇳", speechCode: "ml-IN"},
+            kn: {display: "Kannada", flag: "🇮🇳", speechCode: "kn-IN"},
+            gu: {display: "Gujarati", flag: "🇮🇳", speechCode: "gu-IN"},
+            pa: {display: "Punjabi", flag: "🇮🇳", speechCode: "pa-IN"},
+            ha: {display: "Hausa", flag: "🇳🇬", speechCode: "ha-NG"},
+            yo: {display: "Yoruba", flag: "🇳🇬", speechCode: "yo-NG"},
+            ig: {display: "Igbo", flag: "🇳🇬", speechCode: "ig-NG"}
+        };
+    }
 
+    setupTranslator() {
         this.bindEvents();
         this.setupSpeechRecognition();
+        this.setupThemeToggle();
+        this.setupNavigation();
+        this.setupEnhancedFeatures();
+        this.loadTranslationHistory();
     }
 
     bindEvents() {
@@ -840,32 +1534,39 @@ class NexoTranslator {
 
             this.recognition.onstart = () => {
                 this.isRecording = true;
-                this.elements.micBtn.classList.add("active");
+                this.elements.micBtn.classList.add("recording");
             };
 
             this.recognition.onresult = (event) => {
+                let interimTranscript = "";
                 let finalTranscript = "";
+
                 for (let i = event.resultIndex; i < event.results.length; i++) {
+                    const transcript = event.results[i][0].transcript;
                     if (event.results[i].isFinal) {
-                        finalTranscript += event.results[i][0].transcript;
+                        finalTranscript += transcript;
+                    } else {
+                        interimTranscript += transcript;
                     }
                 }
+
+                this.elements.sourceText.value = finalTranscript + interimTranscript;
+                this.updateCharCount();
+
                 if (finalTranscript) {
-                    this.elements.sourceText.value = finalTranscript;
-                    this.updateCharCount();
-                    this.translateText();
+                    this.debounceTranslate();
                 }
             };
 
             this.recognition.onend = () => {
                 this.isRecording = false;
-                this.elements.micBtn.classList.remove("active");
+                this.elements.micBtn.classList.remove("recording");
             };
 
             this.recognition.onerror = (event) => {
                 this.showError("Voice input error: " + event.error);
                 this.isRecording = false;
-                this.elements.micBtn.classList.remove("active");
+                this.elements.micBtn.classList.remove("recording");
             };
         }
     }
@@ -877,11 +1578,30 @@ class NexoTranslator {
 
     toggleDropdown(type) {
         const dropdown = type === "source" ? this.elements.sourceLangDropdown : this.elements.targetLangDropdown;
+        const button = type === "source" ? this.elements.sourceLangBtn : this.elements.targetLangBtn;
         const isActive = dropdown.classList.contains("active");
         
         this.closeAllDropdowns();
         
         if (!isActive) {
+            // Position dropdown properly using fixed positioning
+            const rect = button.getBoundingClientRect();
+            const viewportHeight = window.innerHeight;
+            const dropdownHeight = 300; // max height
+            
+            dropdown.style.left = rect.left + 'px';
+            dropdown.style.width = Math.max(rect.width, 220) + 'px';
+            
+            // Check if dropdown fits below the button
+            if (rect.bottom + dropdownHeight + 20 < viewportHeight) {
+                dropdown.style.top = (rect.bottom + 4) + 'px';
+                dropdown.style.bottom = 'auto';
+            } else {
+                // Position above if not enough space below
+                dropdown.style.bottom = (viewportHeight - rect.top + 4) + 'px';
+                dropdown.style.top = 'auto';
+            }
+            
             dropdown.classList.add("active");
         }
     }
@@ -902,12 +1622,13 @@ class NexoTranslator {
         
         this.closeAllDropdowns();
         
-        if (this.recognition && isSource) {
-            this.recognition.lang = this.getRecognitionLanguage();
+        if (this.elements.sourceText.value) {
+            this.translateText();
         }
         
-        if (this.elements.sourceText.value.trim()) {
-            this.translateText();
+        // Update speech recognition language if source language changed
+        if (isSource && this.recognition) {
+            this.recognition.lang = this.getRecognitionLanguage();
         }
     }
 
@@ -925,11 +1646,9 @@ class NexoTranslator {
         this.elements.sourceText.value = this.elements.translatedText.value;
         this.elements.translatedText.value = tempText;
         
-        if (this.recognition) {
-            this.recognition.lang = this.getRecognitionLanguage();
-        }
+        this.updateCharCount();
         
-        if (this.elements.sourceText.value.trim()) {
+        if (this.elements.sourceText.value) {
             this.translateText();
         }
     }
@@ -938,10 +1657,10 @@ class NexoTranslator {
         const count = this.elements.sourceText.value.length;
         this.elements.charCount.textContent = `${count}/5000`;
         
-        if (count > 4500) {
-            this.elements.charCount.style.color = "#d93025";
+        if (count >= 5000) {
+            this.elements.charCount.style.color = '#d93025';
         } else {
-            this.elements.charCount.style.color = "var(--text-tertiary)";
+            this.elements.charCount.style.color = 'var(--text-tertiary)';
         }
     }
 
@@ -951,66 +1670,107 @@ class NexoTranslator {
             if (this.elements.sourceText.value.trim()) {
                 this.translateText();
             }
-        }, 500);
-    }
-
-    async translateText() {
-        const text = this.elements.sourceText.value.trim();
-        if (!text) return;
-
-        this.elements.translateBtn.disabled = true;
-        this.elements.translateBtn.textContent = "Translating...";
-        this.hideError();
-
-        try {
-            const translation = await this.callTranslationAPI(text, this.sourceLanguage, this.targetLanguage);
-            this.elements.translatedText.value = translation.text;
-            
-            if (translation.detectedLanguage && this.sourceLanguage === "auto") {
-                const detectedLang = this.languageMap[translation.detectedLanguage];
-                if (detectedLang) {
-                    this.elements.detectedLanguage.textContent = `Detected: ${detectedLang.display}`;
-                }
-            } else {
-                this.elements.detectedLanguage.textContent = "Ready to translate";
-            }
-            
-            this.saveToHistory(text, translation.text, this.sourceLanguage, this.targetLanguage);
-        } catch (error) {
-            this.showError("Translation failed: " + error.message);
-        } finally {
-            this.elements.translateBtn.disabled = false;
-            this.elements.translateBtn.textContent = "Translate";
-        }
+        }, 800);
     }
 
     async callTranslationAPI(text, sourceLang, targetLang) {
-        // Using MyMemory Translation API (free)
-        const response = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${sourceLang === "auto" ? "autodetect" : sourceLang}|${targetLang}`);
-        
-        if (!response.ok) {
-            throw new Error("Translation service unavailable");
-        }
-        
-        const data = await response.json();
-        
-        if (data.responseStatus === 200) {
-            return {
-                text: data.responseData.translatedText,
-                detectedLanguage: sourceLang === "auto" ? this.detectLanguageFromText(text) : null
-            };
-        } else {
-            throw new Error("Translation failed");
+        try {
+            // Primary: MyMemory Translation API
+            const myMemoryResponse = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${sourceLang === "auto" ? "autodetect" : sourceLang}|${targetLang}`);
+            
+            if (myMemoryResponse.ok) {
+                const data = await myMemoryResponse.json();
+                
+                if (data.responseStatus === 200 && data.responseData && data.responseData.translatedText) {
+                    // Clean up the translation result
+                    let translatedText = data.responseData.translatedText.trim();
+                    
+                    // Remove common API artifacts
+                    translatedText = translatedText.replace(/\[.*?\]/g, '').trim();
+                    
+                    return {
+                        text: translatedText,
+                        detectedLanguage: sourceLang === "auto" ? this.detectLanguageFromText(text) : null,
+                        service: 'MyMemory'
+                    };
+                }
+            }
+            
+            // Fallback: LibreTranslate API
+            try {
+                const libreResponse = await fetch('https://libretranslate.de/translate', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        q: text,
+                        source: sourceLang === 'auto' ? 'auto' : sourceLang,
+                        target: targetLang,
+                        format: 'text'
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                if (libreResponse.ok) {
+                    const data = await libreResponse.json();
+                    if (data.translatedText) {
+                        return {
+                            text: data.translatedText.trim(),
+                            detectedLanguage: data.detectedLanguage || (sourceLang === "auto" ? this.detectLanguageFromText(text) : null),
+                            service: 'LibreTranslate'
+                        };
+                    }
+                }
+            } catch (libreError) {
+                console.warn('LibreTranslate fallback failed:', libreError);
+            }
+            
+            // If both APIs fail, throw error
+            throw new Error("All translation services are currently unavailable");
+            
+        } catch (error) {
+            console.error('Translation API error:', error);
+            throw new Error("Translation failed: " + error.message);
         }
     }
 
     detectLanguageFromText(text) {
-        // Simple language detection based on character patterns
-        if (/[\u4e00-\u9fff]/.test(text)) return "zh";
-        if (/[\u3040-\u309f\u30a0-\u30ff]/.test(text)) return "ja";
-        if (/[\u0600-\u06ff]/.test(text)) return "ar";
-        if (/[\u0400-\u04ff]/.test(text)) return "ru";
-        return "en"; // default
+        // Enhanced language detection based on character patterns and common words
+        const cleanText = text.toLowerCase().trim();
+        
+        // Character-based detection
+        if (/[\u4e00-\u9fff]/.test(text)) return "zh"; // Chinese
+        if (/[\u3040-\u309f\u30a0-\u30ff]/.test(text)) return "ja"; // Japanese
+        if (/[\u0600-\u06ff]/.test(text)) return "ar"; // Arabic
+        if (/[\u0400-\u04ff]/.test(text)) return "ru"; // Russian
+        if (/[\u0590-\u05ff]/.test(text)) return "he"; // Hebrew
+        if (/[\u1100-\u11ff\u3130-\u318f\uac00-\ud7af]/.test(text)) return "ko"; // Korean
+        
+        // Common word patterns for European languages
+        const patterns = {
+            'es': ['el', 'la', 'de', 'que', 'y', 'en', 'un', 'es', 'se', 'no', 'te', 'lo', 'le', 'da', 'su', 'por', 'son', 'con', 'para', 'una', 'con', 'todo', 'pero', 'más', 'hasta', 'muy'],
+            'fr': ['le', 'de', 'et', 'à', 'un', 'il', 'être', 'et', 'en', 'avoir', 'que', 'pour', 'dans', 'ce', 'son', 'une', 'sur', 'avec', 'ne', 'se', 'pas', 'tout', 'plus', 'par', 'grand', 'en', 'une', 'être', 'et', 'de', 'avoir', 'il', 'du'],
+            'de': ['der', 'die', 'und', 'in', 'den', 'von', 'zu', 'das', 'mit', 'sich', 'des', 'auf', 'für', 'ist', 'im', 'dem', 'nicht', 'ein', 'eine', 'als', 'auch', 'es', 'an', 'werden', 'aus', 'er', 'hat', 'dass', 'sie'],
+            'it': ['di', 'a', 'da', 'in', 'con', 'su', 'per', 'tra', 'fra', 'il', 'lo', 'la', 'i', 'gli', 'le', 'un', 'uno', 'una', 'e', 'che', 'non', 'si', 'è', 'ci', 'sono', 'mi', 'ti', 'vi', 'ne'],
+            'pt': ['o', 'de', 'a', 'e', 'do', 'da', 'em', 'um', 'para', 'é', 'com', 'não', 'uma', 'os', 'no', 'se', 'na', 'por', 'mais', 'as', 'dos', 'como', 'mas', 'foi', 'ao', 'ele', 'das', 'tem', 'à', 'seu', 'sua', 'ou']
+        };
+        
+        const words = cleanText.split(/\s+/).slice(0, 10); // Check first 10 words
+        let maxMatches = 0;
+        let detectedLang = 'en';
+        
+        for (const [lang, commonWords] of Object.entries(patterns)) {
+            let matches = 0;
+            words.forEach(word => {
+                if (commonWords.includes(word)) matches++;
+            });
+            if (matches > maxMatches) {
+                maxMatches = matches;
+                detectedLang = lang;
+            }
+        }
+        
+        return maxMatches > 0 ? detectedLang : 'en';
     }
 
     toggleVoiceInput() {
@@ -1021,142 +1781,524 @@ class NexoTranslator {
 
         if (this.isRecording) {
             this.recognition.stop();
+            this.elements.micBtn.classList.remove('recording');
         } else {
             this.recognition.start();
+            this.elements.micBtn.classList.add('recording');
         }
     }
 
-    async copyToClipboard(text) {
+    copyToClipboard(text) {
         if (!text) return;
         
-        try {
-            await navigator.clipboard.writeText(text);
-            this.showSuccess("Copied to clipboard");
-        } catch (error) {
-            this.showError("Failed to copy to clipboard");
-        }
+        navigator.clipboard.writeText(text).then(() => {
+            this.showSuccess("Copied to clipboard!");
+        }).catch(() => {
+            // Fallback for older browsers
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+            this.showSuccess("Copied to clipboard!");
+        });
     }
 
-    speakText(text, language) {
+    speakText(text, lang) {
         if (!text) return;
         
-        if ("speechSynthesis" in window) {
-            speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(text);
-            const langCode = this.languageMap[language]?.speechCode || "en-US";
-            utterance.lang = langCode;
-            speechSynthesis.speak(utterance);
-        } else {
-            this.showError("Text-to-speech not supported in this browser");
+        const utterance = new SpeechSynthesisUtterance(text);
+        const langMap = this.languageMap[lang];
+        
+        if (langMap && langMap.speechCode) {
+            utterance.lang = langMap.speechCode;
         }
+        
+        speechSynthesis.speak(utterance);
     }
 
     saveToHistory(sourceText, translatedText, sourceLang, targetLang) {
-        const history = JSON.parse(localStorage.getItem("nexoTranslatorHistory") || "[]");
-        const entry = {
+        const historyItem = {
             id: Date.now(),
             sourceText,
             translatedText,
-            sourceLang,
-            targetLang,
-            timestamp: new Date().toISOString()
+            sourceLang: this.languageMap[sourceLang].display,
+            targetLang: this.languageMap[targetLang].display,
+            timestamp: new Date().toLocaleDateString()
         };
         
-        history.unshift(entry);
-        if (history.length > 50) history.splice(50);
+        let history = JSON.parse(localStorage.getItem("nexo-history") || "[]");
+        history.unshift(historyItem);
         
-        localStorage.setItem("nexoTranslatorHistory", JSON.stringify(history));
+        // Keep only last 50 items
+        history = history.slice(0, 50);
+        
+        localStorage.setItem("nexo-history", JSON.stringify(history));
         this.renderHistory();
     }
 
-    loadHistory() {
+    loadTranslationHistory() {
         this.renderHistory();
     }
 
     renderHistory() {
-        const history = JSON.parse(localStorage.getItem("nexoTranslatorHistory") || "[]");
+        const history = JSON.parse(localStorage.getItem("nexo-history") || "[]");
+        const historyLists = [this.elements.historyList, document.getElementById('history-list-main')];
         
-        if (history.length === 0) {
-            this.elements.historyList.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 20px;">No translation history yet.</p>';
-            return;
-        }
-        
-        this.elements.historyList.innerHTML = history.map(entry => `
-            <div class="history-item" onclick="nexoTranslator.loadHistoryItem('${entry.id}')">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                    <span style="font-size: 12px; color: var(--text-secondary);">
-                        ${this.languageMap[entry.sourceLang]?.display || entry.sourceLang} → 
-                        ${this.languageMap[entry.targetLang]?.display || entry.targetLang}
-                    </span>
-                    <span style="font-size: 12px; color: var(--text-tertiary);">
-                        ${new Date(entry.timestamp).toLocaleDateString()}
-                    </span>
+        historyLists.forEach(historyList => {
+            if (!historyList) return;
+            
+            if (history.length === 0) {
+                historyList.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px 0;">No translations yet. Start translating to see your history here!</p>';
+                return;
+            }
+            
+            historyList.innerHTML = history.map(item => `
+                <div class="history-item" onclick="nexoTranslator.useHistoryItem('${item.sourceText}')">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                        <span style="font-size: 12px; color: var(--text-secondary);">${item.sourceLang} → ${item.targetLang}</span>
+                        <span style="font-size: 12px; color: var(--text-tertiary);">${item.timestamp}</span>
+                    </div>
+                    <div style="margin-bottom: 8px;">
+                        <div style="font-weight: 500; color: var(--text-primary); margin-bottom: 4px;">${item.sourceText}</div>
+                        <div style="color: var(--text-secondary);">${item.translatedText}</div>
+                    </div>
                 </div>
-                <div style="font-size: 14px; margin-bottom: 4px;">${entry.sourceText.substring(0, 100)}${entry.sourceText.length > 100 ? '...' : ''}</div>
-                <div style="font-size: 14px; color: var(--text-secondary);">${entry.translatedText.substring(0, 100)}${entry.translatedText.length > 100 ? '...' : ''}</div>
-            </div>
-        `).join('');
+            `).join("");
+        });
     }
 
-    loadHistoryItem(id) {
-        const history = JSON.parse(localStorage.getItem("nexoTranslatorHistory") || "[]");
-        const entry = history.find(item => item.id == id);
-        
-        if (entry) {
-            this.elements.sourceText.value = entry.sourceText;
-            this.elements.translatedText.value = entry.translatedText;
-            this.sourceLanguage = entry.sourceLang;
-            this.targetLanguage = entry.targetLang;
-            
-            this.elements.sourceLangBtn.querySelector("span").textContent = this.languageMap[entry.sourceLang]?.display || entry.sourceLang;
-            this.elements.targetLangBtn.querySelector("span").textContent = this.languageMap[entry.targetLang]?.display || entry.targetLang;
-            
-            this.updateCharCount();
-        }
+    useHistoryItem(text) {
+        this.elements.sourceText.value = text;
+        this.updateCharCount();
+        this.navigateToSection('home-section');
+        document.getElementById('nav-home').classList.add('active');
+        document.querySelectorAll('.nav-item:not(#nav-home)').forEach(nav => nav.classList.remove('active'));
+        this.translateText();
     }
 
     clearHistory() {
-        if (confirm("Are you sure you want to clear all translation history?")) {
-            localStorage.removeItem("nexoTranslatorHistory");
-            this.renderHistory();
-        }
+        localStorage.removeItem("nexo-history");
+        this.renderHistory();
+        this.showSuccess("History cleared!");
     }
 
     showError(message) {
         this.elements.errorMessage.textContent = message;
         this.elements.errorMessage.style.display = "block";
-        setTimeout(() => this.hideError(), 5000);
+        setTimeout(() => {
+            this.elements.errorMessage.style.display = "none";
+        }, 5000);
     }
 
     hideError() {
         this.elements.errorMessage.style.display = "none";
     }
 
+    setupThemeToggle() {
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => this.toggleTheme());
+        }
+    }
+
+    setupNavigation() {
+        const navItems = document.querySelectorAll('.nav-item');
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const sectionId = item.getAttribute('data-section');
+                this.navigateToSection(sectionId);
+                
+                // Update active state
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        // FAB functionality
+        const fab = document.getElementById('quick-translate-fab');
+        if (fab) {
+            fab.addEventListener('click', () => {
+                this.navigateToSection('home-section');
+                document.getElementById('nav-home').classList.add('active');
+                document.querySelectorAll('.nav-item:not(#nav-home)').forEach(nav => nav.classList.remove('active'));
+                document.getElementById('source-text').focus();
+            });
+        }
+    }
+
+    setupEnhancedFeatures() {
+        // Enhanced microphone with animation
+        if (this.elements.micBtn) {
+            this.elements.micBtn.classList.add('microphone-btn');
+        }
+
+        // Language detector chip
+        this.setupLanguageDetector();
+
+        // Camera functionality
+        this.setupCameraFeature();
+
+        // Enhanced animations on elements
+        this.setupAnimations();
+    }
+
+    setupLanguageDetector() {
+        this.languageDetector = document.getElementById('language-detector');
+    }
+
+    showLanguageDetected(language) {
+        if (this.languageDetector) {
+            this.languageDetector.textContent = `Detected: ${this.languageMap[language]?.display || language}`;
+            this.languageDetector.classList.add('show');
+            
+            setTimeout(() => {
+                this.languageDetector.classList.remove('show');
+            }, 3000);
+        }
+    }
+
+    navigateToSection(sectionId) {
+        // Hide all sections
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active');
+        });
+
+        // Show target section
+        const targetSection = document.getElementById(sectionId);
+        if (targetSection) {
+            targetSection.classList.add('active');
+            this.currentSection = sectionId;
+        }
+    }
+
+    toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('nexo-theme', newTheme);
+        
+        // Update theme toggle icons
+        this.updateThemeIcons(newTheme);
+        
+        // Add smooth transition effect
+        document.body.style.transition = 'all 0.3s ease';
+        setTimeout(() => {
+            document.body.style.transition = '';
+        }, 300);
+    }
+
+    loadTheme() {
+        const savedTheme = localStorage.getItem('nexo-theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        this.updateThemeIcons(savedTheme);
+    }
+
+    updateThemeIcons(theme) {
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        if (themeToggle) {
+            const sunIcon = themeToggle.querySelector('.sun-icon');
+            const moonIcon = themeToggle.querySelector('.moon-icon');
+            
+            if (theme === 'dark') {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            } else {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            }
+        }
+    }
+
+    setupAnimations() {
+        // Add intersection observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animations
+        document.querySelectorAll('.affiliate-ad, .history-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            observer.observe(el);
+        });
+    }
+
+    setupCameraFeature() {
+        this.cameraElements = {
+            startBtn: document.getElementById('start-camera-btn'),
+            closeBtn: document.getElementById('close-camera-btn'),
+            captureBtn: document.getElementById('capture-btn'),
+            video: document.getElementById('camera-video'),
+            canvas: document.getElementById('camera-canvas'),
+            status: document.getElementById('camera-status'),
+            interface: document.querySelector('.camera-interface'),
+            placeholder: document.getElementById('camera-placeholder'),
+            detectedTextPanel: document.getElementById('detected-text-panel'),
+            detectedText: document.getElementById('detected-text'),
+            useTextBtn: document.getElementById('use-detected-text'),
+            retakeBtn: document.getElementById('retake-photo')
+        };
+
+        this.cameraStream = null;
+        this.isProcessingOCR = false;
+
+        // Event listeners
+        if (this.cameraElements.startBtn) {
+            this.cameraElements.startBtn.addEventListener('click', () => this.startCameraTranslation());
+        }
+        if (this.cameraElements.closeBtn) {
+            this.cameraElements.closeBtn.addEventListener('click', () => this.stopCamera());
+        }
+        if (this.cameraElements.captureBtn) {
+            this.cameraElements.captureBtn.addEventListener('click', () => this.captureAndRecognizeText());
+        }
+        if (this.cameraElements.useTextBtn) {
+            this.cameraElements.useTextBtn.addEventListener('click', () => this.useDetectedText());
+        }
+        if (this.cameraElements.retakeBtn) {
+            this.cameraElements.retakeBtn.addEventListener('click', () => this.retakePhoto());
+        }
+    }
+
+    async startCameraTranslation() {
+        try {
+            // Request camera permission
+            this.cameraStream = await navigator.mediaDevices.getUserMedia({ 
+                video: { 
+                    facingMode: 'environment', // Use back camera if available
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                } 
+            });
+
+            // Show camera interface
+            this.cameraElements.placeholder.classList.add('hidden');
+            this.cameraElements.interface.classList.add('active');
+            this.cameraElements.video.srcObject = this.cameraStream;
+            
+            // Enable capture button once video is ready
+            this.cameraElements.video.onloadedmetadata = () => {
+                this.cameraElements.captureBtn.disabled = false;
+                this.updateCameraStatus('Ready to capture');
+            };
+
+        } catch (error) {
+            console.error('Camera access error:', error);
+            if (error.name === 'NotAllowedError') {
+                this.showError('Camera access denied. Please allow camera permission and try again.');
+            } else if (error.name === 'NotFoundError') {
+                this.showError('No camera found on this device.');
+            } else {
+                this.showError('Unable to access camera: ' + error.message);
+            }
+        }
+    }
+
+    stopCamera() {
+        if (this.cameraStream) {
+            this.cameraStream.getTracks().forEach(track => track.stop());
+            this.cameraStream = null;
+        }
+        
+        // Hide camera interface
+        this.cameraElements.interface.classList.remove('active');
+        this.cameraElements.placeholder.classList.remove('hidden');
+        this.cameraElements.captureBtn.disabled = true;
+        this.cameraElements.detectedTextPanel.style.display = 'none';
+        this.updateCameraStatus('Position text within the frame');
+    }
+
+    async captureAndRecognizeText() {
+        if (this.isProcessingOCR) return;
+        
+        this.isProcessingOCR = true;
+        this.updateCameraStatus('Capturing and analyzing text...');
+        this.cameraElements.captureBtn.disabled = true;
+
+        try {
+            // Capture frame from video
+            const canvas = this.cameraElements.canvas;
+            const context = canvas.getContext('2d');
+            const video = this.cameraElements.video;
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0);
+            
+            // Convert to image data
+            const imageData = canvas.toDataURL('image/jpeg', 0.8);
+            
+            // Perform OCR using Tesseract.js
+            const result = await Tesseract.recognize(imageData, 'eng+spa+fra+deu+ita+por+rus+ara+zho+jpn+kor', {
+                logger: progress => {
+                    if (progress.status === 'recognizing text') {
+                        const percent = Math.round(progress.progress * 100);
+                        this.updateCameraStatus(`Analyzing text... ${percent}%`);
+                    }
+                }
+            });
+            
+            const detectedText = result.data.text.trim();
+            
+            if (detectedText && detectedText.length > 2) {
+                this.showDetectedText(detectedText);
+            } else {
+                this.updateCameraStatus('No text detected. Try repositioning the camera.');
+                this.cameraElements.captureBtn.disabled = false;
+            }
+            
+        } catch (error) {
+            console.error('OCR error:', error);
+            this.showError('Failed to analyze text. Please try again.');
+            this.cameraElements.captureBtn.disabled = false;
+            this.updateCameraStatus('Ready to capture');
+        } finally {
+            this.isProcessingOCR = false;
+        }
+    }
+
+    showDetectedText(text) {
+        this.cameraElements.detectedText.textContent = text;
+        this.cameraElements.detectedTextPanel.style.display = 'block';
+        this.updateCameraStatus('Text detected successfully!');
+    }
+
+    useDetectedText() {
+        const detectedText = this.cameraElements.detectedText.textContent;
+        
+        // Switch back to home section
+        this.navigateToSection('home-section');
+        document.getElementById('nav-home').classList.add('active');
+        document.querySelectorAll('.nav-item:not(#nav-home)').forEach(nav => nav.classList.remove('active'));
+        
+        // Fill the source text and translate
+        this.elements.sourceText.value = detectedText;
+        this.updateCharCount();
+        this.translateText();
+        
+        // Stop camera
+        this.stopCamera();
+        
+        this.showSuccess('Text captured from camera!');
+    }
+
+    retakePhoto() {
+        this.cameraElements.detectedTextPanel.style.display = 'none';
+        this.cameraElements.captureBtn.disabled = false;
+        this.updateCameraStatus('Ready to capture');
+    }
+
+    updateCameraStatus(message) {
+        if (this.cameraElements.status) {
+            this.cameraElements.status.textContent = message;
+        }
+    }
+
+    // Override the existing translateText method to add language detection
+    async translateText() {
+        const text = this.elements.sourceText.value.trim();
+        if (!text) return;
+
+        this.elements.translateBtn.disabled = true;
+        this.elements.translateBtn.querySelector('span').textContent = "Translating...";
+        this.hideError();
+
+        try {
+            const translation = await this.callTranslationAPI(text, this.sourceLanguage, this.targetLanguage);
+            this.elements.translatedText.value = translation.text;
+            
+            if (translation.detectedLanguage && this.sourceLanguage === "auto") {
+                const detectedLang = this.languageMap[translation.detectedLanguage];
+                if (detectedLang) {
+                    this.elements.detectedLanguage.textContent = `Detected: ${detectedLang.display}`;
+                    this.showLanguageDetected(translation.detectedLanguage);
+                }
+            } else {
+                this.elements.detectedLanguage.textContent = "Ready to translate";
+            }
+            
+            this.saveToHistory(text, translation.text, this.sourceLanguage, this.targetLanguage);
+        } catch (error) {
+            this.showError("Translation failed: " + error.message);
+        } finally {
+            this.elements.translateBtn.disabled = false;
+            this.elements.translateBtn.querySelector('span').textContent = "Translate";
+        }
+    }
+
+    // Override voice input to add recording animation
+    toggleVoiceInput() {
+        if (!this.recognition) {
+            this.showError("Voice input not supported in this browser");
+            return;
+        }
+
+        if (this.isRecording) {
+            this.recognition.stop();
+            this.elements.micBtn.classList.remove('recording');
+        } else {
+            this.recognition.start();
+            this.elements.micBtn.classList.add('recording');
+        }
+    }
+
+    // Enhanced success message with modern styling
     showSuccess(message) {
-        // Create a temporary success message
         const successDiv = document.createElement("div");
         successDiv.textContent = message;
         successDiv.style.cssText = `
             position: fixed;
             top: 20px;
             right: 20px;
-            background: #4caf50;
+            background: var(--primary-color);
             color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
+            padding: 16px 24px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-glass);
+            backdrop-filter: blur(10px);
             z-index: 10000;
             font-size: 14px;
+            font-weight: 500;
+            transform: translateX(400px);
+            transition: var(--transition);
         `;
         
         document.body.appendChild(successDiv);
-        setTimeout(() => document.body.removeChild(successDiv), 2000);
+        
+        // Animate in
+        requestAnimationFrame(() => {
+            successDiv.style.transform = 'translateX(0)';
+        });
+        
+        // Animate out and remove
+        setTimeout(() => {
+            successDiv.style.transform = 'translateX(400px)';
+            setTimeout(() => document.body.removeChild(successDiv), 300);
+        }, 2000);
     }
 }
 
-// Initialize the translator when page loads
+// Initialize the enhanced translator when page loads
 let nexoTranslator;
 document.addEventListener("DOMContentLoaded", () => {
-    nexoTranslator = new NexoTranslator();
+    nexoTranslator = new EnhancedNexoTranslator();
 });
 
 // Service Worker Registration
