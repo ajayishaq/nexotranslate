@@ -3,1910 +3,812 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Online Translator | Nexo Translator - 50+ Languages</title>
-    <meta name="description" content="Fast online translator with Nexo Translator! Free, professional translations in 50+ languages like English, Spanish, Hausa, Yoruba, Arabic, and more. User-friendly, no registration needed.">
-    <meta name="keywords" content="translator, online translator, free translator, language translator, multilingual translator, Hausa translator, Yoruba translator, Arabic translator, Spanish translator, fast translation, speech-to-text">
+    <title>Nexo Translator - Modern Translation App</title>
+    <meta name="description" content="Modern, sleek translator with 50+ languages. Fast, beautiful, and easy to use.">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <style>
-/* Reset and Base Styles */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 :root {
-  /* Light Mode Colors */
-  --primary-color: #1a1a1a;
-  --primary-hover: #000000;
-  --primary-light: rgba(26, 26, 26, 0.1);
-  --accent-color: #333333;
-  --accent-hover: #1a1a1a;
-  --surface-color: rgba(255, 255, 255, 0.9);
-  --surface-secondary: rgba(248, 250, 252, 0.95);
-  --surface-tertiary: rgba(241, 245, 249, 0.8);
-  --glass-bg: rgba(255, 255, 255, 0.85);
-  --glass-border: rgba(0, 0, 0, 0.1);
-  --border-light: rgba(0, 0, 0, 0.08);
-  --text-primary: #1a1a1a;
-  --text-secondary: #666666;
-  --text-tertiary: #999999;
-  --shadow-light: 0 8px 32px rgba(0, 0, 0, 0.08);
-  --shadow-medium: 0 8px 32px rgba(0, 0, 0, 0.12);
-  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
-  --backdrop-filter: blur(20px);
-  --border-radius: 16px;
-  --border-radius-large: 24px;
-  --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  --gradient-bg: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
+    --primary: #0EA5E9;
+    --primary-dark: #0284C7;
+    --primary-light: #38BDF8;
+    --accent: #14B8A6;
+    --accent-dark: #0D9488;
+    
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F8FAFC;
+    --bg-tertiary: #F1F5F9;
+    --surface: #FFFFFF;
+    
+    --text-primary: #0F172A;
+    --text-secondary: #64748B;
+    --text-tertiary: #94A3B8;
+    
+    --border: #E2E8F0;
+    --border-light: #F1F5F9;
+    
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+    --shadow-xl: 0 20px 40px rgba(0,0,0,0.12);
+    
+    --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #14B8A6 100%);
+    --gradient-bg: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    --gradient-overlay: linear-gradient(135deg, rgba(14,165,233,0.05) 0%, rgba(20,184,166,0.05) 100%);
 }
 
 [data-theme="dark"] {
-  /* Dark Mode Colors */
-  --primary-color: #ffffff;
-  --primary-hover: #f8f9fa;
-  --primary-light: rgba(255, 255, 255, 0.1);
-  --accent-color: #e9ecef;
-  --accent-hover: #f8f9fa;
-  --surface-color: rgba(26, 26, 26, 0.9);
-  --surface-secondary: rgba(51, 51, 51, 0.8);
-  --surface-tertiary: rgba(77, 77, 77, 0.6);
-  --glass-bg: rgba(26, 26, 26, 0.85);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --border-light: rgba(255, 255, 255, 0.08);
-  --text-primary: #ffffff;
-  --text-secondary: #cccccc;
-  --text-tertiary: #999999;
-  --shadow-light: 0 8px 32px rgba(0, 0, 0, 0.3);
-  --shadow-medium: 0 8px 32px rgba(0, 0, 0, 0.4);
-  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-  --gradient-bg: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-  --gradient-card: linear-gradient(145deg, rgba(26,26,26,0.9) 0%, rgba(51,51,51,0.7) 100%);
+    --primary: #38BDF8;
+    --primary-dark: #0EA5E9;
+    --primary-light: #7DD3FC;
+    --accent: #2DD4BF;
+    --accent-dark: #14B8A6;
+    
+    --bg-primary: #0F172A;
+    --bg-secondary: #1E293B;
+    --bg-tertiary: #334155;
+    --surface: #1E293B;
+    
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-tertiary: #64748B;
+    
+    --border: #334155;
+    --border-light: #1E293B;
+    
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.5);
+    --shadow-xl: 0 20px 40px rgba(0,0,0,0.6);
+    
+    --gradient-bg: linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
+    --gradient-overlay: linear-gradient(135deg, rgba(56,189,248,0.05) 0%, rgba(45,212,191,0.05) 100%);
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
-  background: var(--gradient-bg);
-  min-height: 100vh;
-  color: var(--text-primary);
-  line-height: 1.6;
-  position: relative;
-  overflow-x: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+    background: var(--gradient-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.15) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: -1;
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: var(--gradient-overlay);
+    pointer-events: none;
+    z-index: 0;
 }
 
 .app-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px 20px 100px;
-  min-height: 100vh;
-  position: relative;
-  z-index: 1;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 16px;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Header */
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 40px;
-  padding: 20px;
-  position: relative;
-  backdrop-filter: var(--backdrop-filter);
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--border-radius-large);
-  box-shadow: var(--shadow-glass);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    margin-bottom: 24px;
 }
 
 .logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .logo-icon {
-  width: 52px;
-  height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 16px;
-  overflow: hidden;
-  transition: var(--transition);
-  background: var(--gradient-card);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--gradient-primary);
+    padding: 2px;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.logo-icon:hover {
-  transform: scale(1.05) rotate(2deg);
+.logo-icon:active {
+    transform: scale(0.95);
 }
 
 .logo-icon img {
-  width: 90%;
-  height: 90%;
-  object-fit: contain;
-  filter: contrast(1.1) saturate(1.1);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
 }
 
-
-.header-controls {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+.logo-text {
+    font-size: 22px;
+    font-weight: 700;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .theme-toggle {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: var(--transition);
-  color: var(--text-secondary);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    color: var(--text-secondary);
+    box-shadow: var(--shadow-sm);
 }
 
-.theme-toggle:hover {
-  background: var(--primary-light);
-  color: var(--primary-color);
-  transform: scale(1.1);
+.theme-toggle:active {
+    transform: scale(0.9) rotate(180deg);
 }
 
-.social-header {
-  display: flex;
-  gap: 12px;
+.theme-toggle svg {
+    width: 20px;
+    height: 20px;
 }
 
-.social-link {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-secondary);
-  text-decoration: none;
-  transition: var(--transition);
+.translator-card {
+    background: var(--surface);
+    border-radius: 28px;
+    box-shadow: var(--shadow-xl);
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+    animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.social-link:hover {
-  background: var(--primary-light);
-  color: var(--primary-color);
-  transform: translateY(-2px) scale(1.1);
-  box-shadow: var(--shadow-light);
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* Main Translator */
-.main-translator {
-  background: var(--glass-bg);
-  backdrop-filter: var(--backdrop-filter);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--border-radius-large);
-  box-shadow: var(--shadow-glass);
-  overflow: hidden;
-  margin-bottom: 40px;
-  position: relative;
-}
-
-.main-translator::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
-  opacity: 0.3;
-  z-index: 1;
-}
-
-.language-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 24px;
-  border-bottom: 1px solid var(--border-light);
-  gap: 20px;
-  position: relative;
-  z-index: 100;
-}
-
-.language-detector {
-  position: absolute;
-  top: -8px;
-  left: 24px;
-  background: var(--primary-light);
-  color: var(--primary-color);
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 500;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: var(--transition);
-  z-index: 10;
-  pointer-events: none;
-}
-
-.language-detector.show {
-  opacity: 1;
-  transform: translateY(-8px);
+.language-selector-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-light);
 }
 
 .language-selector {
-  position: relative;
-  flex: 1;
-  max-width: 220px;
-  z-index: 200;
+    flex: 1;
+    position: relative;
 }
 
 .language-btn {
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--border-radius);
-  padding: 14px 18px;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: var(--transition);
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+    width: 100%;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    color: var(--text-primary);
+    font-size: 15px;
+    font-weight: 500;
 }
 
-.language-btn:hover {
-  border-color: var(--primary-color);
-  background: var(--primary-light);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-light);
+.language-btn:active {
+    transform: scale(0.98);
 }
 
 .language-flag {
-  width: 20px;
-  height: 15px;
-  border-radius: 3px;
-  background: var(--gradient-card);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
+    font-size: 20px;
+}
+
+.language-text {
+    flex: 1;
+    text-align: left;
+}
+
+.language-arrow {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.language-selector.active .language-arrow {
+    transform: rotate(180deg);
 }
 
 .language-dropdown {
-  position: fixed !important;
-  background: var(--surface-color);
-  border: 1px solid var(--border-light);
-  border-radius: var(--border-radius);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25) !important;
-  z-index: 9999 !important;
-  max-height: 300px;
-  overflow-y: auto;
-  display: none;
-  min-width: 220px;
-  backdrop-filter: blur(20px) !important;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-top: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.language-dropdown.active {
-  display: block;
+.language-selector.active .language-dropdown {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
 }
 
 .language-option {
-  padding: 12px 16px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  font-size: 14px;
-  color: var(--text-primary);
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    font-size: 14px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .language-option:hover {
-  background: var(--surface-secondary);
+    background: var(--bg-secondary);
 }
 
 .language-option.selected {
-  background: rgba(26,115,232,0.1);
-  color: var(--primary-color);
-  font-weight: 500;
+    background: var(--gradient-overlay);
+    color: var(--primary);
+    font-weight: 600;
 }
 
 .swap-btn {
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
-  border-radius: 50%;
-  width: 52px;
-  height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: var(--transition);
-  color: var(--text-secondary);
-  position: relative;
-  overflow: hidden;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: var(--shadow-md);
+    flex-shrink: 0;
 }
 
-.swap-btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: var(--primary-color);
-  border-radius: 50%;
-  transition: var(--transition);
-  transform: translate(-50%, -50%);
-  opacity: 0.1;
+.swap-btn:active {
+    transform: rotate(180deg) scale(0.9);
 }
 
-.swap-btn:hover {
-  border-color: var(--primary-color);
-  color: var(--primary-color);
-  transform: rotate(180deg) scale(1.1);
-  box-shadow: var(--shadow-light);
+.swap-btn svg {
+    width: 20px;
+    height: 20px;
+    color: white;
 }
 
-.swap-btn:hover::before {
-  width: 100%;
-  height: 100%;
-}
-
-/* Translation Area */
-.translation-area {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 350px;
-  gap: 2px;
-  overflow: hidden;
-  border-radius: 0 0 var(--border-radius-large) var(--border-radius-large);
-}
-
-.text-panel {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  transition: var(--transition);
-}
-
-.text-panel:first-child {
-  border-right: 1px solid var(--glass-border);
-}
-
-.text-panel:hover {
-  background: var(--surface-secondary);
+.text-input-container {
+    position: relative;
+    border-bottom: 1px solid var(--border-light);
 }
 
 .text-area {
-  border: none;
-  outline: none;
-  padding: 28px;
-  font-size: 17px;
-  line-height: 1.7;
-  color: var(--text-primary);
-  background: transparent;
-  resize: none;
-  flex: 1;
-  min-height: 350px;
-  font-family: inherit;
-  transition: var(--transition);
+    width: 100%;
+    min-height: 180px;
+    padding: 24px 20px 60px 20px;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    resize: none;
+    font-family: inherit;
 }
 
 .text-area::placeholder {
-  color: var(--text-tertiary);
-  font-style: italic;
+    color: var(--text-tertiary);
 }
 
-.text-area:focus {
-  color: var(--text-primary);
+.input-controls {
+    position: absolute;
+    bottom: 16px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .char-count {
-  position: absolute;
-  bottom: 60px;
-  right: 24px;
-  font-size: 12px;
-  color: var(--text-tertiary);
+    font-size: 12px;
+    color: var(--text-tertiary);
 }
 
-.panel-controls {
-  display: flex;
-  gap: 8px;
-  padding: 16px 24px;
-  border-top: 1px solid var(--border-light);
-  justify-content: flex-end;
+.input-actions {
+    display: flex;
+    gap: 8px;
 }
 
-.control-btn {
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
-  border-radius: 12px;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--text-secondary);
-  transition: var(--transition);
-  position: relative;
-  overflow: hidden;
+.icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.control-btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: var(--primary-color);
-  border-radius: 50%;
-  transition: var(--transition);
-  transform: translate(-50%, -50%);
-  opacity: 0.1;
-  z-index: 0;
+.icon-btn:active {
+    transform: scale(0.85);
 }
 
-.control-btn:hover {
-  color: var(--primary-color);
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: var(--shadow-light);
+.icon-btn:hover {
+    background: var(--bg-secondary);
+    color: var(--primary);
 }
 
-.control-btn:hover::before {
-  width: 120%;
-  height: 120%;
-}
-
-.control-btn.active {
-  background: var(--primary-color);
-  color: white;
-  box-shadow: var(--shadow-medium);
-}
-
-.control-btn.active::before {
-  background: rgba(255,255,255,0.2);
-  width: 100%;
-  height: 100%;
-}
-
-.microphone-btn {
-  animation: pulse 2s infinite;
-}
-
-.microphone-btn.recording {
-  animation: recording-pulse 1s infinite;
-  background: #ef4444;
-  color: white;
+.icon-btn.recording {
+    background: #EF4444;
+    color: white;
+    animation: pulse 1.5s infinite;
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+    }
 }
 
-@keyframes recording-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-  50% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+.icon-btn svg {
+    width: 18px;
+    height: 18px;
 }
 
-/* Translate Section */
-.translate-section {
-  padding: 24px 28px;
-  background: var(--surface-tertiary);
-  backdrop-filter: blur(20px);
-  text-align: center;
-  border-top: 1px solid var(--glass-border);
-  position: relative;
+.translate-progress {
+    height: 3px;
+    background: var(--border-light);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-.translate-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 20%;
-  right: 20%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
-  opacity: 0.4;
+.translate-progress.active {
+    opacity: 1;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--gradient-primary);
+    width: 0%;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.text-output-container {
+    position: relative;
+    min-height: 180px;
+}
+
+.output-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-tertiary);
+    font-size: 15px;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.output-placeholder.hidden {
+    opacity: 0;
+}
+
+.translated-text {
+    padding: 24px 20px 60px 20px;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    min-height: 180px;
+}
+
+.output-controls {
+    position: absolute;
+    bottom: 16px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
 }
 
 .translate-btn {
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: var(--border-radius);
-  padding: 16px 40px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-  min-width: 140px;
-  position: relative;
-  overflow: hidden;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: var(--shadow-medium);
+    width: 100%;
+    padding: 18px;
+    border: none;
+    border-radius: 20px;
+    background: var(--gradient-primary);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: var(--shadow-md);
+    margin: 20px;
+    position: relative;
+    overflow: hidden;
 }
 
 .translate-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  transition: var(--transition);
-}
-
-.translate-btn:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: var(--shadow-glass);
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
 }
 
 .translate-btn:hover::before {
-  left: 100%;
+    transform: translateX(100%);
 }
 
 .translate-btn:active {
-  transform: translateY(-1px) scale(0.98);
+    transform: scale(0.97);
 }
 
 .translate-btn:disabled {
-  background: var(--text-tertiary);
-  cursor: not-allowed;
-  transform: none;
-  opacity: 0.6;
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
-.detect-language {
-  font-size: 12px;
-  color: var(--text-secondary);
-  margin-bottom: 16px;
+.suggestion-chips {
+    padding: 0 20px 20px 20px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
 }
 
-.error-message {
-  color: #d93025;
-  background: #fce8e6;
-  padding: 12px 24px;
-  margin: 16px 24px;
-  border-radius: 8px;
-  font-size: 14px;
-  display: none;
+.suggestion-chips::-webkit-scrollbar {
+    display: none;
 }
 
-/* Bottom Navigation */
+.chip {
+    padding: 10px 16px;
+    border-radius: 20px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 13px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.chip:active {
+    transform: scale(0.95);
+}
+
+.chip:hover {
+    background: var(--gradient-overlay);
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.detected-language {
+    padding: 12px 20px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-secondary);
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-light);
+}
+
 .bottom-nav {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--glass-bg);
-  backdrop-filter: var(--backdrop-filter);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--border-radius-large);
-  padding: 12px 24px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: var(--shadow-glass);
-  z-index: 1500;
-  transition: var(--transition);
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface);
+    border-radius: 24px;
+    padding: 8px;
+    display: flex;
+    gap: 4px;
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--border);
+    z-index: 100;
 }
 
 .nav-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  transition: var(--transition);
-  color: var(--text-secondary);
-  position: relative;
-  background: transparent;
-  border: none;
+    padding: 12px 20px;
+    border-radius: 18px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .nav-item.active {
-  background: var(--primary-color);
-  color: white;
-  box-shadow: var(--shadow-medium);
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-md);
 }
 
-.nav-item:hover:not(.active) {
-  background: var(--primary-light);
-  color: var(--primary-color);
-  transform: translateY(-2px) scale(1.1);
+.nav-item:active {
+    transform: scale(0.95);
 }
 
-.nav-label {
-  position: absolute;
-  bottom: -28px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 10px;
-  font-weight: 500;
-  opacity: 0;
-  transition: var(--transition);
-  white-space: nowrap;
+.nav-item svg {
+    width: 18px;
+    height: 18px;
 }
 
-.nav-item:hover .nav-label,
-.nav-item.active .nav-label {
-  opacity: 1;
-}
-
-/* Floating Action Button */
-.fab {
-  position: fixed;
-  bottom: 100px;
-  right: 20px;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: var(--transition);
-  box-shadow: var(--shadow-glass);
-  z-index: 1400;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-}
-
-.fab:hover {
-  transform: scale(1.1) rotate(90deg);
-  box-shadow: var(--shadow-medium);
-}
-
-/* Ads Section */
-.ads-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 24px;
-  margin: 40px 0;
-}
-
-.affiliate-ad {
-  display: block;
-  background: var(--glass-bg);
-  backdrop-filter: var(--backdrop-filter);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--border-radius-large);
-  padding: 24px;
-  text-decoration: none;
-  color: inherit;
-  transition: var(--transition);
-  box-shadow: var(--shadow-glass);
-  position: relative;
-  overflow: hidden;
-}
-
-.affiliate-ad::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-  transform: scaleX(0);
-  transition: var(--transition);
-}
-
-.affiliate-ad:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: var(--shadow-medium);
-}
-
-.affiliate-ad:hover::before {
-  transform: scaleX(1);
-}
-
-.ad-content h3 {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 8px;
-}
-
-.ad-content p {
-  font-size: 14px;
-  color: var(--text-secondary);
-  line-height: 1.5;
-}
-
-/* History Section */
 .history-section {
-  background: var(--glass-bg);
-  backdrop-filter: var(--backdrop-filter);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--border-radius-large);
-  box-shadow: var(--shadow-glass);
-  padding: 28px;
-  margin-bottom: 40px;
+    background: var(--surface);
+    border-radius: 28px;
+    box-shadow: var(--shadow-xl);
+    padding: 24px;
+    margin-bottom: 100px;
+    border: 1px solid var(--border);
+    animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.section {
-  display: none;
-}
-
-.section.active {
-  display: block;
-  animation: fadeInUp 0.5s ease-out;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.history-section.hidden {
+    display: none;
 }
 
 .history-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .history-header h2 {
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text-primary);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
 }
 
 .clear-history-btn {
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 8px 16px;
-  font-size: 12px;
-  cursor: pointer;
-  transition: var(--transition);
+    padding: 8px 16px;
+    border-radius: 12px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.clear-history-btn:hover {
-  background: var(--primary-hover);
-  transform: scale(1.02);
+.clear-history-btn:active {
+    transform: scale(0.95);
 }
 
 .history-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .history-item {
-  background: var(--surface-secondary);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--border-radius);
-  padding: 20px;
-  transition: var(--transition);
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
+    padding: 16px;
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.history-item::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: var(--primary-color);
-  transform: scaleY(0);
-  transition: var(--transition);
+.history-item:active {
+    transform: scale(0.98);
 }
 
 .history-item:hover {
-  background: var(--primary-light);
-  transform: translateX(8px);
-  box-shadow: var(--shadow-light);
+    background: var(--gradient-overlay);
+    border-color: var(--primary);
 }
 
-.history-item:hover::before {
-  transform: scaleY(1);
+.history-item-text {
+    font-size: 14px;
+    color: var(--text-primary);
+    margin-bottom: 4px;
 }
 
-/* Footer */
-.footer {
-  text-align: center;
-  padding: 24px;
-  color: var(--text-secondary);
-  font-size: 14px;
+.history-item-meta {
+    font-size: 12px;
+    color: var(--text-tertiary);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .app-container {
-    padding: 16px;
-  }
-  
-  .header {
-    flex-direction: column;
-    gap: 16px;
+.empty-state {
     text-align: center;
-  }
-  
-  .language-header {
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .translation-area {
-    grid-template-columns: 1fr;
-  }
-  
-  .text-panel:first-child {
-    border-right: none;
-    border-bottom: 1px solid var(--border-light);
-  }
-  
-  .ads-section {
-    grid-template-columns: 1fr;
-  }
-  
-  .language-selector {
-    max-width: none;
-  }
+    padding: 40px 20px;
+    color: var(--text-tertiary);
+}
+
+.empty-state svg {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
+    opacity: 0.3;
+}
+
+@media (min-width: 768px) {
+    .app-container {
+        max-width: 600px;
+        padding: 24px;
+    }
 }
     </style>
 </head>
 <body>
     <div class="app-container">
-        <header class="header" role="banner">
+        <header class="header">
             <div class="logo">
                 <div class="logo-icon">
-                    <img src="attached_assets/IMG_20250826_073618_116_1757157131293.webp" alt="Nexo Translator Logo" />
+                    <img src="attached_assets/IMG_20250826_073618_116_1757157131293.webp" alt="Nexo Translator">
                 </div>
+                <div class="logo-text">Nexo</div>
             </div>
-            <div class="header-controls">
-                <button class="theme-toggle" id="theme-toggle" title="Toggle dark/light mode">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="sun-icon">
-                        <path d="M12 17.5C15.04 17.5 17.5 15.04 17.5 12C17.5 8.96 15.04 6.5 12 6.5C8.96 6.5 6.5 8.96 6.5 12C6.5 15.04 8.96 17.5 12 17.5ZM12 0L13.39 4.42C13.52 4.82 13.86 5.1 14.27 5.1H19L15.13 7.97C14.8 8.21 14.66 8.63 14.78 9.02L16.5 14L12 10.5L7.5 14L9.22 9.02C9.34 8.63 9.2 8.21 8.87 7.97L5 5.1H9.73C10.14 5.1 10.48 4.82 10.61 4.42L12 0Z"/>
-                    </svg>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="moon-icon" style="display: none;">
-                        <path d="M12 3C16.97 3 21 7.03 21 12C21 16.97 16.97 21 12 21C7.03 21 3 16.97 3 12C3 7.03 7.03 3 12 3ZM12 1C5.93 1 1 5.93 1 12C1 18.07 5.93 23 12 23C18.07 23 23 18.07 23 12C23 5.93 18.07 1 12 1ZM12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18V6Z"/>
-                    </svg>
-                </button>
-                <div class="social-header">
-                    <a href="https://twitter.com/nexotranslator" class="social-link" target="_blank" title="Follow us on Twitter">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                        </svg>
-                    </a>
-                    <a href="https://instagram.com/nexotranslator" class="social-link" target="_blank" title="Follow us on Instagram">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.79-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <svg class="moon-icon" style="display: none;" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
         </header>
-        <!-- Home Section -->
-        <div class="section active" id="home-section">
-            <main class="main-translator" role="main" aria-label="Translation Interface">
-                <div class="language-detector" id="language-detector">Detected: Spanish</div>
-                <div class="language-header">
-                    <div class="language-selector">
-                        <button class="language-btn" id="source-lang-btn" aria-haspopup="listbox" aria-label="Select source language">
-                            <div class="language-flag">🌐</div>
-                            <span>Auto Detect</span>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M7 10l5 5 5-5z"/>
-                            </svg>
-                        </button>
-                    <div class="language-dropdown" id="source-lang-dropdown" role="listbox">
-                        <div class="language-option" data-lang="auto" role="option">Auto Detect</div>
-                        <div class="language-option" data-lang="en" role="option">English</div>
-                        <div class="language-option" data-lang="es" role="option">Spanish</div>
-                        <div class="language-option" data-lang="fr" role="option">French</div>
-                        <div class="language-option" data-lang="de" role="option">German</div>
-                        <div class="language-option" data-lang="it" role="option">Italian</div>
-                        <div class="language-option" data-lang="pt" role="option">Portuguese</div>
-                        <div class="language-option" data-lang="ru" role="option">Russian</div>
-                        <div class="language-option" data-lang="zh" role="option">Chinese (Simplified)</div>
-                        <div class="language-option" data-lang="ja" role="option">Japanese</div>
-                        <div class="language-option" data-lang="ko" role="option">Korean</div>
-                        <div class="language-option" data-lang="ar" role="option">Arabic</div>
-                        <div class="language-option" data-lang="nl" role="option">Dutch</div>
-                        <div class="language-option" data-lang="sv" role="option">Swedish</div>
-                        <div class="language-option" data-lang="no" role="option">Norwegian</div>
-                        <div class="language-option" data-lang="da" role="option">Danish</div>
-                        <div class="language-option" data-lang="fi" role="option">Finnish</div>
-                        <div class="language-option" data-lang="pl" role="option">Polish</div>
-                        <div class="language-option" data-lang="tr" role="option">Turkish</div>
-                        <div class="language-option" data-lang="hi" role="option">Hindi</div>
-                        <div class="language-option" data-lang="bn" role="option">Bengali</div>
-                        <div class="language-option" data-lang="th" role="option">Thai</div>
-                        <div class="language-option" data-lang="vi" role="option">Vietnamese</div>
-                        <div class="language-option" data-lang="id" role="option">Indonesian</div>
-                        <div class="language-option" data-lang="ms" role="option">Malay</div>
-                        <div class="language-option" data-lang="el" role="option">Greek</div>
-                        <div class="language-option" data-lang="he" role="option">Hebrew</div>
-                        <div class="language-option" data-lang="cs" role="option">Czech</div>
-                        <div class="language-option" data-lang="sk" role="option">Slovak</div>
-                        <div class="language-option" data-lang="hu" role="option">Hungarian</div>
-                        <div class="language-option" data-lang="ro" role="option">Romanian</div>
-                        <div class="language-option" data-lang="bg" role="option">Bulgarian</div>
-                        <div class="language-option" data-lang="uk" role="option">Ukrainian</div>
-                        <div class="language-option" data-lang="hr" role="option">Croatian</div>
-                        <div class="language-option" data-lang="sr" role="option">Serbian</div>
-                        <div class="language-option" data-lang="sl" role="option">Slovenian</div>
-                        <div class="language-option" data-lang="lt" role="option">Lithuanian</div>
-                        <div class="language-option" data-lang="lv" role="option">Latvian</div>
-                        <div class="language-option" data-lang="et" role="option">Estonian</div>
-                        <div class="language-option" data-lang="fa" role="option">Persian</div>
-                        <div class="language-option" data-lang="sw" role="option">Swahili</div>
-                        <div class="language-option" data-lang="am" role="option">Amharic</div>
-                        <div class="language-option" data-lang="zu" role="option">Zulu</div>
-                        <div class="language-option" data-lang="xh" role="option">Xhosa</div>
-                        <div class="language-option" data-lang="so" role="option">Somali</div>
-                        <div class="language-option" data-lang="ta" role="option">Tamil</div>
-                        <div class="language-option" data-lang="te" role="option">Telugu</div>
-                        <div class="language-option" data-lang="ml" role="option">Malayalam</div>
-                        <div class="language-option" data-lang="kn" role="option">Kannada</div>
-                        <div class="language-option" data-lang="gu" role="option">Gujarati</div>
-                        <div class="language-option" data-lang="pa" role="option">Punjabi</div>
-                        <div class="language-option" data-lang="ha" role="option">Hausa</div>
-                        <div class="language-option" data-lang="yo" role="option">Yoruba</div>
-                        <div class="language-option" data-lang="ig" role="option">Igbo</div>
-                    </div>
+
+        <div class="translator-card" id="translator-section">
+            <div class="language-selector-container">
+                <div class="language-selector" id="source-selector">
+                    <button class="language-btn" id="source-lang-btn">
+                        <span class="language-flag">🌐</span>
+                        <span class="language-text">Auto Detect</span>
+                        <svg class="language-arrow" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 10l5 5 5-5z"/>
+                        </svg>
+                    </button>
+                    <div class="language-dropdown" id="source-lang-dropdown"></div>
                 </div>
+
                 <button class="swap-btn" id="swap-btn" aria-label="Swap languages">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"/>
                     </svg>
                 </button>
-                    <div class="language-selector">
-                        <button class="language-btn" id="target-lang-btn" aria-haspopup="listbox" aria-label="Select target language">
-                            <div class="language-flag">🇺🇸</div>
-                            <span>English</span>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M7 10l5 5 5-5z"/>
-                            </svg>
-                        </button>
-                    <div class="language-dropdown" id="target-lang-dropdown" role="listbox">
-                        <div class="language-option" data-lang="en" role="option">English</div>
-                        <div class="language-option" data-lang="es" role="option">Spanish</div>
-                        <div class="language-option" data-lang="fr" role="option">French</div>
-                        <div class="language-option" data-lang="de" role="option">German</div>
-                        <div class="language-option" data-lang="it" role="option">Italian</div>
-                        <div class="language-option" data-lang="pt" role="option">Portuguese</div>
-                        <div class="language-option" data-lang="ru" role="option">Russian</div>
-                        <div class="language-option" data-lang="zh" role="option">Chinese (Simplified)</div>
-                        <div class="language-option" data-lang="ja" role="option">Japanese</div>
-                        <div class="language-option" data-lang="ko" role="option">Korean</div>
-                        <div class="language-option" data-lang="ar" role="option">Arabic</div>
-                        <div class="language-option" data-lang="nl" role="option">Dutch</div>
-                        <div class="language-option" data-lang="sv" role="option">Swedish</div>
-                        <div class="language-option" data-lang="no" role="option">Norwegian</div>
-                        <div class="language-option" data-lang="da" role="option">Danish</div>
-                        <div class="language-option" data-lang="fi" role="option">Finnish</div>
-                        <div class="language-option" data-lang="pl" role="option">Polish</div>
-                        <div class="language-option" data-lang="tr" role="option">Turkish</div>
-                        <div class="language-option" data-lang="hi" role="option">Hindi</div>
-                        <div class="language-option" data-lang="bn" role="option">Bengali</div>
-                        <div class="language-option" data-lang="th" role="option">Thai</div>
-                        <div class="language-option" data-lang="vi" role="option">Vietnamese</div>
-                        <div class="language-option" data-lang="id" role="option">Indonesian</div>
-                        <div class="language-option" data-lang="ms" role="option">Malay</div>
-                        <div class="language-option" data-lang="el" role="option">Greek</div>
-                        <div class="language-option" data-lang="he" role="option">Hebrew</div>
-                        <div class="language-option" data-lang="cs" role="option">Czech</div>
-                        <div class="language-option" data-lang="sk" role="option">Slovak</div>
-                        <div class="language-option" data-lang="hu" role="option">Hungarian</div>
-                        <div class="language-option" data-lang="ro" role="option">Romanian</div>
-                        <div class="language-option" data-lang="bg" role="option">Bulgarian</div>
-                        <div class="language-option" data-lang="uk" role="option">Ukrainian</div>
-                        <div class="language-option" data-lang="hr" role="option">Croatian</div>
-                        <div class="language-option" data-lang="sr" role="option">Serbian</div>
-                        <div class="language-option" data-lang="sl" role="option">Slovenian</div>
-                        <div class="language-option" data-lang="lt" role="option">Lithuanian</div>
-                        <div class="language-option" data-lang="lv" role="option">Latvian</div>
-                        <div class="language-option" data-lang="et" role="option">Estonian</div>
-                        <div class="language-option" data-lang="fa" role="option">Persian</div>
-                        <div class="language-option" data-lang="sw" role="option">Swahili</div>
-                        <div class="language-option" data-lang="am" role="option">Amharic</div>
-                        <div class="language-option" data-lang="zu" role="option">Zulu</div>
-                        <div class="language-option" data-lang="xh" role="option">Xhosa</div>
-                        <div class="language-option" data-lang="so" role="option">Somali</div>
-                        <div class="language-option" data-lang="ta" role="option">Tamil</div>
-                        <div class="language-option" data-lang="te" role="option">Telugu</div>
-                        <div class="language-option" data-lang="ml" role="option">Malayalam</div>
-                        <div class="language-option" data-lang="kn" role="option">Kannada</div>
-                        <div class="language-option" data-lang="gu" role="option">Gujarati</div>
-                        <div class="language-option" data-lang="pa" role="option">Punjabi</div>
-                        <div class="language-option" data-lang="ha" role="option">Hausa</div>
-                        <div class="language-option" data-lang="yo" role="option">Yoruba</div>
-                        <div class="language-option" data-lang="ig" role="option">Igbo</div>
-                    </div>
+
+                <div class="language-selector" id="target-selector">
+                    <button class="language-btn" id="target-lang-btn">
+                        <span class="language-flag">🇺🇸</span>
+                        <span class="language-text">English</span>
+                        <svg class="language-arrow" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 10l5 5 5-5z"/>
+                        </svg>
+                    </button>
+                    <div class="language-dropdown" id="target-lang-dropdown"></div>
                 </div>
             </div>
-            <div class="translation-area">
-                <div class="text-panel">
-                    <textarea class="text-area" id="source-text" placeholder="Enter text or speak to translate..." maxlength="5000" aria-label="Source text input"></textarea>
-                    <div class="char-count" id="char-count">0/5000</div>
-                    <div class="panel-controls">
-                        <button class="control-btn mic-btn" id="mic-btn" title="Voice Input" aria-label="Start voice input">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+
+            <div class="detected-language" id="detected-language"></div>
+
+            <div class="suggestion-chips" id="suggestion-chips">
+                <div class="chip">Hello</div>
+                <div class="chip">Thank you</div>
+                <div class="chip">How are you?</div>
+                <div class="chip">Good morning</div>
+                <div class="chip">Goodbye</div>
+            </div>
+
+            <div class="text-input-container">
+                <textarea 
+                    class="text-area" 
+                    id="source-text" 
+                    placeholder="Type to translate..."
+                    maxlength="5000"
+                    aria-label="Source text"
+                ></textarea>
+                <div class="input-controls">
+                    <span class="char-count" id="char-count">0 / 5000</span>
+                    <div class="input-actions">
+                        <button class="icon-btn" id="mic-btn" aria-label="Voice input">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
                             </svg>
                         </button>
-                        <button class="control-btn" id="copy-source-btn" title="Copy Text" aria-label="Copy source text">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                            </svg>
-                        </button>
-                        <button class="control-btn" id="speak-source-btn" title="Speak Text" aria-label="Speak source text">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                <div class="text-panel">
-                    <textarea class="text-area" id="translated-text" placeholder="Translation appears here..." readonly aria-label="Translated text output"></textarea>
-                    <div class="panel-controls">
-                        <button class="control-btn" id="copy-translated-btn" title="Copy Translation" aria-label="Copy translated text">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                            </svg>
-                        </button>
-                        <button class="control-btn" id="speak-translated-btn" title="Speak Translation" aria-label="Speak translated text">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                        <button class="icon-btn" id="clear-btn" aria-label="Clear text">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"/>
+                                <line x1="6" y1="6" x2="18" y2="18"/>
                             </svg>
                         </button>
                     </div>
                 </div>
             </div>
-            <div class="translate-section">
-                <div class="detect-language" id="detected-language" aria-live="polite">Ready to translate</div>
-                <button class="translate-btn" id="translate-btn" aria-label="Translate text">Translate</button>
+
+            <div class="translate-progress" id="translate-progress">
+                <div class="progress-bar"></div>
             </div>
-            <div class="error-message" id="error-message" role="alert"></div>
-        </main>
-        <section class="ads-section" aria-label="Affiliate Advertisements">
-            <a href="https://rzekl.com/g/pm1aev55clb63cb1a621219aa26f6f/" class="affiliate-ad" target="_blank" rel="sponsored" loading="lazy">
-                <div class="ad-content">
-                    <div class="ad-text">
-                        <h3>Shop Global Deals on Alibaba</h3>
-                        <p>Discover millions of products from trusted suppliers worldwide with unbeatable prices and fast shipping.</p>
-                    </div>
+
+            <div class="text-output-container">
+                <div class="output-placeholder" id="output-placeholder">
+                    Translation appears here...
                 </div>
-            </a>
-            <a href="https://plrvq.com/g/gp8po8i1u7b63cb1a62145d8e108c6/" class="affiliate-ad" target="_blank" rel="sponsored" loading="lazy">
-                <div class="ad-content">
-                    <div class="ad-text">
-                        <h3>Enhance Photos with Retouch4Me</h3>
-                        <p>Transform your images with AI-powered editing tools for professional-quality results in seconds.</p>
-                    </div>
-                </div>
-            </a>
-        </section>
-        <section class="history-section" aria-label="Translation History">
-            <div class="history-header">
-                <h2>Translation History</h2>
-                <button class="clear-history-btn" id="clear-history-btn" aria-label="Clear translation history">Clear History</button>
-            </div>
-            <div class="history-list" id="history-list"></div>
-        </section>
-        <footer class="footer" role="contentinfo">
-            <p>&copy; Nexo Translator. All rights reserved.</p>
-        </footer>
-        
-        <!-- History Section -->
-        <div class="section" id="history-section">
-            <div class="history-section">
-                <div class="history-header">
-                    <h2>Translation History</h2>
-                    <button class="clear-history-btn" id="clear-history-btn-main" aria-label="Clear translation history">Clear All</button>
-                </div>
-                <div class="history-list" id="history-list-main">
-                    <p style="text-align: center; color: var(--text-secondary); padding: 40px 0;">No translations yet. Start translating to see your history here!</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Bottom Navigation -->
-        <nav class="bottom-nav" role="navigation" aria-label="Main navigation">
-            <button class="nav-item active" id="nav-home" data-section="home-section" title="Home">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-                </svg>
-                <span class="nav-label">Home</span>
-            </button>
-            <button class="nav-item" id="nav-history" data-section="history-section" title="History">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
-                </svg>
-                <span class="nav-label">History</span>
-            </button>
-        </nav>
-        
-        <!-- Quick Translate FAB -->
-        <button class="fab" id="quick-translate-fab" title="Quick Translate" aria-label="Quick translate">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
-            </svg>
-        </button>
-    </div>
+                <div class="translated-text" id="translated-text"></div>
+                <div class="output-controls">
+                    <button class="icon-btn" id="copy-btn" aria-label="Copy translation">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                        </svg>
+                    </button>
+                    <button class="icon-btn" id="speak-btn" aria-label="Speak translation">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
     
-    <script>
-class EnhancedNexoTranslator {
-    constructor() {
-        this.sourceLanguage = "auto";
-        this.targetLanguage = "en";
-        this.debounceTimer = null;
-        this.isRecording = false;
-        this.recognition = null;
-        this.currentSection = 'home-section';
-        
-        this.initializeElements();
-        this.setupTranslator();
-        this.loadTheme();
-    }
-
-    initializeElements() {
-        this.elements = {
-            sourceLangBtn: document.getElementById("source-lang-btn"),
-            targetLangBtn: document.getElementById("target-lang-btn"),
-            sourceLangDropdown: document.getElementById("source-lang-dropdown"),
-            targetLangDropdown: document.getElementById("target-lang-dropdown"),
-            swapBtn: document.getElementById("swap-btn"),
-            sourceText: document.getElementById("source-text"),
-            translatedText: document.getElementById("translated-text"),
-            translateBtn: document.getElementById("translate-btn"),
-            charCount: document.getElementById("char-count"),
-            detectedLanguage: document.getElementById("detected-language"),
-            errorMessage: document.getElementById("error-message"),
-            micBtn: document.getElementById("mic-btn"),
-            copySourceBtn: document.getElementById("copy-source-btn"),
-            copyTranslatedBtn: document.getElementById("copy-translated-btn"),
-            speakSourceBtn: document.getElementById("speak-source-btn"),
-            speakTranslatedBtn: document.getElementById("speak-translated-btn"),
-            clearHistoryBtn: document.getElementById("clear-history-btn"),
-            historyList: document.getElementById("history-list")
-        };
-        
-        this.languageMap = {
-            auto: {display: "Auto Detect", flag: "🌐", speechCode: null},
-            en: {display: "English", flag: "🇺🇸", speechCode: "en-US"},
-            es: {display: "Spanish", flag: "🇪🇸", speechCode: "es-ES"},
-            fr: {display: "French", flag: "🇫🇷", speechCode: "fr-FR"},
-            de: {display: "German", flag: "🇩🇪", speechCode: "de-DE"},
-            it: {display: "Italian", flag: "🇮🇹", speechCode: "it-IT"},
-            pt: {display: "Portuguese", flag: "🇵🇹", speechCode: "pt-PT"},
-            ru: {display: "Russian", flag: "🇷🇺", speechCode: "ru-RU"},
-            zh: {display: "Chinese (Simplified)", flag: "🇨🇳", speechCode: "zh-CN"},
-            ja: {display: "Japanese", flag: "🇯🇵", speechCode: "ja-JP"},
-            ko: {display: "Korean", flag: "🇰🇷", speechCode: "ko-KR"},
-            ar: {display: "Arabic", flag: "🇸🇦", speechCode: "ar-SA"},
-            nl: {display: "Dutch", flag: "🇳🇱", speechCode: "nl-NL"},
-            sv: {display: "Swedish", flag: "🇸🇪", speechCode: "sv-SE"},
-            no: {display: "Norwegian", flag: "🇳🇴", speechCode: "no-NO"},
-            da: {display: "Danish", flag: "🇩🇰", speechCode: "da-DK"},
-            fi: {display: "Finnish", flag: "🇫🇮", speechCode: "fi-FI"},
-            pl: {display: "Polish", flag: "🇵🇱", speechCode: "pl-PL"},
-            tr: {display: "Turkish", flag: "🇹🇷", speechCode: "tr-TR"},
-            hi: {display: "Hindi", flag: "🇮🇳", speechCode: "hi-IN"},
-            bn: {display: "Bengali", flag: "🇧🇩", speechCode: "bn-BD"},
-            th: {display: "Thai", flag: "🇹🇭", speechCode: "th-TH"},
-            vi: {display: "Vietnamese", flag: "🇻🇳", speechCode: "vi-VN"},
-            id: {display: "Indonesian", flag: "🇮🇩", speechCode: "id-ID"},
-            ms: {display: "Malay", flag: "🇲🇾", speechCode: "ms-MY"},
-            el: {display: "Greek", flag: "🇬🇷", speechCode: "el-GR"},
-            he: {display: "Hebrew", flag: "🇮🇱", speechCode: "he-IL"},
-            cs: {display: "Czech", flag: "🇨🇿", speechCode: "cs-CZ"},
-            sk: {display: "Slovak", flag: "🇸🇰", speechCode: "sk-SK"},
-            hu: {display: "Hungarian", flag: "🇭🇺", speechCode: "hu-HU"},
-            ro: {display: "Romanian", flag: "🇷🇴", speechCode: "ro-RO"},
-            bg: {display: "Bulgarian", flag: "🇧🇬", speechCode: "bg-BG"},
-            uk: {display: "Ukrainian", flag: "🇺🇦", speechCode: "uk-UA"},
-            hr: {display: "Croatian", flag: "🇭🇷", speechCode: "hr-HR"},
-            sr: {display: "Serbian", flag: "🇷🇸", speechCode: "sr-RS"},
-            sl: {display: "Slovenian", flag: "🇸🇮", speechCode: "sl-SI"},
-            lt: {display: "Lithuanian", flag: "🇱🇹", speechCode: "lt-LT"},
-            lv: {display: "Latvian", flag: "🇱🇻", speechCode: "lv-LV"},
-            et: {display: "Estonian", flag: "🇪🇪", speechCode: "et-EE"},
-            fa: {display: "Persian", flag: "🇮🇷", speechCode: "fa-IR"},
-            sw: {display: "Swahili", flag: "🇰🇪", speechCode: "sw-KE"},
-            am: {display: "Amharic", flag: "🇪🇹", speechCode: "am-ET"},
-            zu: {display: "Zulu", flag: "🇿🇦", speechCode: "zu-ZA"},
-            xh: {display: "Xhosa", flag: "🇿🇦", speechCode: "xh-ZA"},
-            so: {display: "Somali", flag: "🇸🇴", speechCode: "so-SO"},
-            ta: {display: "Tamil", flag: "🇮🇳", speechCode: "ta-IN"},
-            te: {display: "Telugu", flag: "🇮🇳", speechCode: "te-IN"},
-            ml: {display: "Malayalam", flag: "🇮🇳", speechCode: "ml-IN"},
-            kn: {display: "Kannada", flag: "🇮🇳", speechCode: "kn-IN"},
-            gu: {display: "Gujarati", flag: "🇮🇳", speechCode: "gu-IN"},
-            pa: {display: "Punjabi", flag: "🇮🇳", speechCode: "pa-IN"},
-            ha: {display: "Hausa", flag: "🇳🇬", speechCode: "ha-NG"},
-            yo: {display: "Yoruba", flag: "🇳🇬", speechCode: "yo-NG"},
-            ig: {display: "Igbo", flag: "🇳🇬", speechCode: "ig-NG"}
-        };
-    }
-
-    setupTranslator() {
-        this.bindEvents();
-        this.setupSpeechRecognition();
-        this.setupThemeToggle();
-        this.setupNavigation();
-        this.setupEnhancedFeatures();
-        this.loadTranslationHistory();
-    }
-
-    bindEvents() {
-        this.elements.sourceLangBtn.addEventListener("click", () => this.toggleDropdown("source"));
-        this.elements.targetLangBtn.addEventListener("click", () => this.toggleDropdown("target"));
-        this.elements.swapBtn.addEventListener("click", () => this.swapLanguages());
-        this.elements.sourceText.addEventListener("input", () => this.updateCharCount());
-        this.elements.sourceText.addEventListener("input", () => this.debounceTranslate());
-        this.elements.translateBtn.addEventListener("click", () => this.translateText());
-        this.elements.micBtn.addEventListener("click", () => this.toggleVoiceInput());
-        this.elements.copySourceBtn.addEventListener("click", () => this.copyToClipboard(this.elements.sourceText.value));
-        this.elements.copyTranslatedBtn.addEventListener("click", () => this.copyToClipboard(this.elements.translatedText.value));
-        this.elements.speakSourceBtn.addEventListener("click", () => this.speakText(this.elements.sourceText.value, this.sourceLanguage));
-        this.elements.speakTranslatedBtn.addEventListener("click", () => this.speakText(this.elements.translatedText.value, this.targetLanguage));
-        this.elements.clearHistoryBtn.addEventListener("click", () => this.clearHistory());
-
-        // Language option selection
-        document.querySelectorAll(".language-option").forEach(option => {
-            option.addEventListener("click", (e) => {
-                const lang = e.target.getAttribute("data-lang");
-                const dropdown = e.target.closest(".language-dropdown");
-                const isSource = dropdown.id === "source-lang-dropdown";
-                this.selectLanguage(lang, isSource);
-            });
-        });
-
-        // Close dropdowns when clicking outside
-        document.addEventListener("click", (e) => {
-            if (!e.target.closest(".language-selector")) {
-                this.closeAllDropdowns();
-            }
-        });
-
-        this.debounceTimer = null;
-    }
-
-    setupSpeechRecognition() {
-        if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            this.recognition = new SpeechRecognition();
-            this.recognition.continuous = true;
-            this.recognition.interimResults = true;
-            this.recognition.lang = this.getRecognitionLanguage();
-
-            this.recognition.onstart = () => {
-                this.isRecording = true;
-                this.elements.micBtn.classList.add("recording");
-            };
-
-            this.recognition.onresult = (event) => {
-                let interimTranscript = "";
-                let finalTranscript = "";
-
-                for (let i = event.resultIndex; i < event.results.length; i++) {
-                    const transcript = event.results[i][0].transcript;
-                    if (event.results[i].isFinal) {
-                        finalTranscript += transcript;
-                    } else {
-                        interimTranscript += transcript;
-                    }
-                }
-
-                this.elements.sourceText.value = finalTranscript + interimTranscript;
-                this.updateCharCount();
-
-                if (finalTranscript) {
-                    this.debounceTranslate();
-                }
-            };
-
-            this.recognition.onend = () => {
-                this.isRecording = false;
-                this.elements.micBtn.classList.remove("recording");
-            };
-
-            this.recognition.onerror = (event) => {
-                this.showError("Voice input error: " + event.error);
-                this.isRecording = false;
-                this.elements.micBtn.classList.remove("recording");
-            };
-        }
-    }
-
-    getRecognitionLanguage() {
-        const langMap = this.languageMap[this.sourceLanguage];
-        return langMap && langMap.speechCode ? langMap.speechCode : "en-US";
-    }
-
-    toggleDropdown(type) {
-        const dropdown = type === "source" ? this.elements.sourceLangDropdown : this.elements.targetLangDropdown;
-        const button = type === "source" ? this.elements.sourceLangBtn : this.elements.targetLangBtn;
-        const isActive = dropdown.classList.contains("active");
-        
-        this.closeAllDropdowns();
-        
-        if (!isActive) {
-            // Position dropdown properly using fixed positioning
-            const rect = button.getBoundingClientRect();
-            const viewportHeight = window.innerHeight;
-            const dropdownHeight = 300; // max height
-            
-            dropdown.style.left = rect.left + 'px';
-            dropdown.style.width = Math.max(rect.width, 220) + 'px';
-            
-            // Check if dropdown fits below the button
-            if (rect.bottom + dropdownHeight + 20 < viewportHeight) {
-                dropdown.style.top = (rect.bottom + 4) + 'px';
-                dropdown.style.bottom = 'auto';
-            } else {
-                // Position above if not enough space below
-                dropdown.style.bottom = (viewportHeight - rect.top + 4) + 'px';
-                dropdown.style.top = 'auto';
-            }
-            
-            dropdown.classList.add("active");
-        }
-    }
-
-    closeAllDropdowns() {
-        this.elements.sourceLangDropdown.classList.remove("active");
-        this.elements.targetLangDropdown.classList.remove("active");
-    }
-
-    selectLanguage(lang, isSource) {
-        if (isSource) {
-            this.sourceLanguage = lang;
-            this.elements.sourceLangBtn.querySelector("span").textContent = this.languageMap[lang].display;
-        } else {
-            this.targetLanguage = lang;
-            this.elements.targetLangBtn.querySelector("span").textContent = this.languageMap[lang].display;
-        }
-        
-        this.closeAllDropdowns();
-        
-        if (this.elements.sourceText.value) {
-            this.translateText();
-        }
-        
-        // Update speech recognition language if source language changed
-        if (isSource && this.recognition) {
-            this.recognition.lang = this.getRecognitionLanguage();
-        }
-    }
-
-    swapLanguages() {
-        if (this.sourceLanguage === "auto") return;
-        
-        const tempLang = this.sourceLanguage;
-        this.sourceLanguage = this.targetLanguage;
-        this.targetLanguage = tempLang;
-        
-        this.elements.sourceLangBtn.querySelector("span").textContent = this.languageMap[this.sourceLanguage].display;
-        this.elements.targetLangBtn.querySelector("span").textContent = this.languageMap[this.targetLanguage].display;
-        
-        const tempText = this.elements.sourceText.value;
-        this.elements.sourceText.value = this.elements.translatedText.value;
-        this.elements.translatedText.value = tempText;
-        
-        this.updateCharCount();
-        
-        if (this.elements.sourceText.value) {
-            this.translateText();
-        }
-    }
-
-    updateCharCount() {
-        const count = this.elements.sourceText.value.length;
-        this.elements.charCount.textContent = `${count}/5000`;
-        
-        if (count >= 5000) {
-            this.elements.charCount.style.color = '#d93025';
-        } else {
-            this.elements.charCount.style.color = 'var(--text-tertiary)';
-        }
-    }
-
-    debounceTranslate() {
-        clearTimeout(this.debounceTimer);
-        this.debounceTimer = setTimeout(() => {
-            if (this.elements.sourceText.value.trim()) {
-                this.translateText();
-            }
-        }, 800);
-    }
-
-    async callTranslationAPI(text, sourceLang, targetLang) {
-        try {
-            // Primary: MyMemory Translation API
-            const myMemoryResponse = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${sourceLang === "auto" ? "autodetect" : sourceLang}|${targetLang}`);
-            
-            if (myMemoryResponse.ok) {
-                const data = await myMemoryResponse.json();
-                
-                if (data.responseStatus === 200 && data.responseData && data.responseData.translatedText) {
-                    // Clean up the translation result
-                    let translatedText = data.responseData.translatedText.trim();
-                    
-                    // Remove common API artifacts
-                    translatedText = translatedText.replace(/\[.*?\]/g, '').trim();
-                    
-                    return {
-                        text: translatedText,
-                        detectedLanguage: sourceLang === "auto" ? this.detectLanguageFromText(text) : null,
-                        service: 'MyMemory'
-                    };
-                }
-            }
-            
-            // Fallback: LibreTranslate API
-            try {
-                const libreResponse = await fetch('https://libretranslate.de/translate', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        q: text,
-                        source: sourceLang === 'auto' ? 'auto' : sourceLang,
-                        target: targetLang,
-                        format: 'text'
-                    }),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                });
-                
-                if (libreResponse.ok) {
-                    const data = await libreResponse.json();
-                    if (data.translatedText) {
-                        return {
-                            text: data.translatedText.trim(),
-                            detectedLanguage: data.detectedLanguage || (sourceLang === "auto" ? this.detectLanguageFromText(text) : null),
-                            service: 'LibreTranslate'
-                        };
-                    }
-                }
-            } catch (libreError) {
-                console.warn('LibreTranslate fallback failed:', libreError);
-            }
-            
-            // If both APIs fail, throw error
-            throw new Error("All translation services are currently unavailable");
-            
-        } catch (error) {
-            console.error('Translation API error:', error);
-            throw new Error("Translation failed: " + error.message);
-        }
-    }
-
-    detectLanguageFromText(text) {
-        // Enhanced language detection based on character patterns and common words
-        const cleanText = text.toLowerCase().trim();
-        
-        // Character-based detection
-        if (/[\u4e00-\u9fff]/.test(text)) return "zh"; // Chinese
-        if (/[\u3040-\u309f\u30a0-\u30ff]/.test(text)) return "ja"; // Japanese
-        if (/[\u0600-\u06ff]/.test(text)) return "ar"; // Arabic
-        if (/[\u0400-\u04ff]/.test(text)) return "ru"; // Russian
-        if (/[\u0590-\u05ff]/.test(text)) return "he"; // Hebrew
-        if (/[\u1100-\u11ff\u3130-\u318f\uac00-\ud7af]/.test(text)) return "ko"; // Korean
-        
-        // Common word patterns for European languages
-        const patterns = {
-            'es': ['el', 'la', 'de', 'que', 'y', 'en', 'un', 'es', 'se', 'no', 'te', 'lo', 'le', 'da', 'su', 'por', 'son', 'con', 'para', 'una', 'con', 'todo', 'pero', 'más', 'hasta', 'muy'],
-            'fr': ['le', 'de', 'et', 'à', 'un', 'il', 'être', 'et', 'en', 'avoir', 'que', 'pour', 'dans', 'ce', 'son', 'une', 'sur', 'avec', 'ne', 'se', 'pas', 'tout', 'plus', 'par', 'grand', 'en', 'une', 'être', 'et', 'de', 'avoir', 'il', 'du'],
-            'de': ['der', 'die', 'und', 'in', 'den', 'von', 'zu', 'das', 'mit', 'sich', 'des', 'auf', 'für', 'ist', 'im', 'dem', 'nicht', 'ein', 'eine', 'als', 'auch', 'es', 'an', 'werden', 'aus', 'er', 'hat', 'dass', 'sie'],
-            'it': ['di', 'a', 'da', 'in', 'con', 'su', 'per', 'tra', 'fra', 'il', 'lo', 'la', 'i', 'gli', 'le', 'un', 'uno', 'una', 'e', 'che', 'non', 'si', 'è', 'ci', 'sono', 'mi', 'ti', 'vi', 'ne'],
-            'pt': ['o', 'de', 'a', 'e', 'do', 'da', 'em', 'um', 'para', 'é', 'com', 'não', 'uma', 'os', 'no', 'se', 'na', 'por', 'mais', 'as', 'dos', 'como', 'mas', 'foi', 'ao', 'ele', 'das', 'tem', 'à', 'seu', 'sua', 'ou']
-        };
-        
-        const words = cleanText.split(/\s+/).slice(0, 10); // Check first 10 words
-        let maxMatches = 0;
-        let detectedLang = 'en';
-        
-        for (const [lang, commonWords] of Object.entries(patterns)) {
-            let matches = 0;
-            words.forEach(word => {
-                if (commonWords.includes(word)) matches++;
-            });
-            if (matches > maxMatches) {
-                maxMatches = matches;
-                detectedLang = lang;
-            }
-        }
-        
-        return maxMatches > 0 ? detectedLang : 'en';
-    }
-
-    async translateText() {
-        const text = this.elements.sourceText.value.trim();
-        if (!text) return;
-
-        this.elements.translateBtn.disabled = true;
-        this.elements.translateBtn.textContent = "Translating...";
-        this.hideError();
-
-        try {
-            const translation = await this.callTranslationAPI(text, this.sourceLanguage, this.targetLanguage);
-            this.elements.translatedText.value = translation.text;
-            
-            if (translation.detectedLanguage && this.sourceLanguage === "auto") {
-                const detectedLang = this.languageMap[translation.detectedLanguage];
-                if (detectedLang) {
-                    this.elements.detectedLanguage.textContent = `Detected: ${detectedLang.display}`;
-                    this.showLanguageDetected(translation.detectedLanguage);
-                }
-            } else {
-                this.elements.detectedLanguage.textContent = "Ready to translate";
-            }
-            
-            this.saveToHistory(text, translation.text, this.sourceLanguage, this.targetLanguage);
-        } catch (error) {
-            this.showError("Translation failed: " + error.message);
-        } finally {
-            this.elements.translateBtn.disabled = false;
-            this.elements.translateBtn.textContent = "Translate";
-        }
-    }
-
-    toggleVoiceInput() {
-        if (!this.recognition) {
-            this.showError("Voice input not supported in this browser");
-            return;
-        }
-
-        if (this.isRecording) {
-            this.recognition.stop();
-            this.elements.micBtn.classList.remove('recording');
-        } else {
-            this.recognition.start();
-            this.elements.micBtn.classList.add('recording');
-        }
-    }
-
-    copyToClipboard(text) {
-        if (!text) return;
-        
-        navigator.clipboard.writeText(text).then(() => {
-            this.showSuccess("Copied to clipboard!");
-        }).catch(() => {
-            // Fallback for older browsers
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand("copy");
-            document.body.removeChild(textArea);
-            this.showSuccess("Copied to clipboard!");
-        });
-    }
-
-    speakText(text, lang) {
-        if (!text) return;
-        
-        const utterance = new SpeechSynthesisUtterance(text);
-        const langMap = this.languageMap[lang];
-        
-        if (langMap && langMap.speechCode) {
-            utterance.lang = langMap.speechCode;
-        }
-        
-        speechSynthesis.speak(utterance);
-    }
-
-    saveToHistory(sourceText, translatedText, sourceLang, targetLang) {
-        const historyItem = {
-            id: Date.now(),
-            sourceText,
-            translatedText,
-            sourceLang: this.languageMap[sourceLang].display,
-            targetLang: this.languageMap[targetLang].display,
-            timestamp: new Date().toLocaleDateString()
-        };
-        
-        let history = JSON.parse(localStorage.getItem("nexo-history") || "[]");
-        history.unshift(historyItem);
-        
-        // Keep only last 50 items
-        history = history.slice(0, 50);
-        
-        localStorage.setItem("nexo-history", JSON.stringify(history));
-        this.renderHistory();
-    }
-
-    loadTranslationHistory() {
-        this.renderHistory();
-    }
-
-    renderHistory() {
-        const history = JSON.parse(localStorage.getItem("nexo-history") || "[]");
-        const historyLists = [this.elements.historyList, document.getElementById('history-list-main')];
-        
-        historyLists.forEach(historyList => {
-            if (!historyList) return;
-            
-            if (history.length === 0) {
-                historyList.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 40px 0;">No translations yet. Start translating to see your history here!</p>';
-                return;
-            }
-            
-            historyList.innerHTML = history.map(item => `
-                <div class="history-item" onclick="nexoTranslator.useHistoryItem('${item.sourceText}')">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                        <span style="font-size: 12px; color: var(--text-secondary);">${item.sourceLang} → ${item.targetLang}</span>
-                        <span style="font-size: 12px; color: var(--text-tertiary);">${item.timestamp}</span>
-                    </div>
-                    <div style="margin-bottom: 8px;">
-                        <div style="font-weight: 500; color: var(--text-primary); margin-bottom: 4px;">${item.sourceText}</div>
-                        <div style="color: var(--text-secondary);">${item.translatedText}</div>
-                    </div>
-                </div>
-            `).join("");
-        });
-    }
-
-    useHistoryItem(text) {
-        this.elements.sourceText.value = text;
-        this.updateCharCount();
-        this.navigateToSection('home-section');
-        document.getElementById('nav-home').classList.add('active');
-        document.querySelectorAll('.nav-item:not(#nav-home)').forEach(nav => nav.classList.remove('active'));
-        this.translateText();
-    }
-
-    clearHistory() {
-        localStorage.removeItem("nexo-history");
-        this.renderHistory();
-        this.showSuccess("History cleared!");
-    }
-
-    showError(message) {
-        this.elements.errorMessage.textContent = message;
-        this.elements.errorMessage.style.display = "block";
-        setTimeout(() => {
-            this.elements.errorMessage.style.display = "none";
-        }, 5000);
-    }
-
-    hideError() {
-        this.elements.errorMessage.style.display = "none";
-    }
-
-    setupThemeToggle() {
-        const themeToggle = document.getElementById('theme-toggle');
-        
-        if (themeToggle) {
-            themeToggle.addEventListener('click', () => this.toggleTheme());
-        }
-    }
-
-    setupNavigation() {
-        const navItems = document.querySelectorAll('.nav-item');
-        
-        navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const sectionId = item.getAttribute('data-section');
-                this.navigateToSection(sectionId);
-                
-                // Update active state
-                navItems.forEach(nav => nav.classList.remove('active'));
-                item.classList.add('active');
-            });
-        });
-
-        // FAB functionality
-        const fab = document.getElementById('quick-translate-fab');
-        if (fab) {
-            fab.addEventListener('click', () => {
-                this.navigateToSection('home-section');
-                document.getElementById('nav-home').classList.add('active');
-                document.querySelectorAll('.nav-item:not(#nav-home)').forEach(nav => nav.classList.remove('active'));
-                document.getElementById('source-text').focus();
-            });
-        }
-    }
-
-    setupEnhancedFeatures() {
-        // Enhanced microphone with animation
-        if (this.elements.micBtn) {
-            this.elements.micBtn.classList.add('microphone-btn');
-        }
-
-        // Language detector chip
-        this.setupLanguageDetector();
-
-        // Enhanced animations on elements
-        this.setupAnimations();
-    }
-
-    setupLanguageDetector() {
-        this.languageDetector = document.getElementById('language-detector');
-    }
-
-    showLanguageDetected(language) {
-        if (this.languageDetector) {
-            this.languageDetector.textContent = `Detected: ${this.languageMap[language]?.display || language}`;
-            this.languageDetector.classList.add('show');
-            
-            setTimeout(() => {
-                this.languageDetector.classList.remove('show');
-            }, 3000);
-        }
-    }
-
-    navigateToSection(sectionId) {
-        // Hide all sections
-        document.querySelectorAll('.section').forEach(section => {
-            section.classList.remove('active');
-        });
-
-        // Show target section
-        const targetSection = document.getElementById(sectionId);
-        if (targetSection) {
-            targetSection.classList.add('active');
-            this.currentSection = sectionId;
-        }
-    }
-
-    toggleTheme() {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('nexo-theme', newTheme);
-        
-        // Update theme toggle icons
-        this.updateThemeIcons(newTheme);
-        
-        // Add smooth transition effect
-        document.body.style.transition = 'all 0.3s ease';
-        setTimeout(() => {
-            document.body.style.transition = '';
-        }, 300);
-    }
-
-    loadTheme() {
-        const savedTheme = localStorage.getItem('nexo-theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        this.updateThemeIcons(savedTheme);
-    }
-
-    updateThemeIcons(theme) {
-        const themeToggle = document.getElementById('theme-toggle');
-        
-        if (themeToggle) {
-            const sunIcon = themeToggle.querySelector('.sun-icon');
-            const moonIcon = themeToggle.querySelector('.moon-icon');
-            
-            if (theme === 'dark') {
-                sunIcon.style.display = 'block';
-                moonIcon.style.display = 'none';
-            } else {
-                sunIcon.style.display = 'none';
-                moonIcon.style.display = 'block';
-            }
-        }
-    }
-
-    setupAnimations() {
-        // Add intersection observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe elements for animations
-        document.querySelectorAll('.affiliate-ad, .history-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-            observer.observe(el);
-        });
-    }
-
-    // Enhanced success message with modern styling
-    showSuccess(message) {
-        const successDiv = document.createElement("div");
-        successDiv.textContent = message;
-        successDiv.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--primary-color);
-            color: white;
-            padding: 16px 24px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-glass);
-            backdrop-filter: blur(10px);
-            z-index: 10000;
-            font-size: 14px;
-            font-weight: 500;
-            transform: translateX(400px);
-            transition: var(--transition);
-        `;
-        
-        document.body.appendChild(successDiv);
-        
-        // Animate in
-        requestAnimationFrame(() => {
-            successDiv.style.transform = 'translateX(0)';
-        });
-        
-        // Animate out and remove
-        setTimeout(() => {
-            successDiv.style.transform = 'translateX(400px)';
-            setTimeout(() => document.body.removeChild(successDiv), 300);
-        }, 2000);
-    }
-}
-
-// Initialize the enhanced translator when page loads
-let nexoTranslator;
-document.addEventListener("DOMContentLoaded", () => {
-    nexoTranslator = new EnhancedNexoTranslator();
-});
-
-// Service Worker Registration
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw-2.js')
-            .then(registration => console.log('SW registered'))
-            .catch(registrationError => console.log('SW registration failed'));
-    });
-}
-    </script>
-</body>
-</html>
