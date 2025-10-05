@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexo Translator - Modern Translation App</title>
+    <title>Modern Translation App</title>
     <meta name="description" content="Modern, sleek translator with 50+ languages. Fast, beautiful, and easy to use.">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
     <style>
@@ -106,12 +106,17 @@ body::before {
     align-items: center;
     padding: 16px 0;
     margin-bottom: 24px;
+    position: relative;
 }
 
 .logo {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 12px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .logo-icon {
@@ -135,15 +140,6 @@ body::before {
     border-radius: 12px;
 }
 
-.logo-text {
-    font-size: 22px;
-    font-weight: 700;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
 .theme-toggle {
     width: 44px;
     height: 44px;
@@ -157,6 +153,7 @@ body::before {
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     color: var(--text-secondary);
     box-shadow: var(--shadow-sm);
+    margin-left: auto;
 }
 
 .theme-toggle:active {
@@ -554,142 +551,11 @@ body::before {
     color: var(--text-secondary);
     background: var(--bg-secondary);
     border-bottom: 1px solid var(--border-light);
-}
-
-.bottom-nav {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--surface);
-    border-radius: 24px;
-    padding: 8px;
-    display: flex;
-    gap: 4px;
-    box-shadow: var(--shadow-xl);
-    border: 1px solid var(--border);
-    z-index: 100;
-}
-
-.nav-item {
-    padding: 12px 20px;
-    border-radius: 18px;
-    border: none;
-    background: transparent;
-    color: var(--text-secondary);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.nav-item.active {
-    background: var(--gradient-primary);
-    color: white;
-    box-shadow: var(--shadow-md);
-}
-
-.nav-item:active {
-    transform: scale(0.95);
-}
-
-.nav-item svg {
-    width: 18px;
-    height: 18px;
-}
-
-.history-section {
-    background: var(--surface);
-    border-radius: 28px;
-    box-shadow: var(--shadow-xl);
-    padding: 24px;
-    margin-bottom: 100px;
-    border: 1px solid var(--border);
-    animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.history-section.hidden {
     display: none;
 }
 
-.history-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.history-header h2 {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--text-primary);
-}
-
-.clear-history-btn {
-    padding: 8px 16px;
-    border-radius: 12px;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    color: var(--text-secondary);
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.clear-history-btn:active {
-    transform: scale(0.95);
-}
-
-.history-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.history-item {
-    padding: 16px;
-    background: var(--bg-secondary);
-    border-radius: 16px;
-    border: 1px solid var(--border);
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.history-item:active {
-    transform: scale(0.98);
-}
-
-.history-item:hover {
-    background: var(--gradient-overlay);
-    border-color: var(--primary);
-}
-
-.history-item-text {
-    font-size: 14px;
-    color: var(--text-primary);
-    margin-bottom: 4px;
-}
-
-.history-item-meta {
-    font-size: 12px;
-    color: var(--text-tertiary);
-}
-
-.empty-state {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--text-tertiary);
-}
-
-.empty-state svg {
-    width: 64px;
-    height: 64px;
-    margin-bottom: 16px;
-    opacity: 0.3;
+.detected-language.show {
+    display: block;
 }
 
 @media (min-width: 768px) {
@@ -705,9 +571,10 @@ body::before {
         <header class="header">
             <div class="logo">
                 <div class="logo-icon">
-                    <img src="attached_assets/IMG_20250826_073618_116_1757157131293.webp" alt="Nexo Translator">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" style="width:100%;height:100%;padding:10px">
+                        <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
+                    </svg>
                 </div>
-                <div class="logo-text">Nexo</div>
             </div>
             <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
                 <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -761,11 +628,11 @@ body::before {
             <div class="detected-language" id="detected-language"></div>
 
             <div class="suggestion-chips" id="suggestion-chips">
-                <div class="chip">Hello</div>
-                <div class="chip">Thank you</div>
-                <div class="chip">How are you?</div>
-                <div class="chip">Good morning</div>
-                <div class="chip">Goodbye</div>
+                <div class="chip" data-text="Hello">Hello</div>
+                <div class="chip" data-text="Thank you">Thank you</div>
+                <div class="chip" data-text="How are you?">How are you?</div>
+                <div class="chip" data-text="Good morning">Good morning</div>
+                <div class="chip" data-text="Goodbye">Goodbye</div>
             </div>
 
             <div class="text-input-container">
@@ -811,4 +678,43 @@ body::before {
                     </button>
                     <button class="icon-btn" id="speak-btn" aria-label="Speak translation">
                         <svg viewBox="0 0 24 24" fill="currentColor">
-    
+                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <button class="translate-btn" id="translate-btn">Translate</button>
+        </div>
+    </div>
+
+    <script>
+        const languages = [
+            { code: 'auto', name: 'Auto Detect', flag: '🌐' },
+            { code: 'en', name: 'English', flag: '🇺🇸' },
+            { code: 'es', name: 'Spanish', flag: '🇪🇸' },
+            { code: 'fr', name: 'French', flag: '🇫🇷' },
+            { code: 'de', name: 'German', flag: '🇩🇪' },
+            { code: 'it', name: 'Italian', flag: '🇮🇹' },
+            { code: 'pt', name: 'Portuguese', flag: '🇵🇹' },
+            { code: 'ru', name: 'Russian', flag: '🇷🇺' },
+            { code: 'zh', name: 'Chinese', flag: '🇨🇳' },
+            { code: 'ja', name: 'Japanese', flag: '🇯🇵' },
+            { code: 'ko', name: 'Korean', flag: '🇰🇷' },
+            { code: 'ar', name: 'Arabic', flag: '🇸🇦' },
+            { code: 'hi', name: 'Hindi', flag: '🇮🇳' },
+            { code: 'tr', name: 'Turkish', flag: '🇹🇷' },
+            { code: 'nl', name: 'Dutch', flag: '🇳🇱' },
+            { code: 'pl', name: 'Polish', flag: '🇵🇱' },
+            { code: 'sv', name: 'Swedish', flag: '🇸🇪' },
+            { code: 'fi', name: 'Finnish', flag: '🇫🇮' },
+            { code: 'da', name: 'Danish', flag: '🇩🇰' },
+            { code: 'no', name: 'Norwegian', flag: '🇳🇴' },
+            { code: 'cs', name: 'Czech', flag: '🇨🇿' },
+            { code: 'el', name: 'Greek', flag: '🇬🇷' },
+            { code: 'he', name: 'Hebrew', flag: '🇮🇱' },
+            { code: 'id', name: 'Indonesian', flag: '🇮🇩' },
+            { code: 'ms', name: 'Malay', flag: '🇲🇾' },
+            { code: 'th', name: 'Thai', flag: '🇹🇭' },
+            { code: 'vi', name: 'Vietnamese', flag: '🇻🇳' },
+            { code: 'uk', name: 'Ukrain
