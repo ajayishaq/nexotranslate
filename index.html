@@ -472,8 +472,9 @@ body::before {
 }
 
 .translate-btn {
-    width: 100%;
-    padding: 18px;
+    width: fit-content;
+    max-width: 200px;
+    padding: 16px 48px;
     border: none;
     border-radius: 20px;
     background: var(--gradient-primary);
@@ -483,9 +484,11 @@ body::before {
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     box-shadow: var(--shadow-md);
-    margin: 20px;
+    margin: 20px auto;
+    display: block;
     position: relative;
     overflow: hidden;
+    text-align: center;
 }
 
 .translate-btn::before {
@@ -571,9 +574,7 @@ body::before {
         <header class="header">
             <div class="logo">
                 <div class="logo-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" style="width:100%;height:100%;padding:10px">
-                        <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
-                    </svg>
+                    <img src="attached_assets/IMG_20250826_073618_116_1757157131293.webp" alt="Logo" />
                 </div>
             </div>
             <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
@@ -626,14 +627,6 @@ body::before {
             </div>
 
             <div class="detected-language" id="detected-language"></div>
-
-            <div class="suggestion-chips" id="suggestion-chips">
-                <div class="chip" data-text="Hello">Hello</div>
-                <div class="chip" data-text="Thank you">Thank you</div>
-                <div class="chip" data-text="How are you?">How are you?</div>
-                <div class="chip" data-text="Good morning">Good morning</div>
-                <div class="chip" data-text="Goodbye">Goodbye</div>
-            </div>
 
             <div class="text-input-container">
                 <textarea 
@@ -717,4 +710,285 @@ body::before {
             { code: 'ms', name: 'Malay', flag: '🇲🇾' },
             { code: 'th', name: 'Thai', flag: '🇹🇭' },
             { code: 'vi', name: 'Vietnamese', flag: '🇻🇳' },
-            { code: 'uk', name: 'Ukrain
+            { code: 'uk', name: 'Ukrainian', flag: '🇺🇦' },
+            { code: 'bg', name: 'Bulgarian', flag: '🇧🇬' },
+            { code: 'ro', name: 'Romanian', flag: '🇷🇴' },
+            { code: 'hu', name: 'Hungarian', flag: '🇭🇺' },
+            { code: 'sk', name: 'Slovak', flag: '🇸🇰' },
+            { code: 'hr', name: 'Croatian', flag: '🇭🇷' },
+            { code: 'sl', name: 'Slovenian', flag: '🇸🇮' },
+            { code: 'lt', name: 'Lithuanian', flag: '🇱🇹' },
+            { code: 'lv', name: 'Latvian', flag: '🇱🇻' },
+            { code: 'et', name: 'Estonian', flag: '🇪🇪' },
+            { code: 'fa', name: 'Persian', flag: '🇮🇷' },
+            { code: 'ur', name: 'Urdu', flag: '🇵🇰' },
+            { code: 'bn', name: 'Bengali', flag: '🇧🇩' },
+            { code: 'ta', name: 'Tamil', flag: '🇮🇳' },
+            { code: 'te', name: 'Telugu', flag: '🇮🇳' },
+            { code: 'mr', name: 'Marathi', flag: '🇮🇳' },
+            { code: 'kn', name: 'Kannada', flag: '🇮🇳' },
+            { code: 'ml', name: 'Malayalam', flag: '🇮🇳' },
+            { code: 'pa', name: 'Punjabi', flag: '🇮🇳' },
+            { code: 'gu', name: 'Gujarati', flag: '🇮🇳' },
+            { code: 'sw', name: 'Swahili', flag: '🇰🇪' },
+            { code: 'af', name: 'Afrikaans', flag: '🇿🇦' }
+        ];
+
+        let sourceLang = 'auto';
+        let targetLang = 'en';
+        let isTranslating = false;
+
+        const sourceSelector = document.getElementById('source-selector');
+        const targetSelector = document.getElementById('target-selector');
+        const sourceLangBtn = document.getElementById('source-lang-btn');
+        const targetLangBtn = document.getElementById('target-lang-btn');
+        const sourceDropdown = document.getElementById('source-lang-dropdown');
+        const targetDropdown = document.getElementById('target-lang-dropdown');
+        const swapBtn = document.getElementById('swap-btn');
+        const sourceText = document.getElementById('source-text');
+        const translatedText = document.getElementById('translated-text');
+        const outputPlaceholder = document.getElementById('output-placeholder');
+        const charCount = document.getElementById('char-count');
+        const clearBtn = document.getElementById('clear-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const speakBtn = document.getElementById('speak-btn');
+        const micBtn = document.getElementById('mic-btn');
+        const translateBtn = document.getElementById('translate-btn');
+        const translateProgress = document.getElementById('translate-progress');
+        const progressBar = translateProgress.querySelector('.progress-bar');
+
+        function renderLanguageOptions(dropdown, excludeAuto = false) {
+            dropdown.innerHTML = '';
+            languages.forEach(lang => {
+                if (excludeAuto && lang.code === 'auto') return;
+                const option = document.createElement('div');
+                option.className = 'language-option';
+                option.innerHTML = `<span class="language-flag">${lang.flag}</span><span>${lang.name}</span>`;
+                option.addEventListener('click', () => {
+                    if (dropdown === sourceDropdown) {
+                        sourceLang = lang.code;
+                        updateLanguageButton(sourceLangBtn, lang);
+                        sourceSelector.classList.remove('active');
+                    } else {
+                        targetLang = lang.code;
+                        updateLanguageButton(targetLangBtn, lang);
+                        targetSelector.classList.remove('active');
+                    }
+                    updateSelectedOptions();
+                });
+                dropdown.appendChild(option);
+            });
+        }
+
+        function updateLanguageButton(button, lang) {
+            button.querySelector('.language-flag').textContent = lang.flag;
+            button.querySelector('.language-text').textContent = lang.name;
+        }
+
+        function updateSelectedOptions() {
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            const sourceLangName = languages.find(l => l.code === sourceLang)?.name;
+            const targetLangName = languages.find(l => l.code === targetLang)?.name;
+            sourceDropdown.querySelectorAll('.language-option').forEach(option => {
+                if (option.textContent.includes(sourceLangName)) {
+                    option.classList.add('selected');
+                }
+            });
+            targetDropdown.querySelectorAll('.language-option').forEach(option => {
+                if (option.textContent.includes(targetLangName)) {
+                    option.classList.add('selected');
+                }
+            });
+        }
+
+        renderLanguageOptions(sourceDropdown, false);
+        renderLanguageOptions(targetDropdown, true);
+
+        sourceLangBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sourceSelector.classList.toggle('active');
+            targetSelector.classList.remove('active');
+        });
+
+        targetLangBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            targetSelector.classList.toggle('active');
+            sourceSelector.classList.remove('active');
+        });
+
+        document.addEventListener('click', () => {
+            sourceSelector.classList.remove('active');
+            targetSelector.classList.remove('active');
+        });
+
+        swapBtn.addEventListener('click', () => {
+            if (sourceLang === 'auto') return;
+            [sourceLang, targetLang] = [targetLang, sourceLang];
+            const sourceLangObj = languages.find(l => l.code === sourceLang);
+            const targetLangObj = languages.find(l => l.code === targetLang);
+            updateLanguageButton(sourceLangBtn, sourceLangObj);
+            updateLanguageButton(targetLangBtn, targetLangObj);
+            updateSelectedOptions();
+            const tempText = sourceText.value;
+            sourceText.value = translatedText.textContent;
+            translatedText.textContent = tempText;
+        });
+
+        sourceText.addEventListener('input', () => {
+            const length = sourceText.value.length;
+            charCount.textContent = `${length} / 5000`;
+        });
+
+        clearBtn.addEventListener('click', () => {
+            sourceText.value = '';
+            charCount.textContent = '0 / 5000';
+            translatedText.textContent = '';
+            outputPlaceholder.classList.remove('hidden');
+        });
+
+        copyBtn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(translatedText.textContent);
+                copyBtn.style.color = '#14B8A6';
+                setTimeout(() => {
+                    copyBtn.style.color = '';
+                }, 1000);
+            } catch (err) {
+                console.error('Failed to copy:', err);
+            }
+        });
+
+        speakBtn.addEventListener('click', () => {
+            const text = translatedText.textContent;
+            if ('speechSynthesis' in window && text) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = targetLang;
+                speechSynthesis.speak(utterance);
+            }
+        });
+
+        let recognition;
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                sourceText.value = transcript;
+                charCount.textContent = `${transcript.length} / 5000`;
+                micBtn.classList.remove('recording');
+            };
+
+            recognition.onerror = () => {
+                micBtn.classList.remove('recording');
+            };
+
+            recognition.onend = () => {
+                micBtn.classList.remove('recording');
+            };
+        }
+
+        micBtn.addEventListener('click', () => {
+            if (recognition) {
+                if (micBtn.classList.contains('recording')) {
+                    recognition.stop();
+                } else {
+                    micBtn.classList.add('recording');
+                    recognition.lang = sourceLang === 'auto' ? 'en-US' : sourceLang;
+                    recognition.start();
+                }
+            }
+        });
+
+        translateBtn.addEventListener('click', async () => {
+            const text = sourceText.value.trim();
+            if (!text || isTranslating) return;
+
+            isTranslating = true;
+            translateBtn.disabled = true;
+            translateProgress.classList.add('active');
+            progressBar.style.width = '30%';
+
+            try {
+                const response = await fetch('/api/translate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        text: text,
+                        sourceLang: sourceLang,
+                        targetLang: targetLang,
+                        provider: 'deepl'
+                    })
+                });
+
+                progressBar.style.width = '70%';
+
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                progressBar.style.width = '100%';
+                
+                translatedText.textContent = data.translation;
+                outputPlaceholder.classList.add('hidden');
+
+                setTimeout(() => {
+                    translateProgress.classList.remove('active');
+                    progressBar.style.width = '0%';
+                }, 500);
+
+            } catch (error) {
+                console.error('Translation error:', error);
+                translatedText.textContent = 'Translation failed. Please try again.';
+                outputPlaceholder.classList.add('hidden');
+                translateProgress.classList.remove('active');
+                progressBar.style.width = '0%';
+            } finally {
+                isTranslating = false;
+                translateBtn.disabled = false;
+            }
+        });
+
+        const themeToggle = document.getElementById('theme-toggle');
+
+        if (!localStorage.getItem('theme')) {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            localStorage.setItem('theme', prefersDark ? 'dark' : 'light');
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            const sunIcon = themeToggle.querySelector('.sun-icon');
+            const moonIcon = themeToggle.querySelector('.moon-icon');
+            if (theme === 'dark') {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        }
+
+        updateSelectedOptions();
+    </script>
+</body>
+</html>
