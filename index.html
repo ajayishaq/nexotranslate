@@ -836,8 +836,6 @@ body::before {
             setTimeout(() => progressBar.style.width = '30%', 100);
 
             try {
-                const provider = 'deepl';
-                
                 setTimeout(() => progressBar.style.width = '60%', 300);
                 
                 const response = await fetch('/api/translate', {
@@ -848,8 +846,7 @@ body::before {
                     body: JSON.stringify({
                         text,
                         sourceLang,
-                        targetLang,
-                        provider
+                        targetLang
                     })
                 });
                 
