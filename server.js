@@ -35,7 +35,7 @@ function makeRequest(url, options, postData) {
 }
 
 app.post('/api/translate', async (req, res) => {
-    const { text, sourceLang, targetLang, provider } = req.body;
+    const { text, sourceLang, targetLang } = req.body;
 
     if (!text || !targetLang) {
         return res.status(400).json({ error: 'Missing required fields' });
@@ -43,43 +43,68 @@ app.post('/api/translate', async (req, res) => {
 
     try {
         let translation = '';
+        let usedDeepL = false;
 
-        if (provider === 'deepl' && process.env.DEEPL_API_KEY) {
-            const formData = new URLSearchParams();
-            formData.append('auth_key', process.env.DEEPL_API_KEY);
-            formData.append('text', text);
-            formData.append('target_lang', targetLang.toUpperCase());
-            if (sourceLang !== 'auto') {
-                formData.append('source_lang', sourceLang.toUpperCase());
+        if (process.env.DEEPL_API_KEY) {
+            try {
+                const formData = new URLSearchParams();
+                formData.append('auth_key', process.env.DEEPL_API_KEY);
+                formData.append('text', text);
+                formData.append('target_lang', targetLang.toUpperCase());
+                if (sourceLang !== 'auto') {
+                    formData.append('source_lang', sourceLang.toUpperCase());
+                }
+
+                const response = await makeRequest(
+                    'https://api-free.deepl.com/v2/translate',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'Content-Length': Buffer.byteLength(formData.toString())
+                        }
+                    },
+                    formData.toString()
+                );
+
+                if (response.statusCode === 200) {
+                    translation = response.data.translations[0].text;
+                    usedDeepL = true;
+                } else {
+                    throw new Error(`DeepL API error: ${response.statusCode}`);
+                }
+            } catch (deeplError) {
+                console.error('DeepL failed, falling back to LibreTranslate:', deeplError.message);
             }
+        }
+
+        if (!usedDeepL) {
+            const libreTranslateUrl = process.env.LIBRETRANSLATE_URL || 'https://libretranslate.com/translate';
+            const libreBody = JSON.stringify({
+                q: text,
+                source: sourceLang === 'auto' ? 'auto' : sourceLang,
+                target: targetLang,
+                format: 'text',
+                api_key: process.env.LIBRETRANSLATE_API_KEY || ''
+            });
 
             const response = await makeRequest(
-                'https://api-free.deepl.com/v2/translate',
+                libreTranslateUrl,
                 {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Content-Length': Buffer.byteLength(formData.toString())
+                        'Content-Type': 'application/json',
+                        'Content-Length': Buffer.byteLength(libreBody)
                     }
                 },
-                formData.toString()
+                libreBody
             );
 
             if (response.statusCode !== 200) {
-                throw new Error(`DeepL API error: ${response.statusCode}`);
+                throw new Error(`LibreTranslate API error: ${response.statusCode}`);
             }
 
-            translation = response.data.translations[0].text;
-
-        } else {
-            const googleUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
-            const response = await makeRequest(googleUrl, { method: 'GET' });
-            
-            if (Array.isArray(response.data) && response.data[0]) {
-                translation = response.data[0].map(item => item[0]).join('');
-            } else {
-                throw new Error('Invalid response from Google Translate');
-            }
+            translation = response.data.translatedText;
         }
 
         res.json({ translation });
