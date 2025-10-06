@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Translation App</title>
+    <title>Nexo Translate</title>
     <meta name="description" content="Modern, sleek translator with 50+ languages. Fast, beautiful, and easy to use.">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
     <link rel="manifest" href="/manifest.json">
@@ -653,6 +653,8 @@ body::before {
     </div>
 
     <script>
+        const DEEPL_API_KEY = '53b9519d-6d01-4993-9234-80ee9f47039f:fx';
+
         const languages = [
             { code: 'auto', name: 'Auto Detect', flag: '🌐' },
             { code: 'en', name: 'English', flag: '🇺🇸' },
@@ -836,29 +838,59 @@ body::before {
             setTimeout(() => progressBar.style.width = '30%', 100);
 
             try {
-                setTimeout(() => progressBar.style.width = '60%', 300);
-                
-                const response = await fetch('/api/translate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        text,
-                        sourceLang,
-                        targetLang
-                    })
-                });
-                
-                const data = await response.json();
-                
-                progressBar.style.width = '100%';
-                
-                if (data.error) {
-                    throw new Error(data.error);
+                let translation = '';
+                let usedDeepL = false;
+
+                try {
+                    setTimeout(() => progressBar.style.width = '50%', 200);
+                    
+                    const formData = new URLSearchParams();
+                    formData.append('auth_key', DEEPL_API_KEY);
+                    formData.append('text', text);
+                    formData.append('target_lang', targetLang.toUpperCase());
+                    if (sourceLang !== 'auto') {
+                        formData.append('source_lang', sourceLang.toUpperCase());
+                    }
+
+                    const deeplResponse = await fetch('https://api-free.deepl.com/v2/translate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: formData.toString()
+                    });
+
+                    if (deeplResponse.ok) {
+                        const data = await deeplResponse.json();
+                        translation = data.translations[0].text;
+                        usedDeepL = true;
+                    }
+                } catch (deeplError) {
+                    console.log('DeepL failed (likely CORS), falling back to LibreTranslate');
+                }
+
+                if (!usedDeepL) {
+                    setTimeout(() => progressBar.style.width = '60%', 300);
+                    
+                    const libreResponse = await fetch('https://libretranslate.com/translate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            q: text,
+                            source: sourceLang === 'auto' ? 'auto' : sourceLang,
+                            target: targetLang,
+                            format: 'text'
+                        })
+                    });
+
+                    const data = await libreResponse.json();
+                    translation = data.translatedText;
                 }
                 
-                translatedText.textContent = data.translation;
+                progressBar.style.width = '100%';
+                translatedText.textContent = translation;
                 outputPlaceholder.classList.add('hidden');
             } catch (error) {
                 console.error('Translation error:', error);
@@ -973,7 +1005,7 @@ body::before {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
                     .then((registration) => {
-                        console.log('Service Worker registered successfully:', registration.scope);
+                        console.log('Service Worker registered:', registration.scope);
                     })
                     .catch((error) => {
                         console.log('Service Worker registration failed:', error);
