@@ -1,0 +1,17 @@
+{
+  "name": "nexo-translate",
+  "version": "1.0.0",
+  "description": "Modern translator with 50+ languages powered by DeepL",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["translator", "deepl", "pwa"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0"
+  }
+}
