@@ -747,64 +747,60 @@ body::before {
         const swapBtn = document.getElementById('swap-btn');
         const sourceText = document.getElementById('source-text');
         const translatedText = document.getElementById('translated-text');
-        const outputPlaceholder = document.getElementById('output-placeholder');
+        const translateBtn = document.getElementById('translate-btn');
         const charCount = document.getElementById('char-count');
         const clearBtn = document.getElementById('clear-btn');
         const copyBtn = document.getElementById('copy-btn');
         const speakBtn = document.getElementById('speak-btn');
         const micBtn = document.getElementById('mic-btn');
-        const translateBtn = document.getElementById('translate-btn');
+        const themeToggle = document.getElementById('theme-toggle');
+        const outputPlaceholder = document.getElementById('output-placeholder');
         const translateProgress = document.getElementById('translate-progress');
         const progressBar = translateProgress.querySelector('.progress-bar');
 
         function renderLanguageOptions(dropdown, excludeAuto = false) {
-            dropdown.innerHTML = '';
-            languages.forEach(lang => {
-                if (excludeAuto && lang.code === 'auto') return;
-                const option = document.createElement('div');
-                option.className = 'language-option';
-                option.innerHTML = `<span class="language-flag">${lang.flag}</span><span>${lang.name}</span>`;
-                option.addEventListener('click', () => {
-                    if (dropdown === sourceDropdown) {
-                        sourceLang = lang.code;
-                        updateLanguageButton(sourceLangBtn, lang);
-                        sourceSelector.classList.remove('active');
-                    } else {
-                        targetLang = lang.code;
-                        updateLanguageButton(targetLangBtn, lang);
-                        targetSelector.classList.remove('active');
-                    }
-                    updateSelectedOptions();
-                });
-                dropdown.appendChild(option);
-            });
-        }
-
-        function updateLanguageButton(button, lang) {
-            button.querySelector('.language-flag').textContent = lang.flag;
-            button.querySelector('.language-text').textContent = lang.name;
-        }
-
-        function updateSelectedOptions() {
-            document.querySelectorAll('.language-option').forEach(option => {
-                option.classList.remove('selected');
-            });
-            const sourceLangName = languages.find(l => l.code === sourceLang)?.name;
-            const targetLangName = languages.find(l => l.code === targetLang)?.name;
-            sourceDropdown.querySelectorAll('.language-option').forEach(option => {
-                if (option.textContent.includes(sourceLangName)) {
-                    option.classList.add('selected');
-                }
-            });
-            targetDropdown.querySelectorAll('.language-option').forEach(option => {
-                if (option.textContent.includes(targetLangName)) {
-                    option.classList.add('selected');
-                }
-            });
+            const langs = excludeAuto ? languages.filter(l => l.code !== 'auto') : languages;
+            dropdown.innerHTML = langs.map(lang => 
+                `<div class="language-option" data-code="${lang.code}">
+                    <span class="language-flag">${lang.flag}</span>
+                    <span>${lang.name}</span>
+                </div>`
+            ).join('');
         }
 
         renderLanguageOptions(sourceDropdown, false);
         renderLanguageOptions(targetDropdown, true);
+
+        sourceDropdown.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', () => {
+                sourceLang = option.dataset.code;
+                const lang = languages.find(l => l.code === sourceLang);
+                sourceLangBtn.querySelector('.language-flag').textContent = lang.flag;
+                sourceLangBtn.querySelector('.language-text').textContent = lang.name;
+                sourceSelector.classList.remove('active');
+                updateSelectedOptions();
+            });
+        });
+
+        targetDropdown.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', () => {
+                targetLang = option.dataset.code;
+                const lang = languages.find(l => l.code === targetLang);
+                targetLangBtn.querySelector('.language-flag').textContent = lang.flag;
+                targetLangBtn.querySelector('.language-text').textContent = lang.name;
+                targetSelector.classList.remove('active');
+                updateSelectedOptions();
+            });
+        });
+
+        function updateSelectedOptions() {
+            document.querySelectorAll('.language-option').forEach(opt => {
+                opt.classList.remove('selected');
+                if (opt.dataset.code === sourceLang || opt.dataset.code === targetLang) {
+                    opt.classList.add('selected');
+                }
+            });
+        }
 
         sourceLangBtn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -825,48 +821,123 @@ body::before {
 
         swapBtn.addEventListener('click', () => {
             if (sourceLang === 'auto') return;
+            
             [sourceLang, targetLang] = [targetLang, sourceLang];
+            
             const sourceLangObj = languages.find(l => l.code === sourceLang);
             const targetLangObj = languages.find(l => l.code === targetLang);
-            updateLanguageButton(sourceLangBtn, sourceLangObj);
-            updateLanguageButton(targetLangBtn, targetLangObj);
+            
+            sourceLangBtn.querySelector('.language-flag').textContent = sourceLangObj.flag;
+            sourceLangBtn.querySelector('.language-text').textContent = sourceLangObj.name;
+            targetLangBtn.querySelector('.language-flag').textContent = targetLangObj.flag;
+            targetLangBtn.querySelector('.language-text').textContent = targetLangObj.name;
+            
+            [sourceText.value, translatedText.textContent] = [translatedText.textContent, sourceText.value];
+            updateCharCount();
             updateSelectedOptions();
-            const tempText = sourceText.value;
-            sourceText.value = translatedText.textContent;
-            translatedText.textContent = tempText;
         });
 
         sourceText.addEventListener('input', () => {
-            const length = sourceText.value.length;
-            charCount.textContent = `${length} / 5000`;
+            updateCharCount();
         });
+
+        function updateCharCount() {
+            const count = sourceText.value.length;
+            charCount.textContent = `${count} / 5000`;
+        }
 
         clearBtn.addEventListener('click', () => {
             sourceText.value = '';
-            charCount.textContent = '0 / 5000';
             translatedText.textContent = '';
             outputPlaceholder.classList.remove('hidden');
+            updateCharCount();
+        });
+
+        async function translate() {
+            const text = sourceText.value.trim();
+            if (!text || isTranslating) return;
+
+            isTranslating = true;
+            translateBtn.disabled = true;
+            translateProgress.classList.add('active');
+            progressBar.style.width = '0%';
+
+            setTimeout(() => progressBar.style.width = '30%', 100);
+
+            try {
+                const provider = 'deepl';
+                
+                setTimeout(() => progressBar.style.width = '60%', 300);
+                
+                const response = await fetch('/api/translate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        text,
+                        sourceLang,
+                        targetLang,
+                        provider
+                    })
+                });
+                
+                const data = await response.json();
+                
+                progressBar.style.width = '100%';
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                translatedText.textContent = data.translation;
+                outputPlaceholder.classList.add('hidden');
+            } catch (error) {
+                console.error('Translation error:', error);
+                translatedText.textContent = 'Translation failed. Please try again.';
+                outputPlaceholder.classList.add('hidden');
+            } finally {
+                isTranslating = false;
+                translateBtn.disabled = false;
+                setTimeout(() => {
+                    translateProgress.classList.remove('active');
+                    progressBar.style.width = '0%';
+                }, 300);
+            }
+        }
+
+        translateBtn.addEventListener('click', translate);
+
+        sourceText.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                translate();
+            }
         });
 
         copyBtn.addEventListener('click', async () => {
+            const text = translatedText.textContent;
+            if (!text) return;
+            
             try {
-                await navigator.clipboard.writeText(translatedText.textContent);
-                copyBtn.style.color = '#14B8A6';
+                await navigator.clipboard.writeText(text);
+                const originalHTML = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
                 setTimeout(() => {
-                    copyBtn.style.color = '';
-                }, 1000);
+                    copyBtn.innerHTML = originalHTML;
+                }, 1500);
             } catch (err) {
-                console.error('Failed to copy:', err);
+                console.error('Copy failed:', err);
             }
         });
 
         speakBtn.addEventListener('click', () => {
             const text = translatedText.textContent;
-            if ('speechSynthesis' in window && text) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = targetLang;
-                speechSynthesis.speak(utterance);
-            }
+            if (!text || !window.speechSynthesis) return;
+            
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = targetLang;
+            window.speechSynthesis.speak(utterance);
         });
 
         let recognition;
@@ -879,7 +950,7 @@ body::before {
             recognition.onresult = (event) => {
                 const transcript = event.results[0][0].transcript;
                 sourceText.value = transcript;
-                charCount.textContent = `${transcript.length} / 5000`;
+                updateCharCount();
                 micBtn.classList.remove('recording');
             };
 
@@ -890,78 +961,18 @@ body::before {
             recognition.onend = () => {
                 micBtn.classList.remove('recording');
             };
-        }
 
-        micBtn.addEventListener('click', () => {
-            if (recognition) {
+            micBtn.addEventListener('click', () => {
                 if (micBtn.classList.contains('recording')) {
                     recognition.stop();
                 } else {
-                    micBtn.classList.add('recording');
                     recognition.lang = sourceLang === 'auto' ? 'en-US' : sourceLang;
                     recognition.start();
+                    micBtn.classList.add('recording');
                 }
-            }
-        });
-
-        translateBtn.addEventListener('click', async () => {
-            const text = sourceText.value.trim();
-            if (!text || isTranslating) return;
-
-            isTranslating = true;
-            translateBtn.disabled = true;
-            translateProgress.classList.add('active');
-            progressBar.style.width = '30%';
-
-            try {
-                const response = await fetch('/api/translate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        text: text,
-                        sourceLang: sourceLang,
-                        targetLang: targetLang,
-                        provider: 'deepl'
-                    })
-                });
-
-                progressBar.style.width = '70%';
-
-                const data = await response.json();
-
-                if (data.error) {
-                    throw new Error(data.error);
-                }
-
-                progressBar.style.width = '100%';
-                
-                translatedText.textContent = data.translation;
-                outputPlaceholder.classList.add('hidden');
-
-                setTimeout(() => {
-                    translateProgress.classList.remove('active');
-                    progressBar.style.width = '0%';
-                }, 500);
-
-            } catch (error) {
-                console.error('Translation error:', error);
-                translatedText.textContent = 'Translation failed. Please try again.';
-                outputPlaceholder.classList.add('hidden');
-                translateProgress.classList.remove('active');
-                progressBar.style.width = '0%';
-            } finally {
-                isTranslating = false;
-                translateBtn.disabled = false;
-            }
-        });
-
-        const themeToggle = document.getElementById('theme-toggle');
-
-        if (!localStorage.getItem('theme')) {
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            localStorage.setItem('theme', prefersDark ? 'dark' : 'light');
+            });
+        } else {
+            micBtn.style.display = 'none';
         }
 
         const savedTheme = localStorage.getItem('theme') || 'light';
