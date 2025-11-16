@@ -27,37 +27,77 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Using LibreTranslate API (free and open-source)
-    const apiUrl = 'https://libretranslate.com/translate';
-    
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        q: text,
-        source: sourceLang === 'auto' ? 'auto' : sourceLang,
-        target: targetLang,
-        format: 'text'
-      })
-    });
+    let translation = '';
+    let detectedLanguage = null;
+    let usedDeepL = false;
 
-    if (!response.ok) {
-      throw new Error(`Translation API error: ${response.status}`);
+    if (process.env.DEEPL_API_KEY) {
+      try {
+        const deeplUrl = 'https://api-free.deepl.com/v2/translate';
+        const formData = new URLSearchParams();
+        formData.append('auth_key', process.env.DEEPL_API_KEY);
+        formData.append('text', text);
+        formData.append('target_lang', targetLang.toUpperCase());
+
+        if (sourceLang && sourceLang !== 'auto') {
+          formData.append('source_lang', sourceLang.toUpperCase());
+        }
+
+        const deeplResponse = await fetch(deeplUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: formData.toString()
+        });
+
+        if (deeplResponse.ok) {
+          const deeplData = await deeplResponse.json();
+          translation = deeplData.translations[0].text;
+          detectedLanguage = deeplData.translations[0].detected_source_language?.toLowerCase();
+          usedDeepL = true;
+        } else {
+          console.log('DeepL failed, falling back to LibreTranslate');
+        }
+      } catch (deeplError) {
+        console.error('DeepL error:', deeplError);
+      }
     }
 
-    const data = await response.json();
+    if (!usedDeepL) {
+      const libreUrl = 'https://libretranslate.com/translate';
+
+      const libreResponse = await fetch(libreUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          q: text,
+          source: sourceLang === 'auto' ? 'auto' : sourceLang,
+          target: targetLang,
+          format: 'text'
+        })
+      });
+
+      if (!libreResponse.ok) {
+        throw new Error(`Translation API error: ${libreResponse.status}`);
+      }
+
+      const libreData = await libreResponse.json();
+      translation = libreData.translatedText;
+      detectedLanguage = libreData.detectedLanguage?.language;
+    }
 
     return res.status(200).json({
-      translation: data.translatedText,
-      detectedLanguage: data.detectedLanguage
+      translation,
+      detectedLanguage,
+      provider: usedDeepL ? 'deepl' : 'libretranslate'
     });
 
   } catch (error) {
     console.error('Translation error:', error);
-    
-    // Fallback: Return a user-friendly error
+
     return res.status(500).json({
       error: 'Translation service temporarily unavailable. Please try again.',
       details: error.message

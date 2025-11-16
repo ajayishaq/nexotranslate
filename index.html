@@ -3,14 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexo Translate</title>
-    <meta name="description" content="Modern, sleek translator with 50+ languages. Fast, beautiful, and easy to use.">
+    <title>Nexo Translate - Modern Translation</title>
+    <meta name="description" content="Modern, powerful translator with 50+ languages, AI-powered detection, and cloud sync.">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#1A73E8">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Nexo Translate">
+    <meta name="theme-color" content="#0EA5E9">
     <style>
 * {
     margin: 0;
@@ -19,378 +16,120 @@
 }
 
 :root {
-    --primary: #1A73E8;
-    --primary-dark: #1557B0;
-    --primary-light: #4285F4;
-    --accent: #34A853;
+    --primary: #0EA5E9;
+    --primary-dark: #0284C7;
+    --primary-light: #38BDF8;
+    --secondary: #06B6D4;
+    --accent: #10B981;
+    --warning: #F59E0B;
+    --error: #EF4444;
     --bg-primary: #FFFFFF;
-    --bg-secondary: #F8F9FA;
-    --bg-tertiary: #E8EAED;
+    --bg-secondary: #F1F5F9;
+    --bg-tertiary: #E2E8F0;
     --surface: #FFFFFF;
-    --text-primary: #202124;
-    --text-secondary: #5F6368;
-    --text-tertiary: #80868B;
-    --border: #DADCE0;
-    --border-light: #E8EAED;
-    --shadow-sm: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
-    --shadow-md: 0 1px 3px 0 rgba(60,64,67,.3), 0 4px 8px 3px rgba(60,64,67,.15);
-    --shadow-lg: 0 8px 12px rgba(60,64,67,.15), 0 4px 4px rgba(60,64,67,.3);
+    --surface-hover: #F8FAFC;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-tertiary: #94A3B8;
+    --border: #CBD5E1;
+    --border-light: #E2E8F0;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
 [data-theme="dark"] {
-    --primary: #8AB4F8;
-    --primary-dark: #669DF6;
-    --primary-light: #AECBFA;
-    --accent: #81C995;
-    --bg-primary: #202124;
-    --bg-secondary: #292A2D;
-    --bg-tertiary: #35363A;
-    --surface: #292A2D;
-    --text-primary: #E8EAED;
-    --text-secondary: #9AA0A6;
-    --text-tertiary: #5F6368;
-    --border: #3C4043;
-    --border-light: #35363A;
-    --shadow-sm: 0 1px 2px 0 rgba(0,0,0,.3), 0 1px 3px 1px rgba(0,0,0,.15);
-    --shadow-md: 0 1px 3px 0 rgba(0,0,0,.3), 0 4px 8px 3px rgba(0,0,0,.15);
-    --shadow-lg: 0 8px 12px rgba(0,0,0,.15), 0 4px 4px rgba(0,0,0,.3);
+    --primary: #38BDF8;
+    --primary-dark: #0EA5E9;
+    --primary-light: #7DD3FC;
+    --secondary: #22D3EE;
+    --accent: #34D399;
+    --warning: #FBBF24;
+    --error: #F87171;
+    --bg-primary: #0F172A;
+    --bg-secondary: #1E293B;
+    --bg-tertiary: #334155;
+    --surface: #1E293B;
+    --surface-hover: #334155;
+    --text-primary: #F1F5F9;
+    --text-secondary: #CBD5E1;
+    --text-tertiary: #64748B;
+    --border: #334155;
+    --border-light: #475569;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.5);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.5);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.5);
 }
 
 body {
-    font-family: 'Google Sans', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', sans-serif;
     background: var(--bg-secondary);
     color: var(--text-primary);
     line-height: 1.6;
     min-height: 100vh;
-    transition: background 0.3s ease, color 0.3s ease;
+    transition: background 0.2s, color 0.2s;
 }
 
-.app-container {
-    max-width: 1200px;
+.app {
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 20px;
-    min-height: 100vh;
+    padding: 16px;
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 0 24px;
-    margin-bottom: 32px;
+    padding: 12px 0;
+    margin-bottom: 24px;
 }
 
-.logo {
+.logo-section {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.logo-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    overflow: hidden;
+.logo-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: var(--shadow-md);
 }
 
-.logo-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+}
+
+.logo-subtitle {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    font-weight: 500;
 }
 
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 12px;
-}
-
-.theme-toggle {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: transparent;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.2s ease;
-    color: var(--text-secondary);
-}
-
-.theme-toggle:hover {
-    background: var(--bg-tertiary);
-}
-
-.theme-toggle svg {
-    width: 20px;
-    height: 20px;
-}
-
-.main-content {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
-}
-
-@media (min-width: 1024px) {
-    .main-content {
-        grid-template-columns: 2fr 1fr;
-    }
-}
-
-.translator-section {
-    background: var(--surface);
-    border-radius: 8px;
-    box-shadow: var(--shadow-sm);
-    overflow: hidden;
-    border: 1px solid var(--border);
-}
-
-.language-bar {
-    display: flex;
-    align-items: center;
-    padding: 16px 24px;
-    border-bottom: 1px solid var(--border);
-    gap: 16px;
-}
-
-.language-selector {
-    position: relative;
-    flex: 1;
-}
-
-.language-btn {
-    width: 100%;
-    background: transparent;
-    border: none;
-    border-radius: 4px;
-    padding: 8px 12px;
-    display: flex;
-    align-items: center;
     gap: 8px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-    color: var(--text-primary);
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.language-btn:hover {
-    background: var(--bg-tertiary);
-}
-
-.language-flag {
-    font-size: 18px;
-}
-
-.language-text {
-    flex: 1;
-    text-align: left;
-}
-
-.language-arrow {
-    width: 20px;
-    height: 20px;
-    transition: transform 0.2s ease;
-    fill: var(--text-secondary);
-}
-
-.language-selector.active .language-arrow {
-    transform: rotate(180deg);
-}
-
-.language-dropdown {
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    right: 0;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    max-height: 320px;
-    overflow-y: auto;
-    box-shadow: var(--shadow-lg);
-    z-index: 1000;
-    opacity: 0;
-    transform: translateY(-8px);
-    pointer-events: none;
-    transition: all 0.2s ease;
-}
-
-.language-selector.active .language-dropdown {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: all;
-}
-
-.language-option {
-    padding: 12px 16px;
-    cursor: pointer;
-    transition: background 0.15s ease;
-    font-size: 14px;
-    color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.language-option:hover {
-    background: var(--bg-secondary);
-}
-
-.language-option.selected {
-    background: var(--bg-tertiary);
-    color: var(--primary);
-    font-weight: 500;
-}
-
-.swap-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: transparent;
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    color: var(--text-secondary);
-    flex-shrink: 0;
-}
-
-.swap-btn:hover {
-    background: var(--bg-tertiary);
-    border-color: var(--primary);
-    color: var(--primary);
-}
-
-.swap-btn:active {
-    transform: rotate(180deg);
-}
-
-.swap-btn svg {
-    width: 20px;
-    height: 20px;
-}
-
-.translation-panels {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 300px;
-}
-
-@media (max-width: 768px) {
-    .translation-panels {
-        grid-template-columns: 1fr;
-    }
-}
-
-.input-panel, .output-panel {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
-
-.input-panel {
-    border-right: 1px solid var(--border);
-}
-
-@media (max-width: 768px) {
-    .input-panel {
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-    }
-}
-
-.detected-language {
-    padding: 8px 24px;
-    font-size: 12px;
-    color: var(--text-secondary);
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border);
-    display: none;
-    animation: slideDown 0.2s ease;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-4px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.detected-language.show {
-    display: block;
-}
-
-.text-area {
-    width: 100%;
-    min-height: 200px;
-    padding: 24px;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: 18px;
-    line-height: 1.6;
-    color: var(--text-primary);
-    resize: none;
-    font-family: inherit;
-    flex: 1;
-}
-
-.text-area::placeholder {
-    color: var(--text-tertiary);
-}
-
-.output-placeholder {
-    padding: 24px;
-    color: var(--text-tertiary);
-    font-size: 18px;
-    position: absolute;
-    pointer-events: none;
-}
-
-.output-placeholder.hidden {
-    display: none;
-}
-
-.translated-text {
-    padding: 24px;
-    font-size: 18px;
-    line-height: 1.6;
-    color: var(--text-primary);
-    min-height: 200px;
-}
-
-.panel-controls {
-    padding: 12px 24px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.char-count {
-    font-size: 12px;
-    color: var(--text-tertiary);
-}
-
-.control-buttons {
-    display: flex;
-    gap: 4px;
 }
 
 .icon-btn {
     width: 40px;
     height: 40px;
-    border-radius: 50%;
+    border-radius: 10px;
     background: transparent;
     border: none;
     display: flex;
@@ -398,27 +137,12 @@ body {
     justify-content: center;
     cursor: pointer;
     color: var(--text-secondary);
-    transition: all 0.2s ease;
+    transition: all 0.2s;
 }
 
 .icon-btn:hover {
-    background: var(--bg-tertiary);
+    background: var(--surface-hover);
     color: var(--primary);
-}
-
-.icon-btn.recording {
-    background: #EA4335;
-    color: white;
-    animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% {
-        box-shadow: 0 0 0 0 rgba(234, 67, 53, 0.7);
-    }
-    50% {
-        box-shadow: 0 0 0 8px rgba(234, 67, 53, 0);
-    }
 }
 
 .icon-btn svg {
@@ -426,121 +150,397 @@ body {
     height: 20px;
 }
 
-.translate-btn {
-    margin: 24px;
-    padding: 12px 32px;
-    border: none;
-    border-radius: 24px;
-    background: var(--primary);
-    color: white;
+.main-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+@media (min-width: 1024px) {
+    .main-container {
+        grid-template-columns: 1fr 380px;
+    }
+}
+
+.translator-card {
+    background: var(--surface);
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+}
+
+.language-selector-bar {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-light);
+    gap: 12px;
+    background: var(--bg-secondary);
+}
+
+.lang-select-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.lang-select {
+    width: 100%;
+    padding: 10px 36px 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--text-primary);
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: var(--shadow-sm);
-    align-self: flex-start;
+    transition: all 0.2s;
+    appearance: none;
 }
 
-.translate-btn:hover {
+.lang-select:hover {
+    border-color: var(--primary);
+}
+
+.lang-select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+.lang-select-wrapper::after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--text-secondary);
+    pointer-events: none;
+}
+
+.swap-languages-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--primary);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.swap-languages-btn:hover {
     background: var(--primary-dark);
-    box-shadow: var(--shadow-md);
+    transform: rotate(180deg);
 }
 
-.translate-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+.swap-languages-btn:active {
+    transform: rotate(180deg) scale(0.95);
 }
 
-.history-section {
-    background: var(--surface);
-    border-radius: 8px;
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border);
+.translation-workspace {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 400px;
+}
+
+@media (max-width: 768px) {
+    .translation-workspace {
+        grid-template-columns: 1fr;
+    }
+}
+
+.input-section, .output-section {
     display: flex;
     flex-direction: column;
-    max-height: 600px;
+    position: relative;
 }
 
-.history-header {
-    padding: 16px 24px;
-    border-bottom: 1px solid var(--border);
+.input-section {
+    border-right: 1px solid var(--border-light);
+}
+
+@media (max-width: 768px) {
+    .input-section {
+        border-right: none;
+        border-bottom: 1px solid var(--border-light);
+    }
+}
+
+.section-header {
+    padding: 12px 20px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-light);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.history-title {
+.section-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-tertiary);
+}
+
+.detection-badge {
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+    display: none;
+}
+
+.detection-badge.show {
+    display: inline-block;
+}
+
+.text-input, .text-output {
+    flex: 1;
+    padding: 20px;
+    border: none;
+    outline: none;
+    background: transparent;
     font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    resize: none;
+    font-family: inherit;
+}
+
+.text-input::placeholder {
+    color: var(--text-tertiary);
+}
+
+.text-output {
+    pointer-events: none;
+}
+
+.section-footer {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-secondary);
+}
+
+.text-stats {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    color: var(--text-tertiary);
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.stat-label {
     font-weight: 500;
+}
+
+.section-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+}
+
+.action-btn:hover {
+    background: var(--surface-hover);
+    color: var(--primary);
+}
+
+.action-btn.recording {
+    background: var(--error);
+    color: white;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+.action-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.translate-section {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid var(--border-light);
+}
+
+.translate-btn {
+    padding: 12px 48px;
+    border: none;
+    border-radius: 12px;
+    background: var(--primary);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.translate-btn:hover {
+    background: var(--primary-dark);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-1px);
+}
+
+.translate-btn:active {
+    transform: translateY(0);
+}
+
+.translate-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card {
+    background: var(--surface);
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+}
+
+.card-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-secondary);
+}
+
+.card-title {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     color: var(--text-primary);
 }
 
-.clear-history-btn {
-    padding: 6px 16px;
+.card-action {
+    padding: 6px 12px;
     border: none;
-    border-radius: 16px;
+    border-radius: 8px;
     background: transparent;
     color: var(--text-secondary);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s;
     border: 1px solid var(--border);
 }
 
-.clear-history-btn:hover {
-    background: var(--bg-tertiary);
+.card-action:hover {
+    background: var(--surface-hover);
     border-color: var(--primary);
     color: var(--primary);
 }
 
-.history-list {
-    flex: 1;
+.card-content {
+    max-height: 400px;
     overflow-y: auto;
-    padding: 8px;
 }
 
-.history-empty {
-    padding: 48px 24px;
+.empty-state {
+    padding: 48px 20px;
     text-align: center;
     color: var(--text-tertiary);
+}
+
+.empty-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    opacity: 0.5;
+}
+
+.empty-text {
     font-size: 14px;
+    font-weight: 500;
 }
 
-.history-item {
-    padding: 12px 16px;
-    margin-bottom: 8px;
-    border-radius: 8px;
-    background: var(--bg-secondary);
+.history-item, .favorite-item {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-light);
     cursor: pointer;
-    transition: all 0.2s ease;
-    border: 1px solid transparent;
+    transition: all 0.2s;
+    position: relative;
 }
 
-.history-item:hover {
-    background: var(--bg-tertiary);
-    border-color: var(--border);
+.history-item:last-child, .favorite-item:last-child {
+    border-bottom: none;
 }
 
-.history-item-lang {
-    font-size: 11px;
+.history-item:hover, .favorite-item:hover {
+    background: var(--surface-hover);
+}
+
+.item-lang {
+    font-size: 10px;
     color: var(--text-tertiary);
     margin-bottom: 4px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.05em;
+    font-weight: 600;
 }
 
-.history-item-text {
+.item-text {
     font-size: 14px;
     color: var(--text-primary);
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    font-weight: 500;
 }
 
-.history-item-translation {
+.item-translation {
     font-size: 13px;
     color: var(--text-secondary);
     display: -webkit-box;
@@ -549,121 +549,241 @@ body {
     overflow: hidden;
 }
 
-.history-item-time {
-    font-size: 11px;
-    color: var(--text-tertiary);
-    margin-top: 4px;
+.item-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
 }
 
-@media (max-width: 1023px) {
-    .history-section {
-        max-height: none;
+.item-time {
+    font-size: 11px;
+    color: var(--text-tertiary);
+}
+
+.item-actions {
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.history-item:hover .item-actions,
+.favorite-item:hover .item-actions {
+    opacity: 1;
+}
+
+.item-action-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+}
+
+.item-action-btn:hover {
+    background: var(--bg-tertiary);
+    color: var(--primary);
+}
+
+.item-action-btn.favorite-active {
+    color: var(--warning);
+}
+
+.item-action-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+.toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--surface);
+    color: var(--text-primary);
+    padding: 16px 20px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.toast-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--accent);
+}
+
+.toast-message {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 640px) {
+    .app {
+        padding: 12px;
+    }
+
+    .header {
+        margin-bottom: 16px;
+    }
+
+    .logo-img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .logo-title {
+        font-size: 18px;
+    }
+
+    .text-stats {
+        flex-wrap: wrap;
+        gap: 8px;
     }
 }
     </style>
 </head>
 <body>
-    <div class="app-container">
+    <div class="app">
         <header class="header">
-            <div class="logo">
-                <div class="logo-icon">
-                    <img src="attached_assets/IMG_20250826_073618_116_1757157131293.webp" alt="Logo" />
+            <div class="logo-section">
+                <img src="attached_assets/IMG_20250826_073618_116_1757157131293.webp" alt="Nexo Translate" class="logo-img">
+                <div class="logo-text">
+                    <div class="logo-title">Nexo Translate</div>
+                    <div class="logo-subtitle">Powered by AI</div>
                 </div>
             </div>
             <div class="header-actions">
-                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="5"/>
-                        <line x1="12" y1="1" x2="12" y2="3"/>
-                        <line x1="12" y1="21" x2="12" y2="23"/>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                        <line x1="1" y1="12" x2="3" y2="12"/>
-                        <line x1="21" y1="12" x2="23" y2="12"/>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                <button class="icon-btn" id="theme-btn" title="Toggle theme">
+                    <svg class="sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
                     </svg>
-                    <svg class="moon-icon" style="display: none;" viewBox="0 0 24 24" fill="currentColor">
+                    <svg class="moon-icon" style="display: none;" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
                     </svg>
                 </button>
             </div>
         </header>
 
-        <div class="main-content">
-            <div class="translator-section">
-                <div class="language-bar">
-                    <div class="language-selector" id="source-selector">
-                        <button class="language-btn" id="source-lang-btn">
-                            <span class="language-flag">🌐</span>
-                            <span class="language-text">Detect language</span>
-                            <svg class="language-arrow" viewBox="0 0 24 24">
-                                <path d="M7 10l5 5 5-5z"/>
-                            </svg>
-                        </button>
-                        <div class="language-dropdown" id="source-lang-dropdown"></div>
+        <div class="main-container">
+            <div class="translator-card">
+                <div class="language-selector-bar">
+                    <div class="lang-select-wrapper">
+                        <select class="lang-select" id="source-lang">
+                            <option value="auto">Auto Detect</option>
+                        </select>
                     </div>
-
-                    <button class="swap-btn" id="swap-btn" aria-label="Swap languages">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <button class="swap-languages-btn" id="swap-btn" title="Swap languages">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M7 16V4M7 4L3 8M7 4L11 8M17 8V20M17 20L21 16M17 20L13 16"/>
                         </svg>
                     </button>
-
-                    <div class="language-selector" id="target-selector">
-                        <button class="language-btn" id="target-lang-btn">
-                            <span class="language-flag">🇺🇸</span>
-                            <span class="language-text">English</span>
-                            <svg class="language-arrow" viewBox="0 0 24 24">
-                                <path d="M7 10l5 5 5-5z"/>
-                            </svg>
-                        </button>
-                        <div class="language-dropdown" id="target-lang-dropdown"></div>
+                    <div class="lang-select-wrapper">
+                        <select class="lang-select" id="target-lang"></select>
                     </div>
                 </div>
 
-                <div class="translation-panels">
-                    <div class="input-panel">
-                        <div class="detected-language" id="detected-language"></div>
-                        <textarea 
-                            class="text-area" 
-                            id="source-text" 
-                            placeholder="Enter text"
+                <div class="translation-workspace">
+                    <div class="input-section">
+                        <div class="section-header">
+                            <span class="section-label">Source</span>
+                            <span class="detection-badge" id="detection-badge">Detected</span>
+                        </div>
+                        <textarea
+                            class="text-input"
+                            id="source-input"
+                            placeholder="Enter text to translate..."
                             maxlength="5000"
-                            aria-label="Source text"
                         ></textarea>
-                        <div class="panel-controls">
-                            <span class="char-count" id="char-count">0 / 5000</span>
-                            <div class="control-buttons">
-                                <button class="icon-btn" id="mic-btn" aria-label="Voice input" title="Voice input">
-                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <div class="section-footer">
+                            <div class="text-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Characters:</span>
+                                    <span id="char-count">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Words:</span>
+                                    <span id="word-count">0</span>
+                                </div>
+                            </div>
+                            <div class="section-actions">
+                                <button class="action-btn" id="mic-btn" title="Voice input">
+                                    <svg fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
                                     </svg>
                                 </button>
-                                <button class="icon-btn" id="clear-btn" aria-label="Clear text" title="Clear text">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <line x1="18" y1="6" x2="6" y2="18"/>
-                                        <line x1="6" y1="6" x2="18" y2="18"/>
+                                <button class="action-btn" id="clear-btn" title="Clear">
+                                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
                                     </svg>
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="output-panel">
-                        <div class="output-placeholder" id="output-placeholder">Translation</div>
-                        <div class="translated-text" id="translated-text"></div>
-                        <div class="panel-controls">
-                            <div></div>
-                            <div class="control-buttons">
-                                <button class="icon-btn" id="copy-btn" aria-label="Copy translation" title="Copy translation">
-                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                    <div class="output-section">
+                        <div class="section-header">
+                            <span class="section-label">Translation</span>
+                        </div>
+                        <div class="text-output" id="translation-output"></div>
+                        <div class="section-footer">
+                            <div class="text-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Words:</span>
+                                    <span id="output-word-count">0</span>
+                                </div>
+                            </div>
+                            <div class="section-actions">
+                                <button class="action-btn" id="copy-btn" title="Copy">
+                                    <svg fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
                                     </svg>
                                 </button>
-                                <button class="icon-btn" id="speak-btn" aria-label="Speak translation" title="Speak translation">
-                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                <button class="action-btn" id="speak-btn" title="Speak">
+                                    <svg fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                                    </svg>
+                                </button>
+                                <button class="action-btn" id="favorite-btn" title="Add to favorites">
+                                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                                     </svg>
                                 </button>
                             </div>
@@ -671,537 +791,50 @@ body {
                     </div>
                 </div>
 
-                <button class="translate-btn" id="translate-btn">Translate</button>
+                <div class="translate-section">
+                    <button class="translate-btn" id="translate-btn">
+                        <span>Translate</span>
+                    </button>
+                </div>
             </div>
 
-            <div class="history-section">
-                <div class="history-header">
-                    <h2 class="history-title">History</h2>
-                    <button class="clear-history-btn" id="clear-history-btn">Clear all</button>
+            <div class="sidebar">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Favorites</span>
+                        <button class="card-action" id="clear-favorites-btn">Clear</button>
+                    </div>
+                    <div class="card-content" id="favorites-list">
+                        <div class="empty-state">
+                            <div class="empty-icon">⭐</div>
+                            <div class="empty-text">No favorites yet</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="history-list" id="history-list">
-                    <div class="history-empty" id="history-empty">No translation history yet</div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Recent</span>
+                        <button class="card-action" id="clear-history-btn">Clear</button>
+                    </div>
+                    <div class="card-content" id="history-list">
+                        <div class="empty-state">
+                            <div class="empty-icon">🕒</div>
+                            <div class="empty-text">No history yet</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        const languages = [
-            { code: 'auto', name: 'Detect language', flag: '🌐' },
-            { code: 'en', name: 'English', flag: '🇺🇸' },
-            { code: 'es', name: 'Spanish', flag: '🇪🇸' },
-            { code: 'fr', name: 'French', flag: '🇫🇷' },
-            { code: 'de', name: 'German', flag: '🇩🇪' },
-            { code: 'it', name: 'Italian', flag: '🇮🇹' },
-            { code: 'pt', name: 'Portuguese', flag: '🇵🇹' },
-            { code: 'ru', name: 'Russian', flag: '🇷🇺' },
-            { code: 'zh', name: 'Chinese', flag: '🇨🇳' },
-            { code: 'ja', name: 'Japanese', flag: '🇯🇵' },
-            { code: 'ko', name: 'Korean', flag: '🇰🇷' },
-            { code: 'ar', name: 'Arabic', flag: '🇸🇦' },
-            { code: 'hi', name: 'Hindi', flag: '🇮🇳' },
-            { code: 'tr', name: 'Turkish', flag: '🇹🇷' },
-            { code: 'nl', name: 'Dutch', flag: '🇳🇱' },
-            { code: 'pl', name: 'Polish', flag: '🇵🇱' },
-            { code: 'sv', name: 'Swedish', flag: '🇸🇪' },
-            { code: 'fi', name: 'Finnish', flag: '🇫🇮' },
-            { code: 'da', name: 'Danish', flag: '🇩🇰' },
-            { code: 'no', name: 'Norwegian', flag: '🇳🇴' },
-            { code: 'cs', name: 'Czech', flag: '🇨🇿' },
-            { code: 'el', name: 'Greek', flag: '🇬🇷' },
-            { code: 'he', name: 'Hebrew', flag: '🇮🇱' },
-            { code: 'id', name: 'Indonesian', flag: '🇮🇩' },
-            { code: 'ms', name: 'Malay', flag: '🇲🇾' },
-            { code: 'th', name: 'Thai', flag: '🇹🇭' },
-            { code: 'vi', name: 'Vietnamese', flag: '🇻🇳' },
-            { code: 'uk', name: 'Ukrainian', flag: '🇺🇦' },
-            { code: 'bg', name: 'Bulgarian', flag: '🇧🇬' },
-            { code: 'ro', name: 'Romanian', flag: '🇷🇴' },
-            { code: 'hu', name: 'Hungarian', flag: '🇭🇺' },
-            { code: 'sk', name: 'Slovak', flag: '🇸🇰' },
-            { code: 'hr', name: 'Croatian', flag: '🇭🇷' },
-            { code: 'sl', name: 'Slovenian', flag: '🇸🇮' },
-            { code: 'lt', name: 'Lithuanian', flag: '🇱🇹' },
-            { code: 'lv', name: 'Latvian', flag: '🇱🇻' },
-            { code: 'et', name: 'Estonian', flag: '🇪🇪' },
-            { code: 'fa', name: 'Persian', flag: '🇮🇷' },
-            { code: 'ur', name: 'Urdu', flag: '🇵🇰' },
-            { code: 'bn', name: 'Bengali', flag: '🇧🇩' },
-            { code: 'ta', name: 'Tamil', flag: '🇮🇳' },
-            { code: 'te', name: 'Telugu', flag: '🇮🇳' },
-            { code: 'mr', name: 'Marathi', flag: '🇮🇳' },
-            { code: 'kn', name: 'Kannada', flag: '🇮🇳' },
-            { code: 'ml', name: 'Malayalam', flag: '🇮🇳' },
-            { code: 'pa', name: 'Punjabi', flag: '🇮🇳' },
-            { code: 'gu', name: 'Gujarati', flag: '🇮🇳' },
-            { code: 'sw', name: 'Swahili', flag: '🇰🇪' },
-            { code: 'af', name: 'Afrikaans', flag: '🇿🇦' }
-        ];
+    <div class="toast" id="toast">
+        <svg class="toast-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <span class="toast-message" id="toast-message"></span>
+    </div>
 
-        let sourceLang = 'auto';
-        let targetLang = 'en';
-        let isTranslating = false;
-        let detectionTimeout = null;
-        let translationHistory = JSON.parse(localStorage.getItem('translationHistory') || '[]');
-
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        let recognition = null;
-
-        if (SpeechRecognition) {
-            recognition = new SpeechRecognition();
-            recognition.continuous = false;
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
-        }
-
-        const elements = {
-            sourceSelector: document.getElementById('source-selector'),
-            targetSelector: document.getElementById('target-selector'),
-            sourceLangBtn: document.getElementById('source-lang-btn'),
-            targetLangBtn: document.getElementById('target-lang-btn'),
-            sourceDropdown: document.getElementById('source-lang-dropdown'),
-            targetDropdown: document.getElementById('target-lang-dropdown'),
-            swapBtn: document.getElementById('swap-btn'),
-            sourceText: document.getElementById('source-text'),
-            translatedText: document.getElementById('translated-text'),
-            translateBtn: document.getElementById('translate-btn'),
-            charCount: document.getElementById('char-count'),
-            clearBtn: document.getElementById('clear-btn'),
-            copyBtn: document.getElementById('copy-btn'),
-            speakBtn: document.getElementById('speak-btn'),
-            micBtn: document.getElementById('mic-btn'),
-            themeToggle: document.getElementById('theme-toggle'),
-            outputPlaceholder: document.getElementById('output-placeholder'),
-            detectedLanguage: document.getElementById('detected-language'),
-            historyList: document.getElementById('history-list'),
-            historyEmpty: document.getElementById('history-empty'),
-            clearHistoryBtn: document.getElementById('clear-history-btn')
-        };
-
-        function renderLanguageOptions(dropdown, excludeAuto = false) {
-            dropdown.innerHTML = '';
-            const langs = excludeAuto ? languages.filter(l => l.code !== 'auto') : languages;
-            langs.forEach(lang => {
-                const option = document.createElement('div');
-                option.className = 'language-option';
-                option.innerHTML = `
-                    <span class="language-flag">${lang.flag}</span>
-                    <span>${lang.name}</span>
-                `;
-                option.dataset.code = lang.code;
-                option.addEventListener('click', () => {
-                    const selector = dropdown.parentElement;
-                    if (selector === elements.sourceSelector) {
-                        setSourceLanguage(lang.code);
-                    } else {
-                        setTargetLanguage(lang.code);
-                    }
-                    selector.classList.remove('active');
-                });
-                dropdown.appendChild(option);
-            });
-        }
-
-        function setSourceLanguage(code) {
-            sourceLang = code;
-            const lang = languages.find(l => l.code === code);
-            elements.sourceLangBtn.innerHTML = `
-                <span class="language-flag">${lang.flag}</span>
-                <span class="language-text">${lang.name}</span>
-                <svg class="language-arrow" viewBox="0 0 24 24">
-                    <path d="M7 10l5 5 5-5z"/>
-                </svg>
-            `;
-            updateSelectedOptions();
-        }
-
-        function setTargetLanguage(code) {
-            targetLang = code;
-            const lang = languages.find(l => l.code === code);
-            elements.targetLangBtn.innerHTML = `
-                <span class="language-flag">${lang.flag}</span>
-                <span class="language-text">${lang.name}</span>
-                <svg class="language-arrow" viewBox="0 0 24 24">
-                    <path d="M7 10l5 5 5-5z"/>
-                </svg>
-            `;
-            updateSelectedOptions();
-            if (recognition) {
-                recognition.lang = getRecognitionLang(code);
-            }
-        }
-
-        function updateSelectedOptions() {
-            document.querySelectorAll('.language-option').forEach(opt => {
-                opt.classList.remove('selected');
-                if ((opt.closest('#source-lang-dropdown') && opt.dataset.code === sourceLang) ||
-                    (opt.closest('#target-lang-dropdown') && opt.dataset.code === targetLang)) {
-                    opt.classList.add('selected');
-                }
-            });
-        }
-
-        function getRecognitionLang(code) {
-            const langMap = {
-                'en': 'en-US', 'es': 'es-ES', 'fr': 'fr-FR', 'de': 'de-DE',
-                'it': 'it-IT', 'pt': 'pt-BR', 'ru': 'ru-RU', 'zh': 'zh-CN',
-                'ja': 'ja-JP', 'ko': 'ko-KR', 'ar': 'ar-SA', 'hi': 'hi-IN',
-                'tr': 'tr-TR', 'nl': 'nl-NL', 'pl': 'pl-PL', 'sv': 'sv-SE'
-            };
-            return langMap[code] || 'en-US';
-        }
-
-        function detectLanguage(text) {
-            if (!text || text.length < 1) {
-                elements.detectedLanguage.classList.remove('show');
-                return;
-            }
-
-            if (sourceLang !== 'auto') {
-                elements.detectedLanguage.classList.remove('show');
-                return;
-            }
-
-            const languagePatterns = {
-                'zh': { pattern: /[\u4e00-\u9fa5]/, weight: 1, name: 'Chinese' },
-                'ja': { pattern: /[\u3040-\u309f\u30a0-\u30ff]/, weight: 1, name: 'Japanese' },
-                'ko': { pattern: /[\uac00-\ud7af]/, weight: 1, name: 'Korean' },
-                'ar': { pattern: /[\u0600-\u06ff]/, weight: 1, name: 'Arabic' },
-                'he': { pattern: /[\u0590-\u05ff]/, weight: 1, name: 'Hebrew' },
-                'ru': { pattern: /[\u0400-\u04ff]/, weight: 1, name: 'Russian' },
-                'el': { pattern: /[\u0370-\u03ff]/, weight: 1, name: 'Greek' },
-                'th': { pattern: /[\u0e00-\u0e7f]/, weight: 1, name: 'Thai' },
-                'hi': { pattern: /[\u0900-\u097f]/, weight: 1, name: 'Hindi' },
-                'bn': { pattern: /[\u0980-\u09ff]/, weight: 1, name: 'Bengali' },
-                'ta': { pattern: /[\u0b80-\u0bff]/, weight: 1, name: 'Tamil' },
-                'te': { pattern: /[\u0c00-\u0c7f]/, weight: 1, name: 'Telugu' },
-                'ur': { pattern: /[\u0600-\u06ff]/, weight: 0.5, name: 'Urdu' },
-                'fa': { pattern: /[\u0600-\u06ff]/, weight: 0.5, name: 'Persian' }
-            };
-
-            for (const [code, data] of Object.entries(languagePatterns)) {
-                const matches = text.match(data.pattern);
-                if (matches && matches.length > 0) {
-                    const lang = languages.find(l => l.code === code);
-                    if (lang) {
-                        elements.detectedLanguage.textContent = `Detected: ${lang.name}`;
-                        elements.detectedLanguage.classList.add('show');
-                        return;
-                    }
-                }
-            }
-
-            const commonWords = {
-                'es': /\b(el|la|de|que|y|a|en|un|ser|se|no|haber|por|con|su|para|como|estar|tener|le|lo|todo|pero|más|hacer|o|poder|decir|este|ir|otro|ese|la|si|me|ya|ver|porque|dar|cuando|él|muy|sin|vez|mucho|saber|qué|sobre|mi|alguno|mismo|yo|también|hasta|año|dos|querer|entre|así|primero|desde|grande|eso|ni|nos|llegar|pasar|tiempo|ella|sí|día|uno|bien|poco|deber|entonces|poner|cosa|tanto|hombre|parecer|nuestro|tan|donde|ahora|parte|después|vida|quedar|siempre|creer|hablar|llevar|dejar|nada|cada|seguir|menos|nuevo|encontrar|algo|solo|decir|salir|volver|tomar|conocer|vivir|sentir|tratar|mirar|contar|empezar|esperar|buscar|existir|entrar|trabajar|escribir|perder|producir|ocurrir|entender|pedir|recibir|recordar|terminar|permitir|aparecer|conseguir|comenzar|servir|sacar|necesitar|mantener|resultar|leer|caer|cambiar|presentar|crear|abrir|considerar|oír|acabar|mil|ganar|correr|morir|formar|realizar|correr|andar|venir|demostrar|evitar|lograr|sentar|defender|alcanzar|comprar|repetir)\b/gi,
-                'fr': /\b(le|de|un|être|et|à|il|avoir|ne|je|son|que|se|qui|ce|dans|en|du|elle|au|pour|pas|que|vous|par|sur|faire|plus|dire|me|on|mon|lui|nous|comme|mais|pouvoir|avec|tout|y|aller|voir|en|bien|où|sans|tu|ou|leur|homme|si|deux|peu|te|donc|déjà|là|celui|jour|même|jusque|faut|rendre|encore|aussi|heure|autre|parler|chose|vers|monde|savoir|dont|devant|dieu|fois|après|toujours|vie|sous|mettre|tant|tenir|contre|depuis|pays|puis|premier|force|trouver|donner|temps|part|grand|prendre|main|demander|point|penser|arriver|enfant|tête|aimer|sortir|corps|vouloir|nom|voix|côté|fait|cœur|moment|quatre|porter|vue|tomber|comprendre|âme|petit|quelque|passer|sentir|reprendre|matin|reste|porte|ciel|jeune|connaître|an|terre|montrer|entendre|raison|certain|retourner|cas|fils|soir|conduire|appeler|trois|mourir|amour|mer|partir|moins|affaire)\b/gi,
-                'de': /\b(der|die|und|in|den|von|zu|das|mit|sich|des|auf|für|ist|im|dem|nicht|ein|eine|als|auch|es|an|werden|aus|er|hat|dass|sie|nach|wird|bei|einer|um|am|sind|noch|wie|einem|über|einen|so|zum|war|haben|nur|oder|aber|vor|zur|bis|mehr|durch|man|sein|wurde|sei|in|prozent|hatte|kann|gegen|vom|können|schon|wenn|habe|seine|mark|ihre|dann|unter|wir|soll|ich|eines|jahr|zwei|jahren|diese|dieser|wieder|keine|meine|neue|einem|welche|gibt|alle|dieser|wurden|ihrer|zeit|zwischen|sowie|etwas|ohne|jedoch|bei|mal|seit|ersten|vielen|einmal|heute|weit|machen|wurde|seinen|worden|beide|zunächst|ganz|ja|erste|dazu|nichts|drei|weitere|beim|müssen|wohl|sowie|ersten|außer|weg|erhalten|daher|jetzt|jeder|immer|werde|seien|darauf|kommt|sollte|doch|würde|bereits|bisher|stehen|kämpfen|lang|gehen|jeweils|besonders|zehn|kommen|bereits|ab|vier|recht|mann|neuen|teil|schließlich|viele|könnte)\b/gi,
-                'it': /\b(di|a|da|in|con|su|per|tra|fra|il|un|uno|una|lo|la|i|gli|le|e|che|non|si|è|o|ci|mi|ho|sono|ha|sei|hanno|stato|fatto|essere|avere|fare|potere|dire|andare|vedere|sapere|volere|venire|dovere|stare|dare|quando|tempo|anno|più|cosa|dire|quello|bene|io|no|anche|tutto|altro|lei|molto|mi|ancora|niente|mano|giorno|proprio|ora|grande|cosa|uomo|paese|vita|prima|volta|noi|due|casa|mondo|parte|momento|donna|dopo|sempre|poi|tanto|chiaro|suo|mio|nostro|vostro|loro|quella|questo|sta|fa|va|siamo|suo|così|stesso|tre|senza|mai|solo|sì|sotto|sopra|nessuno|oggi|quasi|giorni|anni|nome|modo|occhi|qualcosa|certo|tutti|nulla|ogni|però|quattro|voce|testa|meglio|fare|dire|niente|lungo|nuovo|nuovo|fuori|sera|cuore|piccolo|padre|qualche|punto|terra|invece)\b/gi,
-                'pt': /\b(o|a|de|que|e|do|da|em|um|para|é|com|não|uma|os|no|se|na|por|mais|as|dos|como|mas|foi|ao|ele|das|tem|à|seu|sua|ou|ser|quando|muito|há|nos|já|está|eu|também|só|pelo|pela|até|isso|ela|entre|era|depois|sem|mesmo|aos|ter|seus|quem|nas|me|esse|eles|estão|você|tinha|foram|essa|num|nem|suas|meu|às|minha|têm|numa|pelos|elas|havia|seja|qual|será|nós|tenho|lhe|deles|essas|esses|pelas|este|fosse|dele|tu|te|vocês|vos|lhes|meus|minhas|teu|tua|teus|tuas|nosso|nossa|nossos|nossas|dela|delas|esta|estes|estas|aquele|aquela|aqueles|aquelas|isto|aquilo|estou|está|estamos|estão|estive|esteve|estivemos|estiveram|estava|estávamos|estavam|estiver|estivermos|estiverem|hei|há|havemos|hão|houve|houvemos|houveram|houvera|houvéramos|haja|hajamos|hajam|houvesse|houvéssemos|houvessem|houver|houvermos|houverem|houverei|houverá|houveremos|houverão|houveria|houveríamos|houveriam|sou|somos|são|era|éramos|eram|fui|foi|fomos|foram|fora|fôramos|seja|sejamos|sejam|fosse|fôssemos|fossem|for|formos|forem|serei|será|seremos|serão|seria|seríamos|seriam|tenho|tem|temos|têm|tinha|tínhamos|tinham|tive|teve|tivemos|tiveram|tivera|tivéramos|tenha|tenhamos|tenham|tivesse|tivéssemos|tivessem|tiver|tivermos|tiverem|terei|terá|teremos|terão|teria|teríamos|teriam)\b/gi,
-                'nl': /\b(de|het|een|van|in|en|is|op|te|voor|aan|met|zijn|die|dat|er|ook|als|maar|om|niet|tot|uit|bij|door|over|ze|dan|werd|kan|hij|naar|was|wat|zijn|worden|meer|heeft|moet|deze|daar|nog|wie|worden|andere|hun|nu|alle|worden|tegen|na|twee|zonder|onder|geen|wel|veel|zo|tijdens|alleen|dus|maken|komt|dit|zeer|grote|jaar|kunnen|hebben|haar|grote|werd|zou|binnen|heeft|drie|jaren|omdat|onze|want|geweest|grote|laten|werd|moeten)\b/gi,
-                'pl': /\b(i|w|na|z|do|się|nie|że|a|o|jest|to|od|po|przez|co|jak|ale|być|który|za|dla|czy|tylko|już|tym|jej|jego|przy|lub|też|oraz|ten|może|być|więc|bardzo|wszystko|jeszcze|można|bo|tak|gdzie|kiedy|oraz|pod|nad|przed|między|bez|roku|lat|ze|byli|miał|może|zostać|gdy|oraz|ale|został|gdyż|czyli|trzeba|chociaż|więcej|sam|kilka|swój|między|sobie|ponieważ|wśród|zawsze|nawet|żeby|ktoś|lecz|sposób|niż|dziś|jakie|każdy|tam|raz|jedno|taki|dobry|nowy|wielki|ostatni|pierwszy|mały|będzie)\b/gi
-            };
-
-            for (const [code, pattern] of Object.entries(commonWords)) {
-                const matches = text.match(pattern);
-                if (matches && matches.length >= 2) {
-                    const lang = languages.find(l => l.code === code);
-                    if (lang) {
-                        elements.detectedLanguage.textContent = `Detected: ${lang.name}`;
-                        elements.detectedLanguage.classList.add('show');
-                        return;
-                    }
-                }
-            }
-
-            if (text.length > 10) {
-                elements.detectedLanguage.classList.remove('show');
-            }
-        }
-
-        async function translate() {
-            const text = elements.sourceText.value.trim();
-            if (!text || isTranslating) return;
-
-            isTranslating = true;
-            elements.translateBtn.disabled = true;
-            elements.translateBtn.textContent = 'Translating...';
-
-            try {
-                const response = await fetch('/api/translate', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        text,
-                        sourceLang: sourceLang === 'auto' ? 'auto' : sourceLang,
-                        targetLang
-                    })
-                });
-
-                const data = await response.json();
-
-                if (data.translation) {
-                    elements.translatedText.textContent = data.translation;
-                    elements.outputPlaceholder.classList.add('hidden');
-                    
-                    addToHistory({
-                        source: text,
-                        translation: data.translation,
-                        sourceLang: sourceLang === 'auto' ? 'Detected' : languages.find(l => l.code === sourceLang)?.name,
-                        targetLang: languages.find(l => l.code === targetLang)?.name,
-                        timestamp: Date.now()
-                    });
-                } else {
-                    throw new Error(data.error || 'Translation failed');
-                }
-            } catch (error) {
-                console.error('Translation error:', error);
-                elements.translatedText.textContent = 'Translation failed. Please try again.';
-                elements.outputPlaceholder.classList.add('hidden');
-            } finally {
-                isTranslating = false;
-                elements.translateBtn.disabled = false;
-                elements.translateBtn.textContent = 'Translate';
-            }
-        }
-
-        function addToHistory(item) {
-            translationHistory.unshift(item);
-            if (translationHistory.length > 50) {
-                translationHistory = translationHistory.slice(0, 50);
-            }
-            localStorage.setItem('translationHistory', JSON.stringify(translationHistory));
-            renderHistory();
-        }
-
-        function renderHistory() {
-            if (translationHistory.length === 0) {
-                elements.historyEmpty.style.display = 'block';
-                elements.historyList.innerHTML = '<div class="history-empty">No translation history yet</div>';
-                return;
-            }
-
-            elements.historyEmpty.style.display = 'none';
-            elements.historyList.innerHTML = translationHistory.map(item => `
-                <div class="history-item" data-source="${escapeHtml(item.source)}" data-translation="${escapeHtml(item.translation)}">
-                    <div class="history-item-lang">${item.sourceLang} → ${item.targetLang}</div>
-                    <div class="history-item-text">${escapeHtml(item.source)}</div>
-                    <div class="history-item-translation">${escapeHtml(item.translation)}</div>
-                    <div class="history-item-time">${formatTime(item.timestamp)}</div>
-                </div>
-            `).join('');
-
-            document.querySelectorAll('.history-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    elements.sourceText.value = item.dataset.source;
-                    elements.translatedText.textContent = item.dataset.translation;
-                    elements.outputPlaceholder.classList.add('hidden');
-                    updateCharCount();
-                });
-            });
-        }
-
-        function clearHistory() {
-            if (confirm('Clear all translation history?')) {
-                translationHistory = [];
-                localStorage.setItem('translationHistory', JSON.stringify([]));
-                renderHistory();
-            }
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        function formatTime(timestamp) {
-            const now = Date.now();
-            const diff = now - timestamp;
-            const minutes = Math.floor(diff / 60000);
-            const hours = Math.floor(diff / 3600000);
-            const days = Math.floor(diff / 86400000);
-
-            if (minutes < 1) return 'Just now';
-            if (minutes < 60) return `${minutes}m ago`;
-            if (hours < 24) return `${hours}h ago`;
-            return `${days}d ago`;
-        }
-
-        function updateCharCount() {
-            const count = elements.sourceText.value.length;
-            elements.charCount.textContent = `${count} / 5000`;
-        }
-
-        function swapLanguages() {
-            if (sourceLang === 'auto') return;
-            
-            const tempLang = sourceLang;
-            const tempText = elements.sourceText.value;
-            
-            setSourceLanguage(targetLang);
-            setTargetLanguage(tempLang);
-            
-            elements.sourceText.value = elements.translatedText.textContent;
-            elements.translatedText.textContent = tempText;
-            
-            if (elements.sourceText.value) {
-                elements.outputPlaceholder.classList.add('hidden');
-            }
-            
-            updateCharCount();
-        }
-
-        function startVoiceInput() {
-            if (!recognition) {
-                alert('Voice input is not supported in your browser. Please use Chrome or Edge.');
-                return;
-            }
-
-            if (elements.micBtn.classList.contains('recording')) {
-                recognition.stop();
-                return;
-            }
-
-            recognition.lang = sourceLang === 'auto' ? 'en-US' : getRecognitionLang(sourceLang);
-
-            recognition.onstart = () => {
-                elements.micBtn.classList.add('recording');
-            };
-
-            recognition.onresult = (event) => {
-                const transcript = event.results[0][0].transcript;
-                elements.sourceText.value = transcript;
-                updateCharCount();
-                detectLanguage(transcript);
-            };
-
-            recognition.onerror = (event) => {
-                console.error('Speech recognition error:', event.error);
-                elements.micBtn.classList.remove('recording');
-                if (event.error === 'not-allowed') {
-                    alert('Microphone access denied. Please allow microphone access in your browser settings.');
-                }
-            };
-
-            recognition.onend = () => {
-                elements.micBtn.classList.remove('recording');
-            };
-
-            try {
-                recognition.start();
-            } catch (error) {
-                console.error('Failed to start recognition:', error);
-                elements.micBtn.classList.remove('recording');
-            }
-        }
-
-        function copyTranslation() {
-            const text = elements.translatedText.textContent;
-            if (!text) return;
-            
-            navigator.clipboard.writeText(text).then(() => {
-                const originalHTML = elements.copyBtn.innerHTML;
-                elements.copyBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>';
-                setTimeout(() => {
-                    elements.copyBtn.innerHTML = originalHTML;
-                }, 1500);
-            });
-        }
-
-        function speakTranslation() {
-            const text = elements.translatedText.textContent;
-            if (!text) return;
-
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = getRecognitionLang(targetLang);
-            speechSynthesis.cancel();
-            speechSynthesis.speak(utterance);
-        }
-
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            
-            const sunIcon = elements.themeToggle.querySelector('.sun-icon');
-            const moonIcon = elements.themeToggle.querySelector('.moon-icon');
-            
-            if (newTheme === 'dark') {
-                sunIcon.style.display = 'none';
-                moonIcon.style.display = 'block';
-            } else {
-                sunIcon.style.display = 'block';
-                moonIcon.style.display = 'none';
-            }
-        }
-
-        renderLanguageOptions(elements.sourceDropdown, false);
-        renderLanguageOptions(elements.targetDropdown, true);
-        updateSelectedOptions();
-
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            elements.themeToggle.querySelector('.sun-icon').style.display = 'none';
-            elements.themeToggle.querySelector('.moon-icon').style.display = 'block';
-        }
-
-        elements.sourceLangBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            elements.sourceSelector.classList.toggle('active');
-            elements.targetSelector.classList.remove('active');
-        });
-
-        elements.targetLangBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            elements.targetSelector.classList.toggle('active');
-            elements.sourceSelector.classList.remove('active');
-        });
-
-        document.addEventListener('click', () => {
-            elements.sourceSelector.classList.remove('active');
-            elements.targetSelector.classList.remove('active');
-        });
-
-        elements.swapBtn.addEventListener('click', swapLanguages);
-
-        elements.sourceText.addEventListener('input', () => {
-            updateCharCount();
-            
-            if (detectionTimeout) {
-                clearTimeout(detectionTimeout);
-            }
-            
-            detectionTimeout = setTimeout(() => {
-                detectLanguage(elements.sourceText.value);
-            }, 200);
-        });
-
-        elements.sourceText.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                translate();
-            }
-        });
-
-        elements.translateBtn.addEventListener('click', translate);
-        elements.clearBtn.addEventListener('click', () => {
-            elements.sourceText.value = '';
-            elements.translatedText.textContent = '';
-            elements.outputPlaceholder.classList.remove('hidden');
-            elements.detectedLanguage.classList.remove('show');
-            updateCharCount();
-        });
-        elements.copyBtn.addEventListener('click', copyTranslation);
-        elements.speakBtn.addEventListener('click', speakTranslation);
-        elements.micBtn.addEventListener('click', startVoiceInput);
-        elements.themeToggle.addEventListener('click', toggleTheme);
-        elements.clearHistoryBtn.addEventListener('click', clearHistory);
-
-        renderHistory();
-        updateCharCount();
-    </script>
+    <script type="module" src="/src/main.js"></script>
 </body>
 </html>
