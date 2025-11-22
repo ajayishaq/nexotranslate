@@ -39,7 +39,21 @@ const languages = [
     { code: 'vi', name: 'Vietnamese', flag: '🇻🇳' },
     { code: 'uk', name: 'Ukrainian', flag: '🇺🇦' },
     { code: 'bg', name: 'Bulgarian', flag: '🇧🇬' },
-    { code: 'ro', name: 'Romanian', flag: '🇷🇴' }
+    { code: 'ro', name: 'Romanian', flag: '🇷🇴' },
+    { code: 'bn', name: 'Bengali', flag: '🇧🇩' },
+    { code: 'ta', name: 'Tamil', flag: '🇮🇳' },
+    { code: 'te', name: 'Telugu', flag: '🇮🇳' },
+    { code: 'hu', name: 'Hungarian', flag: '🇭🇺' },
+    { code: 'sk', name: 'Slovak', flag: '🇸🇰' },
+    { code: 'sl', name: 'Slovenian', flag: '🇸🇮' },
+    { code: 'hr', name: 'Croatian', flag: '🇭🇷' },
+    { code: 'sr', name: 'Serbian', flag: '🇷🇸' },
+    { code: 'lt', name: 'Lithuanian', flag: '🇱🇹' },
+    { code: 'lv', name: 'Latvian', flag: '🇱🇻' },
+    { code: 'et', name: 'Estonian', flag: '🇪🇪' },
+    { code: 'ha', name: 'Hausa', flag: '🇳🇬' },
+    { code: 'yo', name: 'Yoruba', flag: '🇳🇬' },
+    { code: 'ig', name: 'Igbo', flag: '🇳🇬' }
 ];
 
 let state = {
