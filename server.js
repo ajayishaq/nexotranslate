@@ -18,7 +18,19 @@ app.use(cors());
 app.use(express.json());
 
 // Serve static files from dist folder (frontend build)
-app.use(express.static(path.join(__dirname, 'dist')));
+const distPath = path.join(__dirname, 'dist');
+
+// Disable caching for HTML files
+app.use((req, res, next) => {
+    if (req.path.endsWith('.html') || req.path === '/' || req.path === '') {
+        res.set('Cache-Control', 'no-cache, no-store, must-revalidate, private');
+        res.set('Pragma', 'no-cache');
+        res.set('Expires', '0');
+    }
+    next();
+});
+
+app.use(express.static(distPath));
 
 const languageMappings = {
   'auto': 'auto',
@@ -146,4 +158,5 @@ app.use((req, res) => {
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Translation server running on http://0.0.0.0:${PORT}`);
+    console.log('Nexo Translator - Latest build deployed');
 });
