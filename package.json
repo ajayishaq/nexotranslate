@@ -1,15 +1,24 @@
 {
-  "name": "nexo-translator",
+  "name": "nexo-translate",
   "version": "2.0.0",
-  "description": "Fast translator with 44 languages",
+  "description": "Modern translator with 44 languages, AI-powered detection, and cloud sync",
   "type": "module",
   "scripts": {
     "dev": "concurrently \"node server.js\" \"vite\"",
     "server": "node server.js",
     "vite": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "npm run build && node server.js"
   },
+  "keywords": [
+    "translator",
+    "deepl",
+    "pwa",
+    "supabase"
+  ],
+  "author": "",
+  "license": "MIT",
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0",
     "cors": "^2.8.5",
