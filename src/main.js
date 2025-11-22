@@ -10,55 +10,54 @@ import { detectLanguageAdvanced } from './utils/languageDetection.js';
 import { getWordCount, getCharacterCount } from './utils/textAnalysis.js';
 
 const languages = [
-    { code: 'auto', name: 'Auto Detect', flag: '🌐' },
-    { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'es', name: 'Spanish', flag: '🇪🇸' },
-    { code: 'fr', name: 'French', flag: '🇫🇷' },
-    { code: 'de', name: 'German', flag: '🇩🇪' },
-    { code: 'it', name: 'Italian', flag: '🇮🇹' },
-    { code: 'pt', name: 'Portuguese', flag: '🇵🇹' },
-    { code: 'ru', name: 'Russian', flag: '🇷🇺' },
-    { code: 'zh', name: 'Chinese (Simplified)', flag: '🇨🇳' },
-    { code: 'ja', name: 'Japanese', flag: '🇯🇵' },
-    { code: 'ko', name: 'Korean', flag: '🇰🇷' },
-    { code: 'ar', name: 'Arabic', flag: '🇸🇦' },
-    { code: 'hi', name: 'Hindi', flag: '🇮🇳' },
-    { code: 'tr', name: 'Turkish', flag: '🇹🇷' },
-    { code: 'nl', name: 'Dutch', flag: '🇳🇱' },
-    { code: 'pl', name: 'Polish', flag: '🇵🇱' },
-    { code: 'sv', name: 'Swedish', flag: '🇸🇪' },
-    { code: 'fi', name: 'Finnish', flag: '🇫🇮' },
-    { code: 'da', name: 'Danish', flag: '🇩🇰' },
-    { code: 'no', name: 'Norwegian', flag: '🇳🇴' },
-    { code: 'cs', name: 'Czech', flag: '🇨🇿' },
-    { code: 'el', name: 'Greek', flag: '🇬🇷' },
-    { code: 'he', name: 'Hebrew', flag: '🇮🇱' },
-    { code: 'id', name: 'Indonesian', flag: '🇮🇩' },
-    { code: 'ms', name: 'Malay', flag: '🇲🇾' },
-    { code: 'th', name: 'Thai', flag: '🇹🇭' },
-    { code: 'vi', name: 'Vietnamese', flag: '🇻🇳' },
-    { code: 'uk', name: 'Ukrainian', flag: '🇺🇦' },
-    { code: 'bg', name: 'Bulgarian', flag: '🇧🇬' },
-    { code: 'ro', name: 'Romanian', flag: '🇷🇴' },
-    { code: 'bn', name: 'Bengali', flag: '🇧🇩' },
-    { code: 'ta', name: 'Tamil', flag: '🇮🇳' },
-    { code: 'te', name: 'Telugu', flag: '🇮🇳' },
-    { code: 'hu', name: 'Hungarian', flag: '🇭🇺' },
-    { code: 'sk', name: 'Slovak', flag: '🇸🇰' },
-    { code: 'sl', name: 'Slovenian', flag: '🇸🇮' },
-    { code: 'hr', name: 'Croatian', flag: '🇭🇷' },
-    { code: 'sr', name: 'Serbian', flag: '🇷🇸' },
-    { code: 'lt', name: 'Lithuanian', flag: '🇱🇹' },
-    { code: 'lv', name: 'Latvian', flag: '🇱🇻' },
-    { code: 'et', name: 'Estonian', flag: '🇪🇪' },
-    { code: 'ha', name: 'Hausa', flag: '🇳🇬' },
-    { code: 'yo', name: 'Yoruba', flag: '🇳🇬' },
-    { code: 'ig', name: 'Igbo', flag: '🇳🇬' }
+    { code: 'en', name: 'English' },
+    { code: 'es', name: 'Spanish' },
+    { code: 'fr', name: 'French' },
+    { code: 'de', name: 'German' },
+    { code: 'it', name: 'Italian' },
+    { code: 'pt', name: 'Portuguese' },
+    { code: 'ru', name: 'Russian' },
+    { code: 'zh', name: 'Chinese' },
+    { code: 'ja', name: 'Japanese' },
+    { code: 'ko', name: 'Korean' },
+    { code: 'ar', name: 'Arabic' },
+    { code: 'hi', name: 'Hindi' },
+    { code: 'tr', name: 'Turkish' },
+    { code: 'nl', name: 'Dutch' },
+    { code: 'pl', name: 'Polish' },
+    { code: 'sv', name: 'Swedish' },
+    { code: 'fi', name: 'Finnish' },
+    { code: 'da', name: 'Danish' },
+    { code: 'no', name: 'Norwegian' },
+    { code: 'cs', name: 'Czech' },
+    { code: 'el', name: 'Greek' },
+    { code: 'he', name: 'Hebrew' },
+    { code: 'id', name: 'Indonesian' },
+    { code: 'ms', name: 'Malay' },
+    { code: 'th', name: 'Thai' },
+    { code: 'vi', name: 'Vietnamese' },
+    { code: 'uk', name: 'Ukrainian' },
+    { code: 'bg', name: 'Bulgarian' },
+    { code: 'ro', name: 'Romanian' },
+    { code: 'bn', name: 'Bengali' },
+    { code: 'ta', name: 'Tamil' },
+    { code: 'te', name: 'Telugu' },
+    { code: 'hu', name: 'Hungarian' },
+    { code: 'sk', name: 'Slovak' },
+    { code: 'sl', name: 'Slovenian' },
+    { code: 'hr', name: 'Croatian' },
+    { code: 'sr', name: 'Serbian' },
+    { code: 'lt', name: 'Lithuanian' },
+    { code: 'lv', name: 'Latvian' },
+    { code: 'et', name: 'Estonian' },
+    { code: 'ha', name: 'Hausa (Nigeria)' },
+    { code: 'yo', name: 'Yoruba (Nigeria)' },
+    { code: 'ig', name: 'Igbo (Nigeria)' }
 ];
 
 let state = {
-    sourceLang: 'auto',
-    targetLang: 'en',
+    sourceLang: 'en',
+    targetLang: 'es',
     isTranslating: false,
     currentTranslationId: null,
     detectedLang: null,
@@ -104,14 +103,14 @@ function initLanguageSelectors() {
     languages.forEach(lang => {
         const sourceOption = document.createElement('option');
         sourceOption.value = lang.code;
-        sourceOption.textContent = `${lang.flag} ${lang.name}`;
+        sourceOption.textContent = lang.name;
         elements.sourceLang.appendChild(sourceOption);
     });
 
-    languages.filter(l => l.code !== 'auto').forEach(lang => {
+    languages.forEach(lang => {
         const targetOption = document.createElement('option');
         targetOption.value = lang.code;
-        targetOption.textContent = `${lang.flag} ${lang.name}`;
+        targetOption.textContent = lang.name;
         elements.targetLang.appendChild(targetOption);
     });
 
@@ -134,26 +133,6 @@ function updateOutputStats() {
     elements.outputWordCount.textContent = words;
 }
 
-function detectLanguage() {
-    const text = elements.sourceInput.value;
-
-    if (!text || text.trim().length < 3 || state.sourceLang !== 'auto') {
-        elements.detectionBadge.classList.remove('show');
-        state.detectedLang = null;
-        return;
-    }
-
-    const detection = detectLanguageAdvanced(text);
-
-    if (detection && detection.confidence > 0.5) {
-        elements.detectionBadge.textContent = `Detected: ${detection.name}`;
-        elements.detectionBadge.classList.add('show');
-        state.detectedLang = detection.code;
-    } else {
-        elements.detectionBadge.classList.remove('show');
-        state.detectedLang = null;
-    }
-}
 
 async function translate() {
     const text = elements.sourceInput.value.trim();
@@ -170,7 +149,7 @@ async function translate() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 text,
-                sourceLang: state.sourceLang === 'auto' ? 'auto' : state.sourceLang,
+                sourceLang: state.sourceLang,
                 targetLang: state.targetLang
             })
         });
@@ -231,7 +210,6 @@ function swapLanguages() {
 function clearText() {
     elements.sourceInput.value = '';
     elements.translationOutput.textContent = '';
-    elements.detectionBadge.classList.remove('show');
     state.currentTranslationId = null;
     state.detectedLang = null;
     updateTextStats();
@@ -309,7 +287,6 @@ function startVoiceInput() {
         const transcript = event.results[0][0].transcript;
         elements.sourceInput.value = transcript;
         updateTextStats();
-        detectLanguage();
     };
 
     recognition.onerror = (event) => {
@@ -356,8 +333,8 @@ function renderHistory() {
     if (state.history.length === 0) {
         elements.historyList.innerHTML = `
             <div class="empty-state">
-                <div class="empty-icon">🕒</div>
-                <div class="empty-text">No history yet</div>
+                <div class="empty-icon">◉</div>
+                <div>No history yet</div>
             </div>
         `;
         return;
@@ -393,8 +370,8 @@ function renderFavorites() {
     if (state.favorites.length === 0) {
         elements.favoritesList.innerHTML = `
             <div class="empty-state">
-                <div class="empty-icon">⭐</div>
-                <div class="empty-text">No favorites yet</div>
+                <div class="empty-icon">★</div>
+                <div>No favorites yet</div>
             </div>
         `;
         return;
@@ -568,7 +545,6 @@ function toggleTheme() {
 
 elements.sourceLang.addEventListener('change', () => {
     state.sourceLang = elements.sourceLang.value;
-    detectLanguage();
 });
 
 elements.targetLang.addEventListener('change', () => {
@@ -579,8 +555,6 @@ elements.swapBtn.addEventListener('click', swapLanguages);
 
 elements.sourceInput.addEventListener('input', () => {
     updateTextStats();
-    clearTimeout(window.detectionTimeout);
-    window.detectionTimeout = setTimeout(detectLanguage, 300);
 });
 
 elements.sourceInput.addEventListener('keypress', (e) => {
