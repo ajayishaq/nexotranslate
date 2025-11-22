@@ -1,6 +1,5 @@
-const CACHE_NAME = 'nexo-translate-v3';
+const CACHE_NAME = 'nexo-translate-v5';
 const urlsToCache = [
-  '/',
   '/index.html',
   '/manifest.json',
   '/attached_assets/icon-192x192.png',
@@ -10,11 +9,16 @@ const urlsToCache = [
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Opened cache');
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => caches.delete(cacheName))
+      );
+    }).then(() => {
+      return caches.open(CACHE_NAME).then(cache => {
+        console.log('Opened cache v5');
         return cache.addAll(urlsToCache);
-      })
+      });
+    })
   );
   self.skipWaiting();
 });
