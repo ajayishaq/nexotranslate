@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexo Translate - Modern Translation</title>
-    <meta name="description" content="Modern, powerful translator with 44 languages, AI-powered detection, and cloud sync.">
+    <title>Nexo Translator</title>
+    <meta name="description" content="Fast, accurate translation in 44 languages">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#0EA5E9">
+    <meta name="theme-color" content="#1F2937">
     <style>
 * {
     margin: 0;
@@ -16,536 +16,433 @@
 }
 
 :root {
-    --primary: #0EA5E9;
-    --primary-dark: #0284C7;
-    --primary-light: #38BDF8;
-    --secondary: #06B6D4;
-    --accent: #10B981;
-    --warning: #F59E0B;
-    --error: #EF4444;
-    --bg-primary: #FFFFFF;
-    --bg-secondary: #F1F5F9;
-    --bg-tertiary: #E2E8F0;
-    --surface: #FFFFFF;
-    --surface-hover: #F8FAFC;
-    --text-primary: #0F172A;
-    --text-secondary: #475569;
-    --text-tertiary: #94A3B8;
-    --border: #CBD5E1;
-    --border-light: #E2E8F0;
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --primary: #1F2937;
+    --secondary: #374151;
+    --accent: #3B82F6;
+    --accent-hover: #2563EB;
+    --bg: #FFFFFF;
+    --bg-secondary: #F9FAFB;
+    --text: #111827;
+    --text-light: #6B7280;
+    --border: #E5E7EB;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 [data-theme="dark"] {
-    --primary: #38BDF8;
-    --primary-dark: #0EA5E9;
-    --primary-light: #7DD3FC;
-    --secondary: #22D3EE;
-    --accent: #34D399;
-    --warning: #FBBF24;
-    --error: #F87171;
-    --bg-primary: #0F172A;
-    --bg-secondary: #1E293B;
-    --bg-tertiary: #334155;
-    --surface: #1E293B;
-    --surface-hover: #334155;
-    --text-primary: #F1F5F9;
-    --text-secondary: #CBD5E1;
-    --text-tertiary: #64748B;
-    --border: #334155;
-    --border-light: #475569;
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.4);
-    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.5);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.5);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.5);
+    --bg: #1F2937;
+    --bg-secondary: #111827;
+    --text: #F3F4F6;
+    --text-light: #D1D5DB;
+    --border: #374151;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', sans-serif;
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    line-height: 1.6;
-    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
     transition: background 0.2s, color 0.2s;
 }
 
 .app {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
 }
 
-.header {
+header {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 0;
-    margin-bottom: 24px;
+    flex-shrink: 0;
 }
 
 .logo-section {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
 .logo-img {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
     object-fit: cover;
-    box-shadow: var(--shadow-md);
-}
-
-.logo-text {
-    display: flex;
-    flex-direction: column;
 }
 
 .logo-title {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--text-primary);
-    letter-spacing: -0.02em;
-}
-
-.logo-subtitle {
-    font-size: 12px;
-    color: var(--text-tertiary);
+    font-size: 18px;
     font-weight: 500;
+    color: var(--text);
 }
 
 .header-actions {
     display: flex;
-    align-items: center;
     gap: 8px;
 }
 
 .icon-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
     background: transparent;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: var(--text-secondary);
-    transition: all 0.2s;
+    color: var(--text-light);
+    transition: background 0.2s;
 }
 
 .icon-btn:hover {
-    background: var(--surface-hover);
-    color: var(--primary);
+    background: var(--bg-secondary);
 }
 
 .icon-btn svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
 }
 
-.main-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-}
-
-@media (min-width: 1024px) {
-    .main-container {
-        grid-template-columns: 1fr 380px;
-    }
-}
-
-.translator-card {
-    background: var(--surface);
-    border-radius: 20px;
-    box-shadow: var(--shadow-lg);
-    overflow: hidden;
-    border: 1px solid var(--border-light);
-    transition: box-shadow 0.3s, border-color 0.3s;
-}
-
-.language-selector-bar {
+main {
+    flex: 1;
     display: flex;
-    align-items: center;
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--border-light);
-    gap: 12px;
+    overflow: hidden;
     background: var(--bg-secondary);
+}
+
+.translator-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.lang-selector {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+    align-items: center;
 }
 
 .lang-select-wrapper {
     position: relative;
-    flex: 1;
 }
 
 .lang-select {
     width: 100%;
-    padding: 10px 36px 10px 12px;
+    padding: 10px 12px;
     border: 1px solid var(--border);
-    border-radius: 10px;
-    background: var(--surface);
-    color: var(--text-primary);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--text);
     font-size: 14px;
-    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
     appearance: none;
+    transition: border-color 0.2s;
 }
 
 .lang-select:hover {
-    border-color: var(--primary);
+    border-color: var(--accent);
 }
 
 .lang-select:focus {
     outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .lang-select-wrapper::after {
     content: '';
     position: absolute;
-    right: 12px;
+    right: 10px;
     top: 50%;
     transform: translateY(-50%);
     width: 0;
     height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid var(--text-secondary);
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid var(--text-light);
     pointer-events: none;
 }
 
-.swap-languages-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: var(--primary);
-    border: none;
+.swap-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    background: var(--bg);
+    border: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: white;
+    color: var(--accent);
     transition: all 0.2s;
-    flex-shrink: 0;
 }
 
-.swap-languages-btn:hover {
-    background: var(--primary-dark);
-    transform: rotate(180deg);
+.swap-btn:hover {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: white;
 }
 
-.swap-languages-btn:active {
-    transform: rotate(180deg) scale(0.95);
-}
-
-.translation-workspace {
+.workspace {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    min-height: 400px;
+    gap: 12px;
+    flex: 1;
+    margin-bottom: 20px;
 }
 
 @media (max-width: 768px) {
-    .translation-workspace {
+    .workspace {
         grid-template-columns: 1fr;
+        gap: 20px;
     }
 }
 
-.input-section, .output-section {
+.text-box {
     display: flex;
     flex-direction: column;
-    position: relative;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-.input-section {
-    border-right: 1px solid var(--border-light);
-}
-
-@media (max-width: 768px) {
-    .input-section {
-        border-right: none;
-        border-bottom: 1px solid var(--border-light);
-    }
-}
-
-.section-header {
-    padding: 12px 20px;
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border-light);
+.text-box-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.section-label {
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-tertiary);
-}
-
 .detection-badge {
     font-size: 11px;
-    padding: 6px 10px;
-    border-radius: 8px;
-    background: var(--primary);
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: var(--accent);
     color: white;
     font-weight: 600;
     display: none;
-    animation: slideIn 0.3s ease-out;
 }
 
 .detection-badge.show {
     display: inline-block;
 }
 
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateX(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
 .text-input, .text-output {
     flex: 1;
-    padding: 20px;
+    padding: 16px;
     border: none;
     outline: none;
     background: transparent;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.6;
-    color: var(--text-primary);
+    color: var(--text);
     resize: none;
     font-family: inherit;
 }
 
 .text-input::placeholder {
-    color: var(--text-tertiary);
+    color: var(--text-light);
 }
 
 .text-output {
     pointer-events: none;
 }
 
-.section-footer {
-    padding: 12px 20px;
-    border-top: 1px solid var(--border-light);
+.text-box-footer {
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 12px;
+    color: var(--text-light);
     background: var(--bg-secondary);
 }
 
 .text-stats {
     display: flex;
     gap: 16px;
-    font-size: 12px;
-    color: var(--text-tertiary);
 }
 
-.stat-item {
+.text-actions {
     display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.stat-label {
-    font-weight: 500;
-}
-
-.section-actions {
-    display: flex;
-    gap: 4px;
+    gap: 8px;
 }
 
 .action-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
     background: transparent;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: var(--text-secondary);
+    color: var(--text-light);
     transition: all 0.2s;
 }
 
 .action-btn:hover {
-    background: var(--surface-hover);
-    color: var(--primary);
+    background: var(--bg-secondary);
+    color: var(--accent);
 }
 
 .action-btn.recording {
-    background: var(--error);
+    background: #EF4444;
     color: white;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.8; }
 }
 
 .action-btn svg {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
 }
 
-.translate-section {
-    padding: 20px;
+.bottom-bar {
     display: flex;
     justify-content: center;
-    border-top: 1px solid var(--border-light);
+    gap: 12px;
 }
 
 .translate-btn {
-    padding: 12px 48px;
+    padding: 12px 36px;
     border: none;
-    border-radius: 12px;
-    background: var(--primary);
+    border-radius: 6px;
+    background: var(--accent);
     color: white;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
-    box-shadow: var(--shadow-md);
-    display: flex;
-    align-items: center;
-    gap: 8px;
 }
 
 .translate-btn:hover {
-    background: var(--primary-dark);
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-1px);
+    background: var(--accent-hover);
 }
 
 .translate-btn:active {
-    transform: translateY(0);
+    transform: translateY(1px);
 }
 
 .translate-btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
-    transform: none;
-}
-
-.translate-btn:active:not(:disabled) {
-    box-shadow: var(--shadow-md);
-    transform: translateY(2px);
 }
 
 .sidebar {
+    width: 300px;
+    background: var(--bg);
+    border-left: 1px solid var(--border);
     display: flex;
     flex-direction: column;
-    gap: 20px;
-}
-
-.card {
-    background: var(--surface);
-    border-radius: 20px;
-    box-shadow: var(--shadow-lg);
     overflow: hidden;
-    border: 1px solid var(--border-light);
-    transition: box-shadow 0.3s, transform 0.2s;
 }
 
-.card:hover {
-    box-shadow: var(--shadow-xl);
+@media (max-width: 1024px) {
+    .sidebar {
+        display: none;
+    }
 }
 
-.card-header {
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--border-light);
+.sidebar-section {
+    flex: 1;
+    overflow-y: auto;
+    border-bottom: 1px solid var(--border);
+}
+
+.sidebar-section:last-child {
+    border-bottom: none;
+}
+
+.sidebar-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: var(--bg-secondary);
 }
 
-.card-title {
-    font-size: 14px;
+.sidebar-title {
+    font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--text-primary);
+    color: var(--text);
 }
 
-.card-action {
-    padding: 6px 12px;
-    border: none;
-    border-radius: 8px;
+.sidebar-action {
+    padding: 4px 8px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
     background: transparent;
-    color: var(--text-secondary);
-    font-size: 12px;
+    color: var(--text-light);
+    font-size: 11px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
-    border: 1px solid var(--border);
 }
 
-.card-action:hover {
-    background: var(--surface-hover);
-    border-color: var(--primary);
-    color: var(--primary);
+.sidebar-action:hover {
+    background: var(--bg-secondary);
+    border-color: var(--accent);
+    color: var(--accent);
 }
 
-.card-content {
-    max-height: 400px;
+.sidebar-content {
     overflow-y: auto;
 }
 
 .empty-state {
-    padding: 48px 20px;
+    padding: 32px 16px;
     text-align: center;
-    color: var(--text-tertiary);
+    color: var(--text-light);
+    font-size: 13px;
 }
 
 .empty-icon {
-    font-size: 48px;
-    margin-bottom: 12px;
+    font-size: 32px;
+    margin-bottom: 8px;
     opacity: 0.5;
 }
 
-.empty-text {
-    font-size: 14px;
-    font-weight: 500;
-}
-
 .history-item, .favorite-item {
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--border-light);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
     cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-}
-
-.history-item:last-child, .favorite-item:last-child {
-    border-bottom: none;
+    transition: background 0.2s;
 }
 
 .history-item:hover, .favorite-item:hover {
-    background: var(--surface-hover);
+    background: var(--bg-secondary);
 }
 
 .item-lang {
     font-size: 10px;
-    color: var(--text-tertiary);
+    color: var(--text-light);
     margin-bottom: 4px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -553,19 +450,19 @@ body {
 }
 
 .item-text {
-    font-size: 14px;
-    color: var(--text-primary);
+    font-size: 13px;
+    color: var(--text);
     margin-bottom: 6px;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
     font-weight: 500;
 }
 
 .item-translation {
-    font-size: 13px;
-    color: var(--text-secondary);
+    font-size: 12px;
+    color: var(--text-light);
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
@@ -577,66 +474,58 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-top: 8px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.history-item:hover .item-footer,
+.favorite-item:hover .item-footer {
+    opacity: 1;
 }
 
 .item-time {
-    font-size: 11px;
-    color: var(--text-tertiary);
+    font-size: 10px;
+    color: var(--text-light);
 }
 
 .item-actions {
     display: flex;
     gap: 4px;
-    opacity: 0;
-    transition: opacity 0.2s;
 }
 
-.history-item:hover .item-actions,
-.favorite-item:hover .item-actions {
-    opacity: 1;
-}
-
-.item-action-btn {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
+.item-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 3px;
     background: transparent;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: var(--text-secondary);
+    color: var(--text-light);
     transition: all 0.2s;
 }
 
-.item-action-btn:hover {
-    background: var(--bg-tertiary);
-    color: var(--primary);
+.item-btn:hover {
+    background: var(--accent);
+    color: white;
 }
 
-.item-action-btn.favorite-active {
-    color: var(--warning);
-}
-
-.item-action-btn svg {
-    width: 14px;
-    height: 14px;
+.item-btn svg {
+    width: 12px;
+    height: 12px;
 }
 
 .toast {
     position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background: var(--surface);
-    color: var(--text-primary);
-    padding: 16px 20px;
-    border-radius: 12px;
-    box-shadow: var(--shadow-xl);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    bottom: 20px;
+    left: 20px;
+    background: var(--text);
+    color: var(--bg);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 13px;
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.3s;
@@ -650,21 +539,10 @@ body {
     pointer-events: all;
 }
 
-.toast-icon {
-    width: 20px;
-    height: 20px;
-    color: var(--accent);
-}
-
-.toast-message {
-    font-size: 14px;
-    font-weight: 500;
-}
-
 .loading-spinner {
     display: inline-block;
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-top-color: white;
     border-radius: 50%;
@@ -675,26 +553,29 @@ body {
     to { transform: rotate(360deg); }
 }
 
-@media (max-width: 640px) {
-    .app {
-        padding: 12px;
-    }
-
-    .header {
-        margin-bottom: 16px;
+@media (max-width: 768px) {
+    header {
+        padding: 12px 16px;
     }
 
     .logo-img {
-        width: 40px;
-        height: 40px;
+        width: 28px;
+        height: 28px;
     }
 
     .logo-title {
-        font-size: 18px;
+        font-size: 16px;
     }
 
-    .text-stats {
-        flex-wrap: wrap;
+    .translator-container {
+        padding: 16px;
+    }
+
+    .workspace {
+        min-height: 250px;
+    }
+
+    .lang-selector {
         gap: 8px;
     }
 }
@@ -702,13 +583,10 @@ body {
 </head>
 <body>
     <div class="app">
-        <header class="header">
+        <header>
             <div class="logo-section">
-                <img src="attached_assets/IMG_20250826_073618_116_1757157131293.webp" alt="Nexo Translate" class="logo-img">
-                <div class="logo-text">
-                    <div class="logo-title">Nexo Translate</div>
-                    <div class="logo-subtitle">Powered by AI</div>
-                </div>
+                <img src="attached_assets/IMG_20250826_073618_116_1757157131293.webp" alt="Nexo Translator" class="logo-img">
+                <div class="logo-title">Nexo Translator</div>
             </div>
             <div class="header-actions">
                 <button class="icon-btn" id="theme-btn" title="Toggle theme">
@@ -725,16 +603,14 @@ body {
             </div>
         </header>
 
-        <div class="main-container">
-            <div class="translator-card">
-                <div class="language-selector-bar">
+        <main>
+            <div class="translator-container">
+                <div class="lang-selector">
                     <div class="lang-select-wrapper">
-                        <select class="lang-select" id="source-lang">
-                            <option value="auto">Auto Detect</option>
-                        </select>
+                        <select class="lang-select" id="source-lang"></select>
                     </div>
-                    <button class="swap-languages-btn" id="swap-btn" title="Swap languages">
-                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <button class="swap-btn" id="swap-btn" title="Swap languages">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path d="M7 16V4M7 4L3 8M7 4L11 8M17 8V20M17 20L21 16M17 20L13 16"/>
                         </svg>
                     </button>
@@ -743,30 +619,18 @@ body {
                     </div>
                 </div>
 
-                <div class="translation-workspace">
-                    <div class="input-section">
-                        <div class="section-header">
-                            <span class="section-label">Source</span>
-                            <span class="detection-badge" id="detection-badge">Detected</span>
+                <div class="workspace">
+                    <div class="text-box">
+                        <div class="text-box-header">
+                            <span>Text</span>
+                            <span class="detection-badge" id="detection-badge"></span>
                         </div>
-                        <textarea
-                            class="text-input"
-                            id="source-input"
-                            placeholder="Enter text to translate..."
-                            maxlength="5000"
-                        ></textarea>
-                        <div class="section-footer">
+                        <textarea class="text-input" id="source-input" placeholder="Enter text to translate..." maxlength="5000"></textarea>
+                        <div class="text-box-footer">
                             <div class="text-stats">
-                                <div class="stat-item">
-                                    <span class="stat-label">Characters:</span>
-                                    <span id="char-count">0</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-label">Words:</span>
-                                    <span id="word-count">0</span>
-                                </div>
+                                <span id="char-count">0</span> characters, <span id="word-count">0</span> words
                             </div>
-                            <div class="section-actions">
+                            <div class="text-actions">
                                 <button class="action-btn" id="mic-btn" title="Voice input">
                                     <svg fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
@@ -781,19 +645,14 @@ body {
                         </div>
                     </div>
 
-                    <div class="output-section">
-                        <div class="section-header">
-                            <span class="section-label">Translation</span>
-                        </div>
+                    <div class="text-box">
+                        <div class="text-box-header">Translation</div>
                         <div class="text-output" id="translation-output"></div>
-                        <div class="section-footer">
+                        <div class="text-box-footer">
                             <div class="text-stats">
-                                <div class="stat-item">
-                                    <span class="stat-label">Words:</span>
-                                    <span id="output-word-count">0</span>
-                                </div>
+                                <span id="output-word-count">0</span> words
                             </div>
-                            <div class="section-actions">
+                            <div class="text-actions">
                                 <button class="action-btn" id="copy-btn" title="Copy">
                                     <svg fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
@@ -814,48 +673,43 @@ body {
                     </div>
                 </div>
 
-                <div class="translate-section">
-                    <button class="translate-btn" id="translate-btn">
-                        <span>Translate</span>
-                    </button>
+                <div class="bottom-bar">
+                    <button class="translate-btn" id="translate-btn">Translate</button>
                 </div>
             </div>
 
-            <div class="sidebar">
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">Favorites</span>
-                        <button class="card-action" id="clear-favorites-btn">Clear</button>
+            <div class="sidebar" id="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-header">
+                        <span class="sidebar-title">Favorites</span>
+                        <button class="sidebar-action" id="clear-favorites-btn">Clear</button>
                     </div>
-                    <div class="card-content" id="favorites-list">
+                    <div class="sidebar-content" id="favorites-list">
                         <div class="empty-state">
                             <div class="empty-icon">⭐</div>
-                            <div class="empty-text">No favorites yet</div>
+                            <div>No favorites</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">History</span>
-                        <button class="card-action" id="clear-history-btn">Clear</button>
+                <div class="sidebar-section" style="flex: 2;">
+                    <div class="sidebar-header">
+                        <span class="sidebar-title">History</span>
+                        <button class="sidebar-action" id="clear-history-btn">Clear</button>
                     </div>
-                    <div class="card-content" id="history-list">
+                    <div class="sidebar-content" id="history-list">
                         <div class="empty-state">
                             <div class="empty-icon">🕒</div>
-                            <div class="empty-text">No history yet</div>
+                            <div>No history</div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 
     <div class="toast" id="toast">
-        <svg class="toast-icon" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-        </svg>
-        <span class="toast-message" id="toast-message"></span>
+        <span id="toast-message"></span>
     </div>
 
     <script type="module" src="/src/main.js"></script>
