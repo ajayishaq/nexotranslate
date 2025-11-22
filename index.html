@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexo Translate - Modern Translation</title>
-    <meta name="description" content="Modern, powerful translator with 50+ languages, AI-powered detection, and cloud sync.">
+    <meta name="description" content="Modern, powerful translator with 44 languages, AI-powered detection, and cloud sync.">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#0EA5E9">
@@ -164,10 +164,11 @@ body {
 
 .translator-card {
     background: var(--surface);
-    border-radius: 16px;
+    border-radius: 20px;
     box-shadow: var(--shadow-lg);
     overflow: hidden;
     border: 1px solid var(--border-light);
+    transition: box-shadow 0.3s, border-color 0.3s;
 }
 
 .language-selector-bar {
@@ -294,16 +295,28 @@ body {
 
 .detection-badge {
     font-size: 11px;
-    padding: 4px 8px;
-    border-radius: 6px;
+    padding: 6px 10px;
+    border-radius: 8px;
     background: var(--primary);
     color: white;
     font-weight: 600;
     display: none;
+    animation: slideIn 0.3s ease-out;
 }
 
 .detection-badge.show {
     display: inline-block;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .text-input, .text-output {
@@ -432,6 +445,11 @@ body {
     transform: none;
 }
 
+.translate-btn:active:not(:disabled) {
+    box-shadow: var(--shadow-md);
+    transform: translateY(2px);
+}
+
 .sidebar {
     display: flex;
     flex-direction: column;
@@ -440,10 +458,15 @@ body {
 
 .card {
     background: var(--surface);
-    border-radius: 16px;
+    border-radius: 20px;
     box-shadow: var(--shadow-lg);
     overflow: hidden;
     border: 1px solid var(--border-light);
+    transition: box-shadow 0.3s, transform 0.2s;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-xl);
 }
 
 .card-header {
@@ -814,7 +837,7 @@ body {
 
                 <div class="card">
                     <div class="card-header">
-                        <span class="card-title">Recent</span>
+                        <span class="card-title">History</span>
                         <button class="card-action" id="clear-history-btn">Clear</button>
                     </div>
                     <div class="card-content" id="history-list">
@@ -829,8 +852,8 @@ body {
     </div>
 
     <div class="toast" id="toast">
-        <svg class="toast-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        <svg class="toast-icon" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
         </svg>
         <span class="toast-message" id="toast-message"></span>
     </div>
