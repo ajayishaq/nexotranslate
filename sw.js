@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nexo-translate-v2';
+const CACHE_NAME = 'nexo-translate-v3';
 const urlsToCache = [
   '/',
   '/index.html',
