@@ -3,8 +3,13 @@ import cors from 'cors';
 import https from 'https';
 import http from 'http';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.BACKEND_PORT || 3001;
@@ -12,7 +17,11 @@ const PORT = process.env.BACKEND_PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
+// Serve static files from dist folder (frontend build)
+app.use(express.static(path.join(__dirname, 'dist')));
+
 const languageMappings = {
+  'auto': 'auto',
   'ha': 'yo',
   'ig': 'yo',
   'fi': 'fi',
@@ -86,36 +95,55 @@ app.post('/api/translate', async (req, res) => {
                 if (response.statusCode === 200) {
                     translation = response.data.translations[0].text;
                     usedDeepL = true;
+                } else {
+                    throw new Error(`DeepL API error: ${response.statusCode}`);
                 }
             } catch (deeplError) {
-                console.error('DeepL failed, falling back to MyMemory');
+                console.error('DeepL failed, falling back to MyMemory:', deeplError.message);
             }
         }
 
         if (!usedDeepL) {
             const myMemoryUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${mappedSourceLang}|${mappedTargetLang}`;
             
+            console.log('MyMemory request:', myMemoryUrl);
+
             const response = await makeRequest(myMemoryUrl, {});
 
-            if (response.statusCode !== 200 || response.data.responseStatus !== 200) {
-                throw new Error('Translation API error');
+            if (response.statusCode !== 200) {
+                console.error('MyMemory error response:', response);
+                throw new Error(`MyMemory API error: ${response.statusCode}`);
             }
 
-            translation = response.data.responseData.translatedText;
+            const data = response.data;
+            if (data.responseStatus !== 200) {
+                throw new Error(`MyMemory API error: ${data.responseStatus} - ${data.responseDetails}`);
+            }
+
+            translation = data.responseData.translatedText;
+            
+            if (!translation || translation.trim() === '') {
+                throw new Error('Empty translation received');
+            }
         }
 
         res.json({ translation });
 
     } catch (error) {
         console.error('Translation error:', error);
-        res.status(500).json({ error: 'Translation failed' });
+        res.status(500).json({ error: 'Translation failed', details: error.message });
     }
 });
 
 app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok' });
+    res.json({ status: 'ok', message: 'Translation server is running' });
+});
+
+// Fallback to index.html for SPA routing
+app.use((req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Translation server running on port ${PORT}`);
+    console.log(`Translation server running on http://0.0.0.0:${PORT}`);
 });
