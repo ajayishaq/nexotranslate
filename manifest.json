@@ -1,19 +1,18 @@
 {
   "id": "/?source=pwa",
-  "name": "Nexo Translate",
+  "name": "Nexo Translator",
   "short_name": "Nexo",
-  "description": "Modern, sleek translator with 50+ languages powered by DeepL. Fast, beautiful, and easy to use with auto-detect, voice input, and theme support.",
+  "description": "Fast translator with 44 languages - English, Spanish, French, Chinese, Arabic, and more. Instant translation, voice input, and theme support.",
   "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone"],
   "background_color": "#FFFFFF",
-  "theme_color": "#0EA5E9",
+  "theme_color": "#3B82F6",
   "orientation": "portrait-primary",
   "lang": "en-US",
   "dir": "ltr",
   "categories": ["utilities", "productivity", "education"],
-  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7",
   "prefer_related_applications": false,
   "icons": [
     {
@@ -39,12 +38,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
-    },
-    {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='128' fill='%230EA5E9'/><text x='256' y='380' font-size='300' text-anchor='middle' fill='white'>🌐</text></svg>",
-      "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any"
     }
   ],
   "screenshots": [
@@ -53,14 +46,14 @@
       "sizes": "512x512",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Nexo Translate mobile interface"
+      "label": "Nexo Translator interface"
     },
     {
       "src": "/attached_assets/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Nexo Translate wide view"
+      "label": "Nexo Translator desktop view"
     }
   ],
   "shortcuts": [
