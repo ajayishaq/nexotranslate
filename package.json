@@ -1,7 +1,7 @@
 {
   "name": "nexo-translate",
   "version": "2.0.0",
-  "description": "Modern translator with 50+ languages, AI-powered detection, and cloud sync",
+  "description": "Modern translator with 44 languages, AI-powered detection, and cloud sync",
   "type": "module",
   "scripts": {
     "dev": "vite",
